@@ -7,10 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Product\Product;
 
 
-
 class ProductsController extends Controller
 {
-    public function sigleProducts($id) {
+    public function singleProduct($id) {
 
         $product = Product::find($id);
 
