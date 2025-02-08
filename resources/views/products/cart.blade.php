@@ -3,7 +3,6 @@
 
 @section('content')
 
-
 <section class="home-slider owl-carousel">
 
     <div class="slider-item" style="background-image: url({{asset('assets/images/bg_3.jpg')}});" data-stellar-background-ratio="0.5">
@@ -20,7 +19,16 @@
       </div>
     </div>
   </section>
-      
+  <div class="container">
+    @if (Session::has('delete'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ Session::get('delete') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+</div>
+
+</div>
       <section class="ftco-section ftco-cart">
           <div class="container">
               <div class="row">
@@ -40,7 +48,7 @@
                           <tbody>
                             @foreach($cart as $carts)
                             <tr class="text-center">
-                              <td class="product-remove"><a href="#"><span class="icon-close"></span></a></td>
+                              <td class="product-remove"><a href="{{route('cart.product.delete',$carts->pro_id) }}"><span class="icon-close"></span></a></td>
                               
                               <td class="image-prod"><div class="img" style="background-image:url({{asset('assets/images/'.$carts->image.'')}});"></div></td>
                               
@@ -61,7 +69,7 @@
                             </tr>
                             @endforeach
                             <tr class="text-center">
-                              <td class="product-remove"><a href="#"><span class="icon-close"></span></a></td>
+                              <td class="product-remove"><a href="{{route('cart.product.delete',$carts->id)}}"><span class="icon-close"></span></a></td>
                               
                               <td class="image-prod"><div class="img" style="background-image:url({{asset('assets/images/'.$carts->image.'')}});"></div></td>
                               
@@ -107,8 +115,6 @@
                           <span>$17.60</span>
                       </p>
                   </div>
-
-
                   <p class="text-center"><a href="checkout.html" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
               </div>
           </div>

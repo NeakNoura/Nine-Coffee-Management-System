@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Product\Product;
 use Illuminate\Support\Facades\Auth;
-use Redirect;
+use Illuminate\Support\Facades\Redirect;
 use App\Models\Product\Cart;
 
 class ProductsController extends Controller
@@ -52,5 +52,24 @@ class ProductsController extends Controller
 
     
         return view('products.cart',compact('cart'));
+    }
+
+    
+
+    public function deleteProductCart($id) {
+    
+        $deleteProducCart = Cart::where('pro_id', $id)
+       ->where('user_id',Auth::user()->id)
+       ->first();
+
+      
+       if($deleteProducCart){
+        $deleteProducCart->delete();
+       return Redirect::route('cart')
+       ->with(['delete' => "Product deleted from cart successfully"]);
+       }
+
+       return Redirect::route('cart')
+       ->with(['error' => "Product not found in cart"]);
     }
 }
