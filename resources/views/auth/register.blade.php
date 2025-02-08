@@ -24,65 +24,63 @@
         <div class="col-md-12 ftco-animate">
           <form method="POST" action="{{ route('register') }}" class="billing-form ftco-bg-dark p-3 p-md-5">
             @csrf
-              <h3 class="mb-4 billing-heading">Register</h3>
-                <div class="row align-items-end">
-               <div class="col-md-12">
-                      <div class="form-group">
-                          <label for="Username">Username</label>
-                          <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
-
-                          @error('name')
-                              <span class="invalid-feedback" role="alert">
-                                  <strong>{{ $message }}</strong>
-                              </span>
-                          @enderror                      </div>
-               </div>
-                  <div class="col-md-12">
-                  <div class="form-group">
-                      <label for="Email">Email</label>
-                      <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                      @error('email')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror                  </div>
-                </div>
-               
+            <h3 class="mb-4 billing-heading">Register</h3>
+            <div class="row align-items-end">
                 <div class="col-md-12">
-                  <div class="form-group">
-                      <label for="Password">Password</label>
-                      <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                      @error('password')
-                          <span class="invalid-feedback" role="alert">
-                              <strong>{{ $message }}</strong>
-                          </span>
-                      @enderror                  </div>
-
-              </div>
-              <div class="col-md-12">
-                <div class="form-group">
-                    <label for="Password">ComfirmPassword</label>
-                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                    @error('password')
+                    <div class="form-group">
+                        <label for="name">Username</label>
+                        <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                            name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+                        @error('name')
                         <span class="invalid-feedback" role="alert">
                             <strong>{{ $message }}</strong>
                         </span>
-                    @enderror                  </div>
-
+                        @enderror
+                    </div>
+                </div>
+        
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                            name="email" value="{{ old('email') }}" required autocomplete="email">
+                        @error('email')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+        
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                            name="password" required autocomplete="new-password">
+                        @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                        @enderror
+                    </div>
+                </div>
+        
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label for="password_confirmation">Confirm Password</label>
+                        <input id="password_confirmation" type="password" class="form-control"
+                            name="password_confirmation" required autocomplete="new-password">
+                    </div>
+                </div>
+        
+                <div class="col-md-12">
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary py-3 px-4">Register</button>
+                    </div>
+                </div>
             </div>
-              <div class="col-md-12">
-                  <div class="form-group mt-4">
-                          <div class="radio">
-                              <button class="btn btn-primary py-3 px-4">Register</button>
-                          </div>
-                  </div>
-              </div>
-
-             
-            </form><!-- END -->
+        </form>
+        
         </div> <!-- .col-md-8 -->
         </div>
       </div>

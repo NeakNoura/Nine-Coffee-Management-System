@@ -63,7 +63,8 @@ body {
   color: #212529;
   text-align: left;
   background-color: #fff; 
-  overflow-x: hidden;}
+  overflow-x: hidden;
+  margin-top: -30px;}
 
 [tabindex="-1"]:focus {
   outline: 0 !important; }
