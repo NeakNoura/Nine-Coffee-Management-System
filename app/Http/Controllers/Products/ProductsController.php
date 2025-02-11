@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Product\Cart;
 use Illuminate\Support\Facades\Session;
+
+
+
+
+
 class ProductsController extends Controller
 
 {
@@ -49,14 +54,14 @@ class ProductsController extends Controller
     }
 
 
-
     public function cart() {
-    
+        if (!Auth::check()) {
+            return Redirect::route('login')->with(['error' => "You need to login first"]);
+        }
      $cart = Cart::where('user_id', Auth::user()->id)
-      ->orderBy('id','desc')
-      ->get();
+      ->orderBy('id','desc')->get();
 
-      $totalPrice = Cart::where('user_id',Auth::user()->id)
+      $totalPrice = $cart
       ->sum('price');
     
         return view('products.cart',compact('cart','totalPrice'));
@@ -67,8 +72,7 @@ class ProductsController extends Controller
     public function deleteProductCart($id) {
     
         $deleteProducCart = Cart::where('pro_id', $id)
-       ->where('user_id',Auth::user()->id)
-       ->first();
+       ->where('user_id',Auth::user()->id)->first();
 
         $deleteProducCart->delete();
         
@@ -87,7 +91,7 @@ class ProductsController extends Controller
       
         $value = $request->price;
         $price = Session::put('price',$value);
-        $newPrice = Session::get($price);
+        $newPrice = Session::get('price');
 
 
             if($newPrice > 0){
@@ -108,9 +112,22 @@ class ProductsController extends Controller
 
         $checkout = Order::create($request->all());
 
-    echo"welcome to paypal payment";
-        // return Redirect::route('product.single', $id)
-        //     ->with(['success' => "Product added to cart successfully"]);
+        return View('products.paypal');
     }
 
+    public function success() {
+
+       $deleteItems = Cart::where('user_id',Auth::user()->id);
+       $deleteItems->delete();
+
+       if($deleteItems){
+        Session::forget('price');
+
+        return View('products.success');
+       }
+       
+    }
+
+
+    
 }

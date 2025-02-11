@@ -4,7 +4,6 @@
 @section('content')
 
 <section class="home-slider owl-carousel">
-
     <div class="slider-item" style="background-image: url({{ asset('assets/images/bg_3.jpg') }});">
         <div class="overlay"></div>
       <div class="container">
@@ -25,7 +24,6 @@
         </div>
     @endif
 </div>
-
 </div>
       <section class="ftco-section ftco-cart">
           <div class="container">
@@ -64,9 +62,8 @@
                                    <input disabled type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
                                 </div>
                             </td>
-                              
                               <td class="total">${{ $totalPrice }}</td>
-                            </tr><!-- END TR-->
+                            </tr>
                             @endforeach
                       @else
                       <p class="alert alert-success">you dont have product yet </p>

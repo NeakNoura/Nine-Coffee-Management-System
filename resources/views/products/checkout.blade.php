@@ -63,10 +63,7 @@
                     <textarea name="address" cols="10" rows="10" class="form-control" placeholder="House number and street name"></textarea>
                   </div>
                   </div>
-                  {{-- <div class="col-md-12">
-                      <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
-                  </div> --}}
+                 
                   </div>
                   <div class="w-100"></div>
                   <div class="col-md-6">
@@ -96,7 +93,7 @@
                 </div>
                   <div class="col-md-6">
                     <div class="form-group">
-                      <input name="price" type="text"  value="{{ Session::get('price')}}" class="form-control" placeholder="">
+                      <input name="price" type="hidden"  value="{{ Session::get('price')}}" class="form-control" placeholder="">
                     </div>
                 </div>
                     <div class="col-md-6">
