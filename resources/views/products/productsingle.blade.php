@@ -22,8 +22,6 @@
       <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('success') }}</p>
     @endif
   </div>
-  
-    
   <section class="ftco-section">
     <div class="container">
         <div class="row">
@@ -36,25 +34,21 @@
                 <p>{{ $product->description }}</p>
                     <div class="row mt-4">
                         <div class="col-md-6">
-                            <div class="form-group d-flex">
-                        </div>
-                 </span>
-              </div>
-              
+                            <div class="form-group d-flex">                          
           </div>
+          <div class="row mt-4">
+            <div class="col-md-6">
           <form method="POST" action="{{ route('add.cart',$product->id )}}">
             @csrf
             <input type="hidden" name="pro_id" value="{{ $product->id }}">
             <input type="hidden" name="name" value="{{ $product->name }}">
             <input type="hidden" name="price" value="{{ $product->price }}">
             <input type="hidden" name="image" value="{{ $product->image }}">
-        @if($checkInCart== 0)
-
+        @if($checkInCart==0)
                 <button type="submit" name="submit" class="btn btn-warning py-3 px-5">Add to Cart</button>
         @else
                 <button style="background-color:black" class="text-white btn btn-warning py-3 px-5" disabled>Add to Cart</button>
         @endif
-
             </div>
         </div>
     </div>
@@ -71,10 +65,7 @@
     </div>
     <div class="row">
         @foreach ($relatedProducts as $relatedProduct)
-            
-
         <div class="col-md-3">
-
             <div class="menu-entry">
                 <a href="{{ route('product.single', $relatedProduct->id) }}" class="img" style="background-image: url('{{ asset('assets/images/'.$relatedProduct->image) }}');"></a>
                 <div class="text text-center pt-4">
@@ -83,10 +74,10 @@
                         <p class="price"><span>{{ $relatedProduct->price }}</span></p>
                         <p><a href="{{ route('product.single', $relatedProduct->id) }}" class="btn btn-primary btn-outline-primary">Add to Cart</a></p>
                     </div>
-                </div>
+                  </div>
         </div>
         @endforeach
     </div>
-    </div>
+  </div>
 </section>
 @endsection
