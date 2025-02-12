@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\Product\Cart;
 use Illuminate\Support\Facades\Session;
+use App\Models\Product\Booking;
 
 
 
@@ -61,9 +62,8 @@ class ProductsController extends Controller
      $cart = Cart::where('user_id', Auth::user()->id)
       ->orderBy('id','desc')->get();
 
-      $totalPrice = $cart
-      ->sum('price');
-    
+      $totalPrice = $cart->sum(fn($item) => floatval($item->price));
+
         return view('products.cart',compact('cart','totalPrice'));
     }
 
@@ -129,5 +129,20 @@ class ProductsController extends Controller
     }
 
 
-    
+       
+    public function BookingTables(Request $request) {
+
+
+        if($request->date > date('n/j/Y')){
+        $bookTables = Booking::create($request->all());
+        if ($bookTables){
+            return Redirect::route('home')->with (['booking' => "you booked a table successfully"]);
+        }
+
+    }else{
+        return Redirect::route('home')
+        ->with(['date' => "Invalid date,choose a date in the future "]);
+    }
+    }
+
 }

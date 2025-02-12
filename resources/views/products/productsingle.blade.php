@@ -49,11 +49,11 @@
         @else
                 <button style="background-color:black" class="text-white btn btn-warning py-3 px-5" disabled>Add to Cart</button>
         @endif
+      </form>
             </div>
         </div>
     </div>
 </section>
-
 <section class="ftco-section">
     <div class="container">
         <div class="row justify-content-center mb-5 pb-3">

@@ -64,6 +64,7 @@ body {
   text-align: left;
   background-color: #fff; 
   overflow-x: hidden;
+  margin-top: -20px;
   }
 
 [tabindex="-1"]:focus {

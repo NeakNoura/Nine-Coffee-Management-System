@@ -13,7 +13,6 @@
             <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
             <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
           </div>
-
         </div>
       </div>
     </div>
@@ -50,7 +49,20 @@
       </div>
     </div>
   </section>
+  <div class="container">
+    @if(Session::has('date'))
+    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('date')
+      }}
+      @endif
+    </div>
+    <div class="container">
+      @if(Session::has('booking'))
+      <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('booking')
+        }}
+        @endif
+      </div>
   <section class="ftco-intro">
+
     <div class="container-wrap">
         <div class="wrap d-md-flex align-items-xl-end">
             <div class="info">
@@ -58,60 +70,65 @@
                     <div class="col-md-4 d-flex ftco-animate">
                         <div class="icon"><span class="icon-phone"></span></div>
                         <div class="text">
-                            <h3>000 (123) 456 7890</h3>
+                            <h3>(+855) 87708259</h3>
                             <p>A small river named Duden flows by their place and supplies.</p>
                         </div>
                     </div>
                     <div class="col-md-4 d-flex ftco-animate">
                         <div class="icon"><span class="icon-my_location"></span></div>
                         <div class="text">
-                            <h3>198 West 21th Street</h3>
-                            <p>	203 Fake St. Mountain View, San Francisco, California, USA</p>
+                            <h3>265 Street</h3>
+                            <p>	265 Fake St. Tekl'k 3, , ToulKork, Cambodia</p>
                         </div>
                     </div>
                     <div class="col-md-4 d-flex ftco-animate">
                         <div class="icon"><span class="icon-clock-o"></span></div>
                         <div class="text">
-                            <h3>Open Monday-Friday</h3>
-                            <p>8:00am - 9:00pm</p>
+                            <h3>Open Monday-Saturday</h3>
+                            <p>8:00am - 10:00pm</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="book p-4">
                 <h3>Book a Table</h3>
-                <form action="#" class="appointment-form">
+                <form action="{{ route('booking.tables') }}" method="POST" class="appointment-form">
+                  @csrf
                     <div class="d-md-flex">
                         <div class="form-group">
-                            <input type="text" class="form-control" placeholder="First Name">
+                            <input type="text" name="first_name" class="form-control" placeholder="First Name">
                         </div>
                         <div class="form-group ml-md-4">
-                            <input type="text" class="form-control" placeholder="Last Name">
+                            <input type="text" name="last_name" class="form-control" placeholder="Last Name">
                         </div>
                     </div>
                     <div class="d-md-flex">
                         <div class="form-group">
                             <div class="input-wrap">
                         <div class="icon"><span class="ion-md-calendar"></span></div>
-                        <input type="text" class="form-control appointment_date" placeholder="Date">
+                        <input type="text" name="date" class="form-control appointment_date" placeholder="Date">
                     </div>
                         </div>
                         <div class="form-group ml-md-4">
                             <div class="input-wrap">
                         <div class="icon"><span class="ion-ios-clock"></span></div>
-                        <input type="text" class="form-control appointment_time" placeholder="Time">
+                        <input type="text" name="time" class="form-control appointment_time" placeholder="Time">
                     </div>
+                    <div class="form-group ml-md-4">
+                      <div class="input-wrap">
+                  <input type="text" name="user_id" value="{{ Auth::user()->id }}" class="form-control appointment_time">
+              </div>
                         </div>
                         <div class="form-group ml-md-4">
-                            <input type="text" class="form-control" placeholder="Phone">
+                            <input type="text" name="phone" class="form-control" placeholder="Phone">
                         </div>
                     </div>
                     <div class="d-md-flex">
                         <div class="form-group">
-                  <textarea name="" id="" cols="30" rows="2" class="form-control" placeholder="Message"></textarea>
+                  <textarea id="" name="message" cols="30" rows="2" class="form-control" placeholder="Message"></textarea>
                 </div>
                 <div class="form-group ml-md-4">
-                  <input type="submit" value="Appointment" class="btn btn-white py-3 px-4">
+                  <input type="submit" name="first_name" value="Book" class="btn btn-white py-3 px-4">
                 </div>
                     </div>
                 </form>
@@ -144,7 +161,7 @@
           </div>
           <div class="media-body">
             <h3 class="heading">Easy to Order</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>Enjoy a seamless and hassle-free ordering experience with our intuitive online system. Browse our menu, customize your coffee just the way you like it, and place your order with just a few clicks. Whether you’re at home, in the office, or on the go, getting your favorite coffee has never been this simple!.</p>
           </div>
         </div>      
       </div>
@@ -155,7 +172,7 @@
           </div>
           <div class="media-body">
             <h3 class="heading">Fastest Delivery</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>We understand that coffee cravings can’t wait! That’s why our system ensures the fastest delivery possible. Once your order is placed, our baristas start preparing your coffee immediately, and our reliable delivery service ensures that your cup of joy reaches you hot and fresh in no time.</p>
           </div>
         </div>      
       </div>
@@ -165,7 +182,7 @@
               <span class="flaticon-coffee-bean"></span></div>
           <div class="media-body">
             <h3 class="heading">Quality Coffee</h3>
-            <p>Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic.</p>
+            <p>We take pride in serving only the best. Our coffee beans are carefully sourced, freshly roasted, and brewed to perfection. Every cup is crafted with passion and expertise, delivering rich flavors and the perfect aroma to satisfy your coffee needs. Whether you love a classic espresso, a creamy latte, or a flavorful cappuccino, we guarantee top-quality in every sip.</p>
           </div>
         </div>    
       </div>
@@ -180,7 +197,7 @@
                 <div class="heading-section text-md-right ftco-animate">
               <span class="subheading">Discover</span>
             <h2 class="mb-4">Our Menu</h2>
-            <p class="mb-4">Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+            <p class="mb-4">Indulge in a rich selection of handcrafted coffee and beverages, made with the finest ingredients to satisfy every taste. Whether you love a bold espresso, a creamy latte, or a refreshing iced coffee, we have something special for you!</p>
             <p><a href="#" class="btn btn-primary btn-outline-primary px-4 py-3">View Full Menu</a></p>
           </div>
             </div>
@@ -212,8 +229,8 @@
     </div>
 </section>
 
-<section class="ftco-counter ftco-bg-dark img" id="section-counter" style="background-image: url({{ asset('assets/images/bg_2.jpg') }});" data-stellar-background-ratio="0.5">
-        <div class="overlay"></div>
+<section class="ftco-counter ftco-bg-dark img" id="section-counter" style="background-image: url({{ asset('assets/images/bg_2.jpg') }});">
+  <div class="overlay"></div>
   <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -322,14 +339,15 @@
     </div>
 </section>
 
-<section class="ftco-section img" id="ftco-testimony" style="background-image: url({{ asset('assets/images/bg_1.jpg') }});"  data-stellar-background-ratio="0.5">
+<section class="ftco-section img" id="ftco-testimony" style="background-image: url({{ asset('assets/images/bg_1.jpg') }});">
     <div class="overlay"></div>
     <div class="container">
       <div class="row justify-content-center mb-5">
         <div class="col-md-7 heading-section text-center ftco-animate">
             <span class="subheading">Testimony</span>
           <h2 class="mb-4">Customers Says</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+          <p>Our customers love the rich flavors, fast service, and warm atmosphere at our coffee shop. Here's what they have to say:
+          </p>
         </div>
       </div>
     </div>
@@ -338,7 +356,8 @@
         <div class="col-lg align-self-sm-end ftco-animate">
           <div class="testimony">
              <blockquote>
-                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small.&rdquo;</p>
+                <p>&ldquo;"I love the smooth taste of their cappuccino! The quality is outstanding, and the delivery is always fast. Highly recommend!"
+                  — Sophia L.&rdquo;</p>
               </blockquote>
               <div class="author d-flex mt-4">
                 <div class="image mr-3 align-self-center">
@@ -351,7 +370,8 @@
         <div class="col-lg align-self-sm-end">
           <div class="testimony overlay">
              <blockquote>
-                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small line of blind text by the name of Lorem Ipsum decided to leave for the far World of Grammar.&rdquo;</p>
+                <p>&ldquo;"Ordered my coffee online, and it arrived within minutes! Fresh, hot, and delicious. Definitely my go-to coffee spot."
+                  — James K.&rdquo;</p>
               </blockquote>
               <div class="author d-flex mt-4">
                 <div class="image mr-3 align-self-center">
@@ -364,7 +384,8 @@
         <div class="col-lg align-self-sm-end ftco-animate">
           <div class="testimony">
              <blockquote>
-                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
+                <p>&ldquo;"From espresso to iced coffee, every cup is made with care. The menu has so many options, and the staff is super friendly!"
+                  — Emma R. &rdquo;</p>
               </blockquote>
               <div class="author d-flex mt-4">
                 <div class="image mr-3 align-self-center">
@@ -377,7 +398,8 @@
         <div class="col-lg align-self-sm-end">
           <div class="testimony overlay">
              <blockquote>
-                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however.&rdquo;</p>
+                <p>&ldquo;"The online ordering process is smooth, and I love how I can customize my drink. The quality never disappoints!"
+                  — Daniel M.&rdquo;</p>
               </blockquote>
               <div class="author d-flex mt-4">
                 <div class="image mr-3 align-self-center">
@@ -390,7 +412,8 @@
         <div class="col-lg align-self-sm-end ftco-animate">
           <div class="testimony">
             <blockquote>
-              <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
+              <p>&ldquo;"You can really taste the quality in every sip. The beans are perfectly roasted, and the aroma is irresistible!"
+                — Michael T. &rdquo;</p>
             </blockquote>
             <div class="author d-flex mt-4">
               <div class="image mr-3 align-self-center">

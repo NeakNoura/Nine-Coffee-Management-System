@@ -21,7 +21,7 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_VALID_API_KEY"></script>
 
     <!-- ✅ FIXED: PayPal SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id=AQOsuWjUUGTN2IipP8kbdp_jaYyWdOAFbP4yD5oBAc62GVe4F7xnkjy8SYNpF8Kd6VMOA5ODFWVSZ_vA&currency=USD"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AWz8KxTfgSZkfv_--1V7bfT05BQA20tPW1n2W7uacbNF1PQkzm5f1UFELl0P9g-mY_Z487fNBXT47xUq&currency=USD"></script>
 
     <div id="paypal-button-container"></div>
 
