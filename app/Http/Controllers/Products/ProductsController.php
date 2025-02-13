@@ -107,7 +107,7 @@ class ProductsController extends Controller
         return view('products.checkout');
        }
     }
-    
+
     public function storeCheckout(Request $request) {
 
         $checkout = Order::create($request->all());
@@ -132,7 +132,14 @@ class ProductsController extends Controller
        
     public function BookingTables(Request $request) {
 
-
+        Request()->validate([
+            "first_name"=> "required|max:40",
+            "last_name"=> "required|max:40",
+            "date"=> "required",
+            "time"=> "required",
+            "phone"=> "required|max:40",
+            "message"=> "required",
+        ]);
         if($request->date > date('n/j/Y')){
         $bookTables = Booking::create($request->all());
         if ($bookTables){
@@ -140,9 +147,23 @@ class ProductsController extends Controller
         }
 
     }else{
-        return Redirect::route('home')
-        ->with(['date' => "Invalid date,choose a date in the future "]);
+        return Redirect::route('home')->with(['date' => "Invalid date,choose a date in the future "]);
+         }
     }
+
+    public function contact()
+    {
+        return view('products.contact'); 
     }
+
+    public function menu()
+    {
+        return view('products.menu'); 
+    }
+    public function about()
+    {
+        return view('products.about'); 
+    }
+
 
 }

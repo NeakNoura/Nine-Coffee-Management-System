@@ -41,18 +41,18 @@
     <div id="app">
         <nav class="navbar navbar-expand-lg navbar-light ftco_navbar  ftco-navbar-light" id="ftco-navbar">
             <div class="container">
-              <a class="navbar-brand" href="{{ url('/') }}">Coffee<small>Blend</small></a>
+              <a class="navbar-brand" href="{{ url('home') }}">Coffee<small>Blend</small></a>
               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
               </button>
               <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                  <li class="nav-item active"><a href="index.html" class="nav-link">Home</a></li>
-                  <li class="nav-item"><a href="menu.html" class="nav-link">Menu</a></li>
-                  <li class="nav-item"><a href="services.html" class="nav-link">Services</a></li>
-                  <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
+                  <li class="nav-item active"><a href="{{ url('home') }}" class="nav-link">Home</a></li>
+                  <li class="nav-item"><a href="{{ route('product.menu')}}" class="nav-link">Menu</a></li>
+                  {{-- <li class="nav-item"><a href="{{ route('product.Sevices')}}" class="nav-link">Services</a></li> --}}
+                  <li class="nav-item"><a href="{{ route('product.about')}}" class="nav-link">About</a></li>
                  
-                  <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                  <li class="nav-item"><a href="{{ route('product.contact')}}" class="nav-link">Contact</a></li>
                   <li class="nav-item cart"><a href="{{ route('cart')}}" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
             @guest
                     @if (Route::has('login'))               
@@ -108,7 +108,7 @@
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Recent Blog</h2>
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({{ asset ('assets/images/image_2.jpg') }});"></a>
+                <a class="blog-img mr-4" style="background-image: url({{ asset ('assets/images/menu-2.jpg') }});"></a>
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
                   <div class="meta">
@@ -119,7 +119,7 @@
                 </div>
               </div>
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({{ asset ('assets/images/image_2.jpg') }});"></a>
+                <a class="blog-img mr-4" style="background-image: url({{ asset ('assets/images/menu-1.jpg') }});"></a>
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
                   <div class="meta">
@@ -167,8 +167,6 @@
     </footer>
     
   
-
-  <!-- loader -->
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
