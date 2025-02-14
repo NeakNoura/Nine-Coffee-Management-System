@@ -15,8 +15,6 @@ use App\Models\Product\Booking;
 
 
 
-
-
 class ProductsController extends Controller
 
 {
@@ -153,17 +151,23 @@ class ProductsController extends Controller
 
     public function contact()
     {
+        $contact = Product::select()->get();
         return view('products.contact'); 
     }
-
     public function menu()
     {
-        return view('products.menu'); 
+        $desserts = Product::where("type", "desserts")->orderBy('id','desc')->take(4)->get();
+        $drinks = Product::where("type", "drinks")->orderBy('id','desc')->take(4)->get();
+        
+        
+        return view('products.menu', compact('desserts', 'drinks'));
     }
+    
     public function about()
     {
+        $about = Product::select()->get();
         return view('products.about'); 
     }
 
-
+    
 }

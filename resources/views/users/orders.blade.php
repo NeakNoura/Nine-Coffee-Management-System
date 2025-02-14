@@ -8,25 +8,15 @@
         <div class="container">
             <div class="row slider-text justify-content-center align-items-center">
                 <div class="col-md-7 col-sm-12 text-center ftco-animate">
-                    <h1 class="mb-3 mt-5 bread">Cart</h1>
+                    <h1 class="mb-3 mt-5 bread">My Orders</h1>
                     <p class="breadcrumbs">
-                        <span class="mr-2"><a href="index.html">Home</a></span> <span>Cart</span>
+                        <span class="mr-2"><a href="index.html">Home</a></span> <span>My Orders</span>
                     </p>
                 </div>
             </div>
         </div>
     </div>
 </section>
-
-<div class="container">
-    @if (Session::has('delete'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ Session::get('delete') }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
-</div>
-
 <section class="ftco-section ftco-cart">
     <div class="container">
         <div class="row">
@@ -35,40 +25,40 @@
                     <table class="table-dark" style="width:1100px">
                         <thead style="background-color:#c49b63; height:60px">
                             <tr class="text-center">
-                                <th>&nbsp;</th>
-                                <th>Product</th>
+                                <th>Fisrt Name</th>
+                                <th>Last Name</th>
+                                <th>Address</th>
+                                <th>City</th>
+                                <th>Email</th>
                                 <th>Price</th>
-                                <th>Quantity</th>
-                                <th>Total</th>
+                                <th>Status</th>
+
                             </tr>
                         </thead>
                         <tbody>
-                            @if($cart->count() > 0)
-                                @foreach($cart as $carts)
+                            @if($orders->count() > 0)
+                                @foreach($orders as $order)
                                     <tr class="text-center" style="height:140px">
                                         <td class="product-remove">
-                                            <a href="{{ route('cart.product.delete', $carts->pro_id) }}">
-                                                <span class="icon-close"></span>
-                                            </a>
+                                            {{ $order->first_name}}
                                         </td>
                                         <td class="image-prod">
-                                            <img width="100" height="100" src="{{ asset('assets/images/' . $carts->image) }}" alt="Product Image">
-                                        </td>
+                                            {{ $order->last_name}} </td>
                                         <td class="product-name">
-                                            <h3>{{ $carts->name }}</h3>
-                                            <p>{{ $carts->description }}</p>
-                                            <p>${{ $carts->price }}</p>
+                                            <h3>{{ $order->address }}</h3>
                                         </td>
-                                        <td class="quantity">
-                                            <div class="input-group mb-3">
-                                                <input disabled type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-                                            </div>
+                                        <td class="price">
+                                            {{ $order->city }}
                                         </td>
-                                        <td class="total">${{ $totalPrice }}</td>
+                                        <td >
+                                            {{ $order->email }}
+                                        </td>
+                                        <td class="total">${{ $order->price }}</td>
+                                        <td class="total">${{ $order->status }}</td>
                                     </tr>
                                 @endforeach
                             @else
-                                <p class="alert alert-success">You don't have any products in your cart yet.</p>
+                                <p class="alert alert-success">you have no order just yet</p>
                             @endif
                         </tbody>
                     </table>
@@ -76,7 +66,7 @@
             </div>
         </div>
 
-        <div class="row justify-content-end">
+        {{-- <div class="row justify-content-end">
             <div class="col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
                 <div class="cart-total mb-3">
                     <h3>Cart Totals</h3>
@@ -107,6 +97,36 @@
             </div>
         </div>
     </div>
-</section>
+</section> --}}
+{{-- <table class="table"> --}}
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th scope="row">1</th>
+        <td>Mark</td>
+        <td>Otto</td>
+        <td>@mdo</td>
+      </tr>
+      <tr>
+        <th scope="row">2</th>
+        <td>Jacob</td>
+        <td>Thornton</td>
+        <td>@fat</td>
+      </tr>
+      <tr>
+        <th scope="row">3</th>
+        <td>Larry</td>
+        <td>the Bird</td>
+        <td>@twitter</td>
+      </tr>
+    </tbody>
+  </table>
 
 @endsection

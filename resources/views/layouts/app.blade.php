@@ -68,6 +68,12 @@
                               {{ Auth::user()->name }}
                           </a>
 
+
+                          <a class="dropdown-item" href="{{ route('users.orders') }}">
+                      My Order</a>
+                      <a class="dropdown-item" href="{{ route('users.bookings') }}">
+                        My Booking</a>
+  
                           <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="{{ route('logout') }}"
                                  onclick="event.preventDefault();
@@ -98,9 +104,8 @@
               <h2 class="ftco-heading-2">About Us</h2>
               <p>A Shop Coffee Management System is a comprehensive software solution designed to streamline and optimize the operations of a coffee shop. This system enhances efficiency by automating various business processes, including order management, inventory tracking, employee scheduling, and customer engagement.</p>
               <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-                <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
+                <li class="ftco-animate"><a href="https://www.facebook.com/"><span class="icon-facebook"></span></a></li>
+                <li class="ftco-animate"><a href="https://www.instagram.com/"><span class="icon-instagram"></span></a></li>
               </ul>
             </div>
           </div>

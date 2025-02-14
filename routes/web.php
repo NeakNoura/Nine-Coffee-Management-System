@@ -27,15 +27,17 @@ Route::get('products/product-single/{id}', [App\Http\Controllers\Products\Produc
 Route::post('products/product-single/{id}', [App\Http\Controllers\Products\ProductsController::class, 'addCart'])->name('add.cart');
 Route::get('products/cart', [App\Http\Controllers\Products\ProductsController::class, 'cart'])->name('cart');
 Route::get('products/cart-delete/{id}', [App\Http\Controllers\Products\ProductsController::class, 'deleteProductCart'])->name('cart.product.delete');
-
-
 Route::post('products/prepare-checkout', [App\Http\Controllers\Products\ProductsController::class, 'prepareCheckout'])->name('prepare.checkout');
 Route::get('products/checkout', [App\Http\Controllers\Products\ProductsController::class, 'checkout'])->name('checkout')->middleware('check.for.price');
 Route::post('products/checkout', [App\Http\Controllers\Products\ProductsController::class, 'storeCheckout'])->name('proccess.checkout')->middleware('check.for.price');
-
 Route::get('products/paypal', [App\Http\Controllers\Products\ProductsController::class, 'paywithpaypal'])->name('products.paypal')->middleware('check.for.price');
 Route::match(['GET', 'POST'], 'products/success', [App\Http\Controllers\Products\ProductsController::class, 'success'])->name('products.success');
+
+
 Route::post('products/booking', [App\Http\Controllers\Products\ProductsController::class, 'BookingTables'])->name('booking.tables');
 Route::get('products/contact', [App\Http\Controllers\Products\ProductsController::class, 'contact'])->name('product.contact');
 Route::get('products/menu', [App\Http\Controllers\Products\ProductsController::class, 'menu'])->name('product.menu');
 Route::get('products/about', [App\Http\Controllers\Products\ProductsController::class, 'about'])->name('product.about');
+
+Route::get('users/menu', [App\Http\Controllers\Users\UsersController::class, 'displayOrders'])->name('users.orders');
+Route::get('users/bookings', [App\Http\Controllers\Users\UsersController::class, 'displayBookings'])->name('users.bookings');
