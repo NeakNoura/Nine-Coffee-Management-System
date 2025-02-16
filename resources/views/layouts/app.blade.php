@@ -49,11 +49,13 @@
                 <ul class="navbar-nav ml-auto">
                   <li class="nav-item active"><a href="{{ url('home') }}" class="nav-link">Home</a></li>
                   <li class="nav-item"><a href="{{ route('product.menu')}}" class="nav-link">Menu</a></li>
-                  {{-- <li class="nav-item"><a href="{{ route('product.Sevices')}}" class="nav-link">Services</a></li> --}}
+                  <li class="nav-item"><a href="{{ route('product.service')}}" class="nav-link">Services</a></li>
                   <li class="nav-item"><a href="{{ route('product.about')}}" class="nav-link">About</a></li>
                  
                   <li class="nav-item"><a href="{{ route('product.contact')}}" class="nav-link">Contact</a></li>
+                  @if(Auth::check())
                   <li class="nav-item cart"><a href="{{ route('cart')}}" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
+                    @endif
             @guest
                     @if (Route::has('login'))               
                   <li class="nav-item"><a href="login.html" class="nav-link">login</a></li>
@@ -63,24 +65,24 @@
                   <li class="nav-item"><a href="register.html" class="nav-link">register</a></li>
                   @endif
                   @else
-                      <li class="nav-item dropdown">
-                          <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                              {{ Auth::user()->name }}
-                          </a>
-
-
-                          <a class="dropdown-item" href="{{ route('users.orders') }}">
-                      My Order</a>
-                      <a class="dropdown-item" href="{{ route('users.bookings') }}">
-                        My Booking</a>
-  
-                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="{{ route('logout') }}"
-                                 onclick="event.preventDefault();
-                                               document.getElementById('logout-form').submit();">
-                                  {{ __('Logout') }}
-                              </a>
-
+                  <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" 
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->name }}
+                    </a>
+                
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('users.orders') }}">My Order</a>
+                        <a class="dropdown-item" href="{{ route('users.bookings') }}">My Booking</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                     document.getElementById('logout-form').submit();">
+                            {{ __('Logout') }}
+                        </a>
+                    </div>
+                </li>
+                
                               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                   @csrf
                               </form>

@@ -19,22 +19,20 @@ class ProductsController extends Controller
 
 {
     public function singleProduct($id) {
-
         $product = Product::find($id);
+        $relatedProducts = Product::where('type', $product->type)
+            ->where('id', '!=', $id)
+            ->orderBy('id', 'desc')
+            ->take(9)                
+            ->get();
 
-
-        $relatedProducts = Product::where('type',$product->type)
-        ->where('id','!=',$id)->take('4')->orderBy('id','desc')->get();
-
-
-        
         $checkInCart = Cart::where('pro_id', $id)
-        ->where('user_id',Auth::id())
-        ->count();
-
-        return view('products.productsingle', compact('product','relatedProducts','checkInCart'));
+            ->where('user_id', Auth::id())
+            ->count();
+    
+        return view('products.productsingle', compact('product', 'relatedProducts', 'checkInCart'));
     }
-
+    
    
     public function addCart(Request $request, $id) {
 
@@ -90,8 +88,7 @@ class ProductsController extends Controller
         $value = $request->price;
         $price = Session::put('price',$value);
         $newPrice = Session::get('price');
-
-
+        
             if($newPrice > 0){
        return Redirect::route('checkout');
        }
@@ -128,31 +125,43 @@ class ProductsController extends Controller
 
 
        
-    public function BookingTables(Request $request) {
-
-        Request()->validate([
-            "first_name"=> "required|max:40",
-            "last_name"=> "required|max:40",
-            "date"=> "required",
-            "time"=> "required",
-            "phone"=> "required|max:40",
-            "message"=> "required",
+    public function BookingTables(Request $request)
+    {
+        $request->validate([
+            "first_name" => "required|max:40",
+            "last_name" => "required|max:40",
+            "date" => "required|date|after:today",
+            "time" => "required",
+            "phone" => "required|max:40",
+            "message" => "nullable",
+            
         ]);
-        if($request->date > date('n/j/Y')){
-        $bookTables = Booking::create($request->all());
-        if ($bookTables){
-            return Redirect::route('home')->with (['booking' => "you booked a table successfully"]);
-        }
-
-    }else{
-        return Redirect::route('home')->with(['date' => "Invalid date,choose a date in the future "]);
-         }
+    
+        $booking = Booking::create([
+            'user_id' => Auth::id(), 
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'date' => $request->date,
+            'time' => $request->time,
+            'phone' => $request->phone,
+            'message' => $request->message,
+            'status' => "Pendding",
+        ]);
+    
+        return $booking
+            ? Redirect::route('home')->with('booking', "You booked a table successfully")
+            : Redirect::route('home')->with('error', "Failed to book a table");
     }
 
     public function contact()
     {
         $contact = Product::select()->get();
         return view('products.contact'); 
+    }
+    public function service()
+    {
+        $service = Product::select()->get();
+        return view('pages.service'); 
     }
     public function menu()
     {

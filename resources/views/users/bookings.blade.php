@@ -31,6 +31,7 @@
                                 <th>Time</th>
                                 <th>Phone</th>
                                 <th>Status</th>
+                                <th>Write Review</th>
 
                             </tr>
                         </thead>
@@ -38,19 +39,21 @@
                             @if($bookings->count() > 0)
                                 @foreach($bookings as $booking)
                                     <tr class="text-center" style="height:140px">
-                                        <td class="product-remove">
-                                            {{ $booking->first_name}}
+                                        <td class="product-remove">{{ $booking->first_name}}</td>                                                                                   
+                                        <td class="image-prod">{{ $booking->last_name}} </td>                                          
+                                        <td class="price">{{ $booking->date }}</td>                                 
+                                        <td class="total">{{ $booking->time }}</td>
+                                        <td class="total">{{ $booking->phone }}</td>
+                                        <td class="total">{{ $booking->status }}</td>
+                                        
+                                        <td class="total">
+                                        @if($booking->status == "Booked")
+                                        <a class ="btn btn-primary" href="{{route('write.reviews')}}"> Write Review</a>
+                                      
+                                        @else
+                                        <p>You have not booking yet</p>
+                                        @endif
                                         </td>
-                                        <td class="image-prod">
-                                            {{ $booking->last_name}} </td>
-                                        <td class="price">
-                                            {{ $booking->date }}
-                                        </td>
-                                        <td >
-                                            {{ $booking->email }}
-                                        </td>
-                                        <td class="total">${{ $booking->time }}</td>
-                                        <td class="total">${{ $booking->phone }}</td>
                                     </tr>
                                 @endforeach
                             @else

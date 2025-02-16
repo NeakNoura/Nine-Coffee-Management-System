@@ -72,7 +72,7 @@
               <h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
               @foreach ($drinks as $drink)
               <div class="pricing-entry d-flex ftco-animate">
-                  <div class="img" style="background-image: url({{ asset('assets/images/'.$drink->image.'')}});"></div>
+                <div class="img" style="background-image: url({{ asset('assets/images/'.$drink->image.'')}});"></div>
                   <div class="desc pl-3">
                       <div class="d-flex text align-items-center">
                           <h3><span>{{$drink->name}}</span></h3>
@@ -116,9 +116,10 @@
                     
 
                     <div class="tab-pane fade show active" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
-                        @foreach ($drinks as $drink)
+                   
                             
                       <div class="row">
+                        @foreach ($drinks as $drink)
                             <div class="col-md-4 text-center">
                                 <div class="menu-wrap">
                                     <a href="{{ route('product.single', $drink->id)}}" class="menu-img img mb-4" style="background-image: url('{{ asset('assets/images/' . $drink->image) }}');"></a>

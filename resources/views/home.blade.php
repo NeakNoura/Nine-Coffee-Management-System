@@ -383,76 +383,23 @@
     </div>
     <div class="container-wrap">
       <div class="row d-flex no-gutters">
-        <div class="col-lg align-self-sm-end ftco-animate">
+        @foreach ($reviews as $review)
+          
+   
+        <div class="col-md align-self-sm-end ftco-animate">
           <div class="testimony">
              <blockquote>
-                <p>&ldquo;"I love the smooth taste of their cappuccino! The quality is outstanding, and the delivery is always fast. Highly recommend!"
-                  — Sophia L.&rdquo;</p>
+                <p>&ldquo;{{ $review->review}}.&rdquo;</p>
               </blockquote>
               <div class="author d-flex mt-4">
-                <div class="image mr-3 align-self-center">
+                {{-- <div class="image mr-3 align-self-center">
                   <img src="images/person_1.jpg" alt="">
-                </div>
-                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
+                </div> --}}
+                <div class="name align-self-center">{{$review->name}}</div>
               </div>
           </div>
         </div>
-        <div class="col-lg align-self-sm-end">
-          <div class="testimony overlay">
-             <blockquote>
-                <p>&ldquo;"Ordered my coffee online, and it arrived within minutes! Fresh, hot, and delicious. Definitely my go-to coffee spot."
-                  — James K.&rdquo;</p>
-              </blockquote>
-              <div class="author d-flex mt-4">
-                <div class="image mr-3 align-self-center">
-                  <img src="images/person_2.jpg" alt="">
-                </div>
-                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-              </div>
-          </div>
-        </div>
-        <div class="col-lg align-self-sm-end ftco-animate">
-          <div class="testimony">
-             <blockquote>
-                <p>&ldquo;"From espresso to iced coffee, every cup is made with care. The menu has so many options, and the staff is super friendly!"
-                  — Emma R. &rdquo;</p>
-              </blockquote>
-              <div class="author d-flex mt-4">
-                <div class="image mr-3 align-self-center">
-                  <img src="images/person_3.jpg" alt="">
-                </div>
-                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-              </div>
-          </div>
-        </div>
-        <div class="col-lg align-self-sm-end">
-          <div class="testimony overlay">
-             <blockquote>
-                <p>&ldquo;"The online ordering process is smooth, and I love how I can customize my drink. The quality never disappoints!"
-                  — Daniel M.&rdquo;</p>
-              </blockquote>
-              <div class="author d-flex mt-4">
-                <div class="image mr-3 align-self-center">
-                  <img src="images/person_2.jpg" alt="">
-                </div>
-                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-              </div>
-          </div>
-        </div>
-        <div class="col-lg align-self-sm-end ftco-animate">
-          <div class="testimony">
-            <blockquote>
-              <p>&ldquo;"You can really taste the quality in every sip. The beans are perfectly roasted, and the aroma is irresistible!"
-                — Michael T. &rdquo;</p>
-            </blockquote>
-            <div class="author d-flex mt-4">
-              <div class="image mr-3 align-self-center">
-                <img src="images/person_3.jpg" alt="">
-              </div>
-              <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
-            </div>
-          </div>
-        </div>
+        @endforeach
       </div>
     </div>
   </section>

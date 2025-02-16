@@ -108,11 +108,10 @@
                   <div class="form-group mt-4">
                                       <div class="radio">
                     <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Place an order</button>
-
                                       </div>
                                   </div>
               </div>
               </div>
-            </form><!-- END -->
+            </form>
         </section>
   @endsection
