@@ -104,11 +104,27 @@ class ProductsController extends Controller
     }
 
     public function storeCheckout(Request $request) {
-
-        $checkout = Order::create($request->all());
-
-        return View('products.paypal');
+        // Validate the request
+        $validatedData = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'state' => 'required|string|max:255',
+            'address' => 'required|string|max:255',
+            'city' => 'required|string|max:255',
+            'zip_code' => 'required|string|max:255',
+            'phone' => 'required|string|max:255',
+            'price' => 'required|string|max:255',
+            'user_id' => 'required|string|max:255',
+         
+        ]);
+        
+        Order::create($validatedData);
+    
+        
+        return redirect()->back()->with('success', 'Checkout completed successfully.');
     }
+    
 
     public function success() {
 
@@ -167,8 +183,6 @@ class ProductsController extends Controller
     {
         $desserts = Product::where("type", "desserts")->orderBy('id','desc')->take(4)->get();
         $drinks = Product::where("type", "drinks")->orderBy('id','desc')->take(4)->get();
-        
-        
         return view('products.menu', compact('desserts', 'drinks'));
     }
     

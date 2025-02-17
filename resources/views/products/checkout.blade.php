@@ -23,6 +23,21 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 ftco-animate">
+          @if(session('success'))
+          <div class="alert alert-success">
+              {{ session('success') }}
+          </div>
+      @endif
+      @if($errors->any())
+      <div class="alert alert-danger">
+          <ul>
+              @foreach ($errors->all() as $error)
+                  <li>{{ $error }}</li>
+              @endforeach
+          </ul>
+      </div>
+  @endif
+
                       <form method="POST" action="{{ route('proccess.checkout')}}" class="billing-form ftco-bg-dark p-3 p-md-5">
                         @csrf
                           <h3 class="mb-4 billing-heading">Billing Details</h3>

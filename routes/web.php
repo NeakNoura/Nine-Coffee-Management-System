@@ -47,3 +47,8 @@ Route::get('users/bookings', [App\Http\Controllers\Users\UsersController::class,
 
 Route::get('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'writeReviews'])->name('write.reviews');
 Route::post('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'proccesswriteReviews'])->name('proccess.write.reviews');
+
+
+Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login');
+Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
+Route::get('admin/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
