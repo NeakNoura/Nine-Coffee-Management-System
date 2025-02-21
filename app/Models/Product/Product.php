@@ -15,6 +15,7 @@ class Product extends Model
         "image",
         "price",
         "description",
+        "type",
     ];
-    public  $timestamp = true;
+    public  $timestamps = false;
 }

@@ -1,12 +1,10 @@
 @extends('layouts.app')
-
 @section('content')
 <section class="home-slider owl-carousel">
     <div class="slider-item" style="background-image: url({{ asset('assets/images/bg_1.jpg') }});">
         <div class="overlay"></div>
       <div class="container">
         <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
           <div class="col-md-8 col-sm-12 text-center ftco-animate">
               <span class="subheading">Welcome</span>
             <h1 class="mb-4">The Best Coffee Testing Experience</h1>
@@ -16,12 +14,10 @@
         </div>
       </div>
     </div>
-
     <div class="slider-item" style="background-image: url({{ asset('assets/images/bg_2.jpg') }});">
         <div class="overlay"></div>
       <div class="container">
         <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
-
           <div class="col-md-8 col-sm-12 text-center ftco-animate">
               <span class="subheading">Welcome</span>
             <h1 class="mb-4">Amazing Taste &amp; Beautiful Place</h1>
@@ -392,9 +388,6 @@
                 <p>&ldquo;{{ $review->review}}.&rdquo;</p>
               </blockquote>
               <div class="author d-flex mt-4">
-                {{-- <div class="image mr-3 align-self-center">
-                  <img src="images/person_1.jpg" alt="">
-                </div> --}}
                 <div class="name align-self-center">{{$review->name}}</div>
               </div>
           </div>

@@ -19,6 +19,7 @@ class ProductsController extends Controller
 
 {
     public function singleProduct($id) {
+        if(isset(auth::user()->id)){
         $product = Product::find($id);
         $relatedProducts = Product::where('type', $product->type)
             ->where('id', '!=', $id)
@@ -27,11 +28,15 @@ class ProductsController extends Controller
             ->get();
 
         $checkInCart = Cart::where('pro_id', $id)
-            ->where('user_id', Auth::id())
+            ->where('user_id', Auth::user()->id)
             ->count();
-    
+        
         return view('products.productsingle', compact('product', 'relatedProducts', 'checkInCart'));
+    }else{
+        return view('products.productsingle', compact('product', 'relatedProducts'));
+
     }
+}
     
    
     public function addCart(Request $request, $id) {
@@ -104,25 +109,18 @@ class ProductsController extends Controller
     }
 
     public function storeCheckout(Request $request) {
-        // Validate the request
-        $validatedData = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'state' => 'required|string|max:255',
-            'address' => 'required|string|max:255',
-            'city' => 'required|string|max:255',
-            'zip_code' => 'required|string|max:255',
-            'phone' => 'required|string|max:255',
-            'price' => 'required|string|max:255',
-            'user_id' => 'required|string|max:255',
-         
-        ]);
-        
-        Order::create($validatedData);
     
-        
-        return redirect()->back()->with('success', 'Checkout completed successfully.');
+        $order = Order::create($request->all());
+    
+       
+        return redirect::route('products.paypal');
+     
+    }
+    public function paywithpaypal(Request $request) {
+    
+      
+        return view('products.paypal');
+     
     }
     
 
@@ -185,7 +183,7 @@ class ProductsController extends Controller
         $drinks = Product::where("type", "drinks")->orderBy('id','desc')->take(4)->get();
         return view('products.menu', compact('desserts', 'drinks'));
     }
-    
+  
     public function about()
     {
         $about = Product::select()->get();

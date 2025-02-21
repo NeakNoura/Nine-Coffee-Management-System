@@ -61,10 +61,10 @@
               </div>
 
              
-            </form><!-- END -->
-        </div> <!-- .col-md-8 -->
+            </form>
+        </div> 
         </div>
       </div>
     </div>
-  </section> <!-- .section -->
+  </section> 
 @endsection

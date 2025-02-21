@@ -14,12 +14,12 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {return view('welcome');});
+
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 
-Route::get('products/contact', [App\Http\Controllers\HomeController::class, 'contact'])->name('product.contact');
+Route::get('products/contact', [App\Http\Controllers\Products\ProductsController::class, 'contact'])->name('product.contact');
 Route::get('products/service', [App\Http\Controllers\Products\ProductsController::class,'service'])->name('product.service');
 Route::get('products/menu', [App\Http\Controllers\Products\ProductsController::class, 'menu'])->name('product.menu');
 Route::get('products/about', [App\Http\Controllers\Products\ProductsController::class, 'about'])->name('product.about');
@@ -27,7 +27,7 @@ Route::get('products/about', [App\Http\Controllers\Products\ProductsController::
 
 Route::get('products/product-single/{id}', [App\Http\Controllers\Products\ProductsController::class, 'singleProduct'])->name('product.single');
 Route::post('products/product-single/{id}', [App\Http\Controllers\Products\ProductsController::class, 'addCart'])->name('add.cart');
-Route::get('products/cart', [App\Http\Controllers\Products\ProductsController::class, 'cart'])->name('cart')->middleware("auth:web");
+Route::get('products/cart', [App\Http\Controllers\Products\ProductsController::class, 'cart'])->name('cart')->middleware('auth:web');
 Route::get('products/cart-delete/{id}', [App\Http\Controllers\Products\ProductsController::class, 'deleteProductCart'])->name('cart.product.delete');
 Route::post('products/prepare-checkout', [App\Http\Controllers\Products\ProductsController::class, 'prepareCheckout'])->name('prepare.checkout');
 Route::get('products/checkout', [App\Http\Controllers\Products\ProductsController::class, 'checkout'])->name('checkout')->middleware('check.for.price');
@@ -41,14 +41,31 @@ Route::get('products/contact', [App\Http\Controllers\Products\ProductsController
 Route::get('products/menu', [App\Http\Controllers\Products\ProductsController::class, 'menu'])->name('product.menu');
 Route::get('products/about', [App\Http\Controllers\Products\ProductsController::class, 'about'])->name('product.about');
 
-Route::get('users/menu', [App\Http\Controllers\Users\UsersController::class, 'displayOrders'])->name('users.orders');
-Route::get('users/bookings', [App\Http\Controllers\Users\UsersController::class, 'displayBookings'])->name('users.bookings');
+Route::get('users/menu', [App\Http\Controllers\Users\UsersController::class, 'displayOrders'])->name('users.orders')->middleware('auth:web');
+Route::get('users/bookings', [App\Http\Controllers\Users\UsersController::class, 'displayBookings'])->name('users.bookings')->middleware('auth:web');
 
 
-Route::get('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'writeReviews'])->name('write.reviews');
-Route::post('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'proccesswriteReviews'])->name('proccess.write.reviews');
+Route::get('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'writeReviews'])->name('write.reviews')->middleware('auth:web');
+Route::post('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'proccesswriteReviews'])->name('proccess.write.reviews')->middleware('auth:web');
 
 
-Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login');
+Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login')->middleware('guest:admin');
 Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
+
+
 Route::get('admin/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
+Route::get('admin/all-admins', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayAllAdmins'])->name('all.admins');
+Route::get('admin/create-admins', [App\Http\Controllers\Admins\AdminsController::class, 'createAdmins'])->name('create.admins');
+
+
+
+Route::get('admin/all-orders', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayAllOrders'])->name('all.orders');
+Route::get('admin/edit-orders/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'EditOrders'])->name('edit.orders');
+Route::post('admin/edit-orders/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'UpdateOrders'])->name('update.orders');
+Route::delete('admin/delete-orders/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'DeleteOrders'])->name('delete.orders');
+
+
+
+Route::get('all/products', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayProducts'])->name('all.products');
+Route::get('/create-products', [App\Http\Controllers\Admins\AdminsController::class, 'CreateProducts'])->name('create.products');
+Route::post('/store-products', [App\Http\Controllers\Admins\AdminsController::class, 'StoreProducts'])->name('store.products');

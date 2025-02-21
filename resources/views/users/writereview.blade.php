@@ -31,8 +31,8 @@
       <div class="row">
         <div class="col-md-12 ftco-animate">
                       <form method="POST" action="{{ route('proccess.write.reviews')}}" class="billing-form ftco-bg-dark p-3 p-md-5">
-                        <h3 class="mb-4 billing-heading">Write Review</h3>
                         @csrf
+                        <h3 class="mb-4 billing-heading">Write Review</h3>
                   <div class="w-100"></div>
                   <div class="col-md-12">
                       <div class="form-group">
