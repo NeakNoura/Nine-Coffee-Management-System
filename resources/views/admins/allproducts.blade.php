@@ -11,6 +11,12 @@
                                 {{ Session::get('success') }}                
                             </p>
                         @endif
+                        
+                    @if (Session::has('delete'))
+                    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">
+                        {{ Session::get('delete') }}                
+                    </p>
+                @endif
                     <h5 class="card-title mb-3 d-inline">All Products</h5>
                     <a href="{{route('create.products')}}" class="btn btn-primary mb-4 text-center float-right">Create Products</a>
                     <table class="table">
@@ -32,7 +38,7 @@
                                 <td><img src="{{asset('assets/images/'.$product->image.'')}}" width="50" ></td>
                                 <td>${{ $product->price }}</td>
                                 <td>{{ $product->type }}</td>                               
-                                <td><a href="delete.products." class="btn btn-danger text-center">Delete</a></td>
+                                <td><a href="{{ route('delete.products', $product->id)}}" class="btn btn-danger text-center">Delete</a></td>
                             </tr>
                             @endforeach
                         </tbody>

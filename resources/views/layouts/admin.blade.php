@@ -36,7 +36,7 @@
                             <a class="nav-link" style="margin-left:20px;" href="{{ route('all.products') }}">Products</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" style="margin-left:20px;" href="{{ route('users.bookings') }}">Bookings</a>
+                            <a class="nav-link" style="margin-left:20px;" href="{{ route('all.bookings') }}">Bookings</a>
                         </li>
                     </ul>
 

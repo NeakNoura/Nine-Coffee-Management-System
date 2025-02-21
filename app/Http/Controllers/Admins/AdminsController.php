@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Admins;
-
+use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Models\Product\Booking;
 use App\Models\Product\Product;
@@ -11,8 +11,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
-
-
 
 
 
@@ -145,13 +143,6 @@ class AdminsController extends Controller
       
       public function StoreProducts(Request $request){
 
-        // Request()->validate([
-        //     "name" => "required|max:40",
-        //     "email" => "required|max:40",
-        //     "password" => "required",
-            // ]);
-
-
 
     $descriptionPath = 'assets/images/';
     $myimage = $request->image->getClientOriginalName();
@@ -172,6 +163,85 @@ class AdminsController extends Controller
     }
            
     }
+    public function DeleteProducts($id){
+       
+
+        $product = Product::find($id);
+        if(File::exists(public_path('assets/images/' . $product->image))){
+            File::delete(public_path('assets/images/' . $product->image));
+
+        }else{
+
+        }
+        $product->delete();
+
+            if($product)
+        return Redirect::route('all.products')
+        ->with(['delete' => "product delete  successfully"]);
+
+         }
   
-    
+  
+         
+         public function DisplayBookings(){
+            $bookings = Booking::select()->orderBy('id','asc')->get();
+           
+              
+                return view('admins.allbookings',compact('bookings'));         
+             
+          }
+          public function EditBookings($id){
+            $booking = Booking::find($id);
+            
+              return view('admins.editbooking',compact('booking'));
+          }
+
+          public function DeleteBookings($id){
+            $booking = Booking::find($id);
+            $booking->delete();
+            if($booking){
+                return Redirect::route('all.bookings')->with(['delete'=>"booking delete  successfully"]);
+            }
+            
+             
+          }
+          public function CreateBookings(){
+       
+            return view('admins.createbooking');
+     
+      }
+      
+      public function UpdateBookings(Request $request,$id){
+        $booking = Booking::find($id);
+        $booking->update($request->all());
+        if($booking){
+            return Redirect::route('all.bookings')->with(['update'=>"booking status updated successfully"]);
+        }
+        
+         
+      }
+      public function StoreBookings(Request $request){
+
+
+
+
+        $storeBookings = Booking::Create([
+            'first_name' => $request->first_name,
+            'last_name' => $request->last_name,
+            'date' => $request->date,
+            'time' => $request->time,
+            'phone' => $request->phone,
+            'message' => $request->message,
+          
+            
+        ]);
+        if($storeBookings){
+            return Redirect::route('all.bookings')
+                    ->with(['success' => "booking created  successfully"]);
+        }
+               
+        }
+      
+          
+          
 }
