@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Product\Booking;
 use App\Models\Product\Product;
 use App\Models\Product\Order;
-use App\Models\Admin\Admin;
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -20,29 +20,23 @@ class AdminsController extends Controller
         return view('admins.login');
     }
 
-
     public function checkLogin(Request $request) {
+        // Validate input fields
         $request->validate([
             'email' => 'required|email',
-            'password' => 'required|string',
+            'password' => 'required'
         ]);
-
-        // Debug: Check if credentials exist
-        $admin = \App\Models\Admin\Admin::where('email', $request->email)->first();
-        if (!$admin) {
-            return back()->withErrors(['email' => 'Admin not found.'])->withInput();
+    
+        // Find the admin by email
+        $admin = Admin::where('email', $request->email)->first();
+    
+        // Check if admin exists and password is correct
+        if ($admin && Hash::check($request->password, $admin->password)) {
+            Auth::guard('admin')->login($admin);
+            return redirect()->route('admins.dashboard');
         }
-
-        // Debug: Check if password is correct
-        if (!\Illuminate\Support\Facades\Hash::check($request->password, $admin->password)) {
-            return back()->withErrors(['password' => 'Incorrect password.'])->withInput();
-        }
-
-        // Debug: Attempt authentication
-        if (Auth::guard('admin')->attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->route('admins.dashboard'); // Success
-        }
-
+    
+        // Redirect back with an error message
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
     }
     
@@ -209,7 +203,7 @@ class AdminsController extends Controller
        
             return view('admins.createbooking');
      
-      }
+         }
       
       public function UpdateBookings(Request $request,$id){
         $booking = Booking::find($id);
@@ -217,15 +211,14 @@ class AdminsController extends Controller
         if($booking){
             return Redirect::route('all.bookings')->with(['update'=>"booking status updated successfully"]);
         }
-        
          
       }
+
+
       public function StoreBookings(Request $request){
 
-
-
-
         $storeBookings = Booking::Create([
+            'user_id' => auth()->id(),
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'date' => $request->date,

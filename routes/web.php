@@ -49,15 +49,17 @@ Route::get('users/write-reviews', [App\Http\Controllers\Users\UsersController::c
 Route::post('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'proccesswriteReviews'])->name('proccess.write.reviews')->middleware('auth:web');
 
 
-Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login')->middleware('guest:admin');
+Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login')->middleware('check.for.auth');
 Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
 
 
-Route::get('admin/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
 Route::get('admin/all-admins', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayAllAdmins'])->name('all.admins');
 Route::get('admin/create-admins', [App\Http\Controllers\Admins\AdminsController::class, 'createAdmins'])->name('create.admins');
 
+Route::group(['prefix' => 'users', 'middleware' => 'auth:admin'], function(){
+    Route::get('admin/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
 
+});
 
 Route::get('admin/all-orders', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayAllOrders'])->name('all.orders');
 Route::get('admin/edit-orders/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'EditOrders'])->name('edit.orders');

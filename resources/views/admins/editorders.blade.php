@@ -12,13 +12,13 @@
                     <select name="status" class="form-select form-control" aria-label="">
                         <option selected>Choose Status</option>
                         <option value="Proccessing">Proccessing</option>
-                        <option value="Proccessing">Delivered</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Pending">Pending</option>
                     </select>
-                </div>
-                  
+                    </div>
+                    <br>
                         <button type="submit" name="submit" class="btn btn-success mb-4 text-center">Update </button>
                 </form>
-
             </div>
         </div>
     </div>

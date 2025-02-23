@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/icomoon.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+   
 </head>
 <body>
     <div id="app">
@@ -56,13 +56,14 @@
                   @if(Auth::check())
                   <li class="nav-item cart"><a href="{{ route('cart')}}" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
                     @endif
-            @guest
+                 @guest
                     @if (Route::has('login'))               
-                  <li class="nav-item"><a href="login.html" class="nav-link">login</a></li>
+                  <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">login</a></li>
                   @endif
 
                   @if (Route::has('register'))
-                  <li class="nav-item"><a href="register.html" class="nav-link">register</a></li>
+                  <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Register</a></li>
+
                   @endif
                   @else
                   <li class="nav-item dropdown">
@@ -97,6 +98,9 @@
             @yield('content')
         </main>
     </div>
+
+
+</script>
     <footer class="ftco-footer ftco-section img">
     	<div class="overlay"></div>
       <div class="container">
@@ -115,7 +119,7 @@
             <div class="ftco-footer-widget mb-4">
               <h2 class="ftco-heading-2">Recent Blog</h2>
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({{ asset ('assets/images/menu-2.jpg') }});"></a>
+                <a class="blog-img mr-4" style="background-image: url({{ asset('assets/images/menu-2.jpg')}});"></a>
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
                   <div class="meta">
@@ -126,7 +130,7 @@
                 </div>
               </div>
               <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url({{ asset ('assets/images/menu-1.jpg') }});"></a>
+                <a class="blog-img mr-4" style="background-image: url({{ asset('assets/images/menu-1.jpg') }});"></a>
                 <div class="text">
                   <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
                   <div class="meta">
@@ -191,8 +195,10 @@
     <script src="{{ asset('assets/js/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('assets/js/jquery.timepicker.min.js') }}"></script>
     <script src="{{ asset('assets/js/scrollax.min.js') }}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&callback=initMap"></script>
     <script src="{{ asset('assets/js/google-map.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+   
+
 </body>
 </html>

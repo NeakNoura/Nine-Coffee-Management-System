@@ -17,9 +17,9 @@
               <thead>
                 <tr>
                   <th scope="col">No.</th>
-                  <th scope="col">First</th>
-                  <th scope="col">Last</th>
-                  <th scope="col">Handle</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Gmail</th>
+                  <th scope="col">Password</th>
                 </tr>
               </thead>
               <tbody>
@@ -28,6 +28,7 @@
                       <th scope="row">{{$admin->id}}</th>
                       <td>{{$admin->name}}</td>
                       <td>{{$admin->email}}</td>
+                      <td>{{$admin->password}}</td>
                     </tr>
                   @endforeach
               </tbody>

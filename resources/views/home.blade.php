@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+
+
 <section class="home-slider owl-carousel">
     <div class="slider-item" style="background-image: url({{ asset('assets/images/bg_1.jpg') }});">
         <div class="overlay"></div>
@@ -396,11 +398,6 @@
       </div>
     </div>
   </section>
-
-
-
-    
-
 
 
 @endsection

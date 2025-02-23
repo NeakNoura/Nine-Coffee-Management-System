@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Admin;
+namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -20,22 +20,17 @@ class Admin extends Authenticatable
      *
      * @var array<int, string>
      */
-  
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $fillable = ['name', 'email', 'password'];
+    
+    protected $hidden = ['password', 'remember_token'];
+   
 
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-
-    ];
+ 
 
     /**
      * The attributes that should be cast.

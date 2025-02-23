@@ -17,7 +17,7 @@
                     </p>
                 @endif
                 </div>
-                                <h5 class="card-title mb-3 d-inline">Orders</h5>
+                    <h5 class="card-title mb-3 d-inline">Orders</h5>
                 <table class="table">
                     <thead>
                         <tr>

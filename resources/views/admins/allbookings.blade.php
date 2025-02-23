@@ -55,11 +55,7 @@
                                 <td>{{ $booking->created_at }}</td>       
                                 <td>
                                     <a href="{{ route('delete.bookings', $booking->id) }}" class="btn btn-sm btn-warning">Delete</a>
-                                </td>
-                                
-
-                                 
-                               
+                                </td>                                                            
                             </tr>
                         @endforeach
                     </tbody>

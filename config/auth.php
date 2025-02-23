@@ -71,7 +71,7 @@ return [
         ],
         'admins' => [
             'driver' => 'eloquent',
-            'model' => App\Models\Admin\Admin::class,
+            'model' => App\Models\Admin::class,
         ],
 
         // 'users' => [
@@ -103,7 +103,12 @@ return [
             'throttle' => 60,
         ],
     ],
-
+'admins' => [  // Add this section
+        'provider' => 'admins',
+        'table' => 'password_resets',
+        'expire' => 60,
+        'throttle' => 60,
+    ],
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout
