@@ -24,7 +24,7 @@ class ProductsController extends Controller
         $relatedProducts = Product::where('type', $product->type)
             ->where('id', '!=', $id)
             ->orderBy('id', 'desc')
-            ->take(9)                
+            ->take(4)                
             ->get();
 
         $checkInCart = Cart::where('pro_id', $id)

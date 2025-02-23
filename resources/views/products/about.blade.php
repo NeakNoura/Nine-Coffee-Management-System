@@ -51,13 +51,13 @@
           <div class="col-lg align-self-sm-end">
             <div class="testimony">
                <blockquote>
-                  <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small.&rdquo;</p>
+                  <p>&ldquo;During their travels, the four companions came across a mysterious copy. It warned them that its homeland erased all originality, leaving only the word "and." The group dismissed the warning and pressed forward—only to fall into a trap set by Copy Writers, who enchanted them with Longe and Parole before dragging them into their agency for endless revisions..&rdquo;</p>
                 </blockquote>
                 <div class="author d-flex mt-4">
                   <div class="image mr-3 align-self-center">
                     <img src="images/person_1.jpg" alt="">
                   </div>
-                  <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
+                  <div class="name align-self-center">Lang Channa <span class="position">Illustrator Designer</span></div>
                 </div>
             </div>
           </div>
@@ -70,27 +70,27 @@
                   <div class="image mr-3 align-self-center">
                     <img src="images/person_2.jpg" alt="">
                   </div>
-                  <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
+                  <div class="name align-self-center">Sim Thim <span class="position">Illustrator Designer</span></div>
                 </div>
             </div>
           </div>
           <div class="col-lg align-self-sm-end">
             <div class="testimony">
                <blockquote>
-                  <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
+                  <p>&ldquo;As they journeyed, the four explorers encountered a copy. The copy pleaded with them to turn back, explaining that in its homeland, stories were rewritten until their original meaning was lost. But they refused to listen. Before long, they were captured by clever Copy Writers, who tricked them with Longe and Parole and forced them into an endless cycle of editing. &rdquo;</p>
                 </blockquote>
                 <div class="author d-flex mt-4">
                   <div class="image mr-3 align-self-center">
                     <img src="images/person_3.jpg" alt="">
                   </div>
-                  <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
+                  <div class="name align-self-center">Sang Bora  <span class="position">Illustrator Designer</span></div>
                 </div>
             </div>
           </div>
           <div class="col-lg align-self-sm-end">
             <div class="testimony overlay">
                <blockquote>
-                  <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however.&rdquo;</p>
+                  <p>&ldquo;During their travels, the four companions came across a mysterious copy. It warned them that its homeland erased all originality, leaving only the word "and." The group dismissed the warning and pressed forward—only to fall into a trap set by Copy Writers, who enchanted them with Longe and Parole before dragging them into their agency for endless revisions..&rdquo;</p>
                 </blockquote>
                 <div class="author d-flex mt-4">
                   <div class="image mr-3 align-self-center">
@@ -103,13 +103,13 @@
           <div class="col-lg align-self-sm-end">
             <div class="testimony">
               <blockquote>
-                <p>&ldquo;Even the all-powerful Pointing has no control about the blind texts it is an almost unorthographic life One day however a small  line of blind text by the name. &rdquo;</p>
+                <p>&ldquo;The four adventurers were on their way when they encountered a copy. The copy cautioned them that in its world, words were reshaped repeatedly until only the word "and" remained. Ignoring the warning, they continued forward, only to be ensnared by a group of cunning Copy Writers. These tricksters made them drunk with Longe and Parole, then took them to their agency, where they were forced into a never-ending cycle of edits. &rdquo;</p>
               </blockquote>
               <div class="author d-flex mt-4">
                 <div class="image mr-3 align-self-center">
                   <img src="images/person_3.jpg" alt="">
                 </div>
-                <div class="name align-self-center">Louise Kelly <span class="position">Illustrator Designer</span></div>
+                <div class="name align-self-center">Ly Kimlong <span class="position">Illustrator Designer</span></div>
               </div>
             </div>
           </div>
