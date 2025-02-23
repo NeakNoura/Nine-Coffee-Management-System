@@ -99,7 +99,7 @@
                     <form method="POST" action="{{ route('prepare.checkout') }}">
                         @csrf
                         <input name="price" type="hidden" value="{{ $totalPrice }}">
-                        <button type="submit" name="submit" class="btn btn-primary py-3 px-4">Proceed to Checkout</button>
+                        <button type="submit" name="submit" class="btn btn-primary text-dark py-3 px-4">Proceed to Checkout</button>
                     </form>
                 @else
                     <p class="text-center alert alert-success">You cannot checkout because your cart is empty.</p>
