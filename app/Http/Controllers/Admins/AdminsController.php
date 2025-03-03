@@ -21,22 +21,22 @@ class AdminsController extends Controller
     }
 
     public function checkLogin(Request $request) {
-        // Validate input fields
+        
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
     
-        // Find the admin by email
+    
         $admin = Admin::where('email', $request->email)->first();
     
-        // Check if admin exists and password is correct
+      
         if ($admin && Hash::check($request->password, $admin->password)) {
             Auth::guard('admin')->login($admin);
             return redirect()->route('admins.dashboard');
         }
     
-        // Redirect back with an error message
+        
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
     }
     

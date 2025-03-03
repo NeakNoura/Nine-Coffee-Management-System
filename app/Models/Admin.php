@@ -20,6 +20,7 @@ class Admin extends Authenticatable
      *
      * @var array<int, string>
      */
+    public $timestamps = false;
     protected $fillable = ['name', 'email', 'password'];
     
     protected $hidden = ['password', 'remember_token'];

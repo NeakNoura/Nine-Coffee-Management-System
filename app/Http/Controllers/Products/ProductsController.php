@@ -161,34 +161,34 @@ class ProductsController extends Controller
             'message' => $request->message,
             'status' => "Pendding",
         ]);
-    
+        
         return $booking
             ? Redirect::route('home')->with('booking', "You booked a table successfully")
             : Redirect::route('home')->with('error', "Failed to book a table");
-    }
+        }
 
-    public function contact()
-    {
-        $contact = Product::select()->get();
-        return view('products.contact'); 
-    }
-    public function service()
-    {
-        $service = Product::select()->get();
-        return view('pages.service'); 
-    }
-    public function menu()
-    {
-        $desserts = Product::where("type", "desserts")->orderBy('id','desc')->take(4)->get();
-        $drinks = Product::where("type", "drinks")->orderBy('id','desc')->take(4)->get();
-        return view('products.menu', compact('desserts', 'drinks'));
-    }
-  
-    public function about()
-    {
-        $about = Product::select()->get();
-        return view('products.about'); 
-    }
-
+        public function contact()
+        {
+            $contact = Product::select()->get();
+            return view('products.contact'); 
+        }
+        public function service()
+        {
+            $service = Product::select()->get();
+            return view('pages.service'); 
+        }
+        public function menu()
+        {
+            $desserts = Product::where("type", "desserts")->orderBy('id','desc')->take(4)->get();
+            $drinks = Product::where("type", "drinks")->orderBy('id','desc')->take(4)->get();
+            return view('products.menu', compact('desserts', 'drinks'));
+        }
     
-}
+        public function about()
+        {
+            $about = Product::select()->get();
+            return view('products.about'); 
+        }
+
+        
+    }
