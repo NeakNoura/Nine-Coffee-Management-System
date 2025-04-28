@@ -50,24 +50,23 @@
   <section class="ftco-section">
       <div class="container">
       <div class="row"> 
-          <div class="col-md-6">
-              <h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
-              @foreach ($desserts as $dessert)
-              <div class="pricing-entry d-flex ftco-animate">
-                  <div class="img" style="background-image: url('{{ asset('assets/images/'.$dessert->image) }}');"></div>
-                  <div class="desc pl-3">
-                      <div class="d-flex text align-items-center">
-                          <h3><span>{{$dessert->name}}</span></h3>
-                          <span class="price">{{$dessert->price}}</span>
-                      </div>
-                      <div class="d-block">
-                          <p>{{$dessert->description}}</p>
-                      </div>
-                  </div>
-              </div>
-              @endforeach
-          </div>
-
+        <div class="col-md-6">
+            <h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
+            @foreach ($desserts as $dessert)
+            <div class="pricing-entry d-flex ftco-animate">
+              <div class="img" style="background-image: url({{ asset('assets/images/'.$dessert->image.'')}});"></div>
+                <div class="desc pl-3">
+                    <div class="d-flex text align-items-center">
+                        <h3><span>{{$dessert->name}}</span></h3>
+                        <span class="price">{{$dessert->price}}</span>
+                    </div>
+                    <div class="d-block">
+                        <p>{{$dessert->description}}</p>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+        </div>
           <div class="col-md-6">
               <h3 class="mb-5 heading-pricing ftco-animate">Drinks</h3>
               @foreach ($drinks as $drink)
@@ -112,9 +111,6 @@
                 <div class="col-md-12 d-flex align-items-center">
                   
                   <div class="tab-content ftco-animate" id="v-pills-tabContent">
-
-                    
-
                     <div class="tab-pane fade show active" id="v-pills-2" role="tabpanel" aria-labelledby="v-pills-2-tab">
                    
                             
@@ -140,7 +136,7 @@
                         @foreach($desserts as $dessert)
                             <div class="col-md-4 text-center">
                                 <div class="menu-wrap">
-                                    <a href="{{ route('product.single', $dessert->id)}}" class="menu-img img mb-4" style="background-image: url({{asset('assets/images/'.$dessert->image.'')}});"></a>
+                                    <a href="{{ route('product.single', $dessert->id)}}" class="menu-img img mb-4" style="background-image: url('{{ asset('assets/images/' . $dessert->image) }}');"></a>
                                     <div class="text">
                                         <h3><a href="{{ route('product.single', $dessert->id)}}">{{ $dessert-> name}}</a></h3>
                                         <p>{{  $dessert-> description}}</p>

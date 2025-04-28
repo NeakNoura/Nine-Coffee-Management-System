@@ -44,7 +44,6 @@
                             <option value="Others">Others</option>
                         </select>
                     </div>
-
                     <button type="submit" class="btn btn-primary">Create Product</button>
                     <a href="{{ route('all.products') }}" class="btn btn-danger">Back</a>
                 </form>
