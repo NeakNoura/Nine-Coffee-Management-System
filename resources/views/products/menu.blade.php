@@ -87,7 +87,6 @@
       </div>
       </div>
   </section>
-
   <section class="ftco-menu mb-5 pb-5">
       <div class="container">
           <div class="row justify-content-center mb-5">
@@ -146,7 +145,6 @@
                                 </div>
                             </div>
                             @endforeach
-                          
                         </div>
                     </div>
                   </div>
