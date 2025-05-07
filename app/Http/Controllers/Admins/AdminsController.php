@@ -141,7 +141,6 @@ class AdminsController extends Controller
     $descriptionPath = 'assets/images/';
     $myimage = $request->image->getClientOriginalName();
     $request->image->move(public_path($descriptionPath), $myimage);
-        
     $storeProducts = Product::Create([
         'name' => $request->name,
         'price' => $request->price,
