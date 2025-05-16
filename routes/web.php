@@ -57,7 +57,7 @@ Route::get('admin/all-admins', [App\Http\Controllers\Admins\AdminsController::cl
 Route::get('admin/create-admins', [App\Http\Controllers\Admins\AdminsController::class, 'createAdmins'])->name('create.admins');
 
 Route::group(['prefix' => 'users', 'middleware' => 'auth:admin'], function(){
-    Route::get('admin/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
+Route::get('admin/index', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
 
 });
 
@@ -76,11 +76,10 @@ Route::post('/store-products', [App\Http\Controllers\Admins\AdminsController::cl
 Route::get('/delete-products/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'DeleteProducts'])->name('delete.products');
 
 
-
-
 Route::match(['GET', 'POST'],'/all-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayBookings'])->name('all.bookings');
 Route::get('/edit-bookings/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'EditBookings'])->name('edit.bookings');
 Route::post('/update-bookings/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'UpdateBookings'])->name('update.bookings');
 Route::get('/delete-bookings/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'DeleteBookings'])->name('delete.bookings');
 Route::get('/create-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'CreateBookings'])->name('create.bookings');
 Route::post('/store-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'StoreBookings'])->name('store.bookings');
+Route::get('/help', [App\Http\Controllers\Admins\AdminsController::class, 'Help'])->name('admins.help');

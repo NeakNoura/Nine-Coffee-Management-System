@@ -360,11 +360,11 @@
                     <a href="gallery.html" class="gallery img d-flex align-items-center" style="background-image: url({{ asset('assets/images/gallery-4.jpg') }});">
                         <div class="icon mb-4 d-flex align-items-center justify-content-center">
                         <span class="icon-search"></span>
-                    </div>
+                      </div>
                     </a>
                 </div>
-    </div>
-    </div>
+             </div>
+          </div>
 </section>
 
 <section class="ftco-section img" id="ftco-testimony" style="background-image: url({{ asset('assets/images/bg_1.jpg') }});">
@@ -382,8 +382,6 @@
     <div class="container-wrap">
       <div class="row d-flex no-gutters">
         @foreach ($reviews as $review)
-          
-   
         <div class="col-md align-self-sm-end ftco-animate">
           <div class="testimony">
              <blockquote>

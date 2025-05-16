@@ -234,6 +234,13 @@ class AdminsController extends Controller
                
         }
       
+        // In AdminsController.php
+
+    public function Help()
+    {
+        return view('admins.help'); // adjust path based on your actual Blade file location
+    }
+
           
           
 }
