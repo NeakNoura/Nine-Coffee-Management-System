@@ -26,7 +26,7 @@ class HomeController extends Controller
     {
 
         $products = Product::select()->orderBy('id','desc')->take('4')->get();
-        $reviews = Review::select()->orderBy('id','desc')->take('4')->get();
+        $reviews = Review::select()->orderBy('id','desc')->take('9')->get();
 
         return view('home',compact('products','reviews'));
     }

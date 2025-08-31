@@ -14,7 +14,7 @@
     <div id="wrapper">
         @auth('admin')
         <!-- Show navbar only when the admin is logged in -->
-        <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
+        {{-- <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
             <div class="container">
                 <a class="navbar-brand" href="#">LOGO</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -65,7 +65,7 @@
 
                 </div>
             </div>
-        </nav>
+        </nav> --}}
         @endauth
 
         <div class="container-fluid">

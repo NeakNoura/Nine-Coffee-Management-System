@@ -8,6 +8,11 @@
     @include make-container-max-widths();
   }
 }
+/* in your admin CSS file */
+.main .container {
+    margin-top: 50px; /* or padding-top: 50px */
+}
+
 
 // Fluid container
 //

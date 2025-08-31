@@ -24,6 +24,8 @@ Route::get('products/service', [App\Http\Controllers\Products\ProductsController
 Route::get('products/menu', [App\Http\Controllers\Products\ProductsController::class, 'menu'])->name('product.menu');
 Route::get('products/about', [App\Http\Controllers\Products\ProductsController::class, 'about'])->name('product.about');
 
+Route::get('/admin', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('home');
+
 
 Route::get('products/product-single/{id}', [App\Http\Controllers\Products\ProductsController::class, 'singleProduct'])->name('product.single');
 Route::post('products/product-single/{id}', [App\Http\Controllers\Products\ProductsController::class, 'addCart'])->name('add.cart');
@@ -32,7 +34,18 @@ Route::get('products/cart-delete/{id}', [App\Http\Controllers\Products\ProductsC
 Route::post('products/prepare-checkout', [App\Http\Controllers\Products\ProductsController::class, 'prepareCheckout'])->name('prepare.checkout');
 Route::get('products/checkout', [App\Http\Controllers\Products\ProductsController::class, 'checkout'])->name('checkout')->middleware('check.for.price');
 Route::post('products/checkout', [App\Http\Controllers\Products\ProductsController::class, 'storeCheckout'])->name('proccess.checkout')->middleware('check.for.price');
+
 Route::get('products/paypal', [App\Http\Controllers\Products\ProductsController::class, 'paywithpaypal'])->name('products.paypal')->middleware('check.for.price');
+Route::post('products/paypal-success', [App\Http\Controllers\Products\ProductsController::class, 'paypalSuccess'])
+    ->name('paypal.success');
+ // routes/web.php
+Route::post('products/success', [App\Http\Controllers\Products\ProductsController::class, 'paypalSuccess'])
+    ->name('products.success');
+
+Route::get('receipt/{id}', [App\Http\Controllers\Products\ProductsController::class, 'showReceipt'])
+    ->name('receipt.show');
+
+
 Route::match(['GET', 'POST'], 'products/success', [App\Http\Controllers\Products\ProductsController::class, 'success'])->name('products.success');
 
 
@@ -52,6 +65,11 @@ Route::post('users/write-reviews', [App\Http\Controllers\Users\UsersController::
 Route::get('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'viewLogin'])->name('view.login')->middleware('check.for.auth');
 Route::post('admin/login', [App\Http\Controllers\Admins\AdminsController::class, 'checkLogin'])->name('check.login');
 
+// Admin dashboard & logout (protected)
+Route::middleware('auth:admin')->group(function () {
+    Route::get('/admin/dashboard', [App\Http\Controllers\Admins\AdminsController::class, 'index'])->name('admins.dashboard');
+    Route::post('/admin/logout',  [App\Http\Controllers\Admins\AdminsController::class, 'logout'])->name('admin.logout');
+});
 
 Route::get('admin/all-admins', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayAllAdmins'])->name('all.admins');
 Route::get('admin/create-admins', [App\Http\Controllers\Admins\AdminsController::class, 'createAdmins'])->name('create.admins');
@@ -72,6 +90,8 @@ Route::delete('admin/delete-orders/{id}', [App\Http\Controllers\Admins\AdminsCon
 
 Route::get('all/products', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayProducts'])->name('all.products');
 Route::get('/create-products', [App\Http\Controllers\Admins\AdminsController::class, 'CreateProducts'])->name('create.products');
+Route::get('/edit-products/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'EditProducts'])->name('edit.products');
+Route::post('/update-products/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'UpdateProducts'])->name('update.products');
 Route::post('/store-products', [App\Http\Controllers\Admins\AdminsController::class, 'StoreProducts'])->name('store.products');
 Route::get('/delete-products/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'DeleteProducts'])->name('delete.products');
 
@@ -83,3 +103,5 @@ Route::get('/delete-bookings/{id}', [App\Http\Controllers\Admins\AdminsControlle
 Route::get('/create-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'CreateBookings'])->name('create.bookings');
 Route::post('/store-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'StoreBookings'])->name('store.bookings');
 Route::get('/help', [App\Http\Controllers\Admins\AdminsController::class, 'Help'])->name('admins.help');
+Route::get('/staff-sell', [App\Http\Controllers\Admins\AdminsController::class, 'StaffSellForm'])->name('staff.sell.form');
+Route::post('/staff-sell', [App\Http\Controllers\Admins\AdminsController::class, 'StaffSellProduct'])->name('staff.sell');

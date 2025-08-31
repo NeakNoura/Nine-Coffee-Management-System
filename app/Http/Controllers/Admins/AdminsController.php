@@ -1,12 +1,15 @@
 <?php
 
+namespace App\Http\Controllers\Models;
 namespace App\Http\Controllers\Admins;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Models\Product\Booking;
 use App\Models\Product\Product;
 use App\Models\Product\Order;
+use App\Models\Product\Receipt;
 use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -16,6 +19,15 @@ use Illuminate\Support\Facades\Redirect;
 
 class AdminsController extends Controller
 {
+
+
+
+public function showReceipt($id)
+{
+    $order = Order::findOrFail($id);
+    return view('products.receipt', compact('order'));
+}
+
     public function viewLogin(){
         return view('admins.login');
     }
@@ -40,19 +52,37 @@ class AdminsController extends Controller
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
     }
     
-    public function index(){
-        $productsCount = Product::count();
-        $ordersCount = Order::count();
-        $bookingsCount = Booking::count();
-        $adminsCount = Admin::count();
-    
-        return view('admins.index', compact('productsCount', 'ordersCount', 'bookingsCount', 'adminsCount'));
-    }
-    
+ public function index(){
+    $productsCount = Product::count();
+    $ordersCount = Order::count();
+    $bookingsCount = Booking::count();
+    $adminsCount = Admin::count();
+    $usersCount = User::count();
+    $earning = Order::sum('price'); // fix sum query
+
+    // Add this line to get latest orders
+    $recentOrders = Order::latest()->take(8)->get();
+
+    return view('admins.index', compact(
+        'productsCount', 
+        'ordersCount',      
+        'bookingsCount', 
+        'adminsCount',
+        'usersCount',
+        'earning',
+        'recentOrders'  // now defined
+    ));
+}
+
     public function DisplayAllAdmins(){
         $allAdmins = Admin::select()->orderBy('id','asc',)->get();
         return view('admins.alladmins',compact('allAdmins'));
     }
+public function product() {
+    return $this->belongsTo(Product::class, 'product_id', 'id');
+}
+
+            
 
 
     public function createAdmins(){
@@ -87,7 +117,6 @@ class AdminsController extends Controller
       
         return view('admins.allorders',compact('allOrders'));
     }
-
     public function EditOrders($id){
         $order = Order::find($id);
         
@@ -116,6 +145,7 @@ class AdminsController extends Controller
         
          
       }
+      
   
 
       public function DisplayProducts(){
@@ -173,6 +203,39 @@ class AdminsController extends Controller
         ->with(['delete' => "product delete  successfully"]);
 
          }
+         public function EditProducts($id)
+    {
+        $product = Product::findOrFail($id);
+        return view('admins.edit', compact('product'));
+    }
+
+    public function UpdateProducts(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required',
+            'price' => 'required|numeric',
+            'type' => 'required',
+            // 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Optional
+        ]);
+
+        $product->name = $request->name;
+        $product->price = $request->price;
+        $product->type = $request->type;
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            $filename = time() . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path('assets/images/'), $filename);
+            $product->image = $filename;
+        }
+
+        $product->save();
+
+        return redirect()->route('all.products')->with('success', 'Product updated successfully!');
+    }
+
   
   
          
@@ -233,14 +296,57 @@ class AdminsController extends Controller
         }
                
         }
-      
-        // In AdminsController.php
 
-    public function Help()
+        public function Help()
+        {
+            return view('admins.help'); 
+        }
+
+          public function StaffSellForm()
     {
-        return view('admins.help'); // adjust path based on your actual Blade file location
+        $products = Product::select()->orderBy('id','asc')->get();
+        return view('admins.staffSell', compact('products'));
+    }
+public function StaffSellProduct(Request $request)
+{
+    $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'quantity' => 'required|integer|min:1',
+        'payment_status' => 'required|in:Paid,Due',
+        'first_name' => 'sometimes|string|max:255',
+        'last_name' => 'sometimes|string|max:255',
+        'state' => 'sometimes|string|max:255',
+    ]);
+
+    $product = Product::find($request->product_id);
+
+    // Check if enough stock
+    if ($product->quantity < $request->quantity) {
+        return redirect()->back()->with('error', 'Not enough stock!');
     }
 
-          
-          
+    $totalPrice = $product->price * $request->quantity;
+
+    // ✅ Create the order here
+    $order = Order::create([
+        'product_id' => $product->id,
+        'price' => $totalPrice,
+        'payment_status' => $request->payment_status ?? 'Due',
+        'status' => 'Pending',
+        'first_name' => $request->first_name ?? 'Staff',
+        'last_name' => $request->last_name ?? '',
+        'state' => $request->state ?? '',
+        'user_id' => auth()->id(),
+    ]);
+
+    // Deduct sold quantity from product stock
+    $product->quantity -= $request->quantity;
+    $product->save();
+
+    return redirect()->route('staff.sell.form')->with(['success' => 'Product sold successfully!']);
+}
+
+
+
+
 }

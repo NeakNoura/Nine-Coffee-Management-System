@@ -7,26 +7,17 @@
         <div class="navigation">
             <ul>
                 <li>
-                    <a href="{{ route('admins.dashboard') }}">
+                   <a href="{{ route('home') }}">
                         <span class="icon">
-                            <ion-icon name="home-outline"></ion-icon>
+                            <ion-icon name="home"></ion-icon>
                         </span>
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
                 <li>
-                    <a href="">
-                        <span class="icon">
-                            <ion-icon name="people-outline"></ion-icon>
-                        </span>
-                        <span class="title">Customers</span>
-                    </a>
-                </li>
-
-                <li>
                     <a href="{{ route('all.bookings') }}">
                         <span class="icon">
-                            <ion-icon name="chatbubble-outline"></ion-icon>
+                            <ion-icon name="calendar-outline"></ion-icon>
                         </span>
                         <span class="title">Bookings</span>
                     </a>
@@ -44,34 +35,48 @@
                 <li>
                     <a href="{{ route('all.admins') }}">
                         <span class="icon">
-                            <ion-icon name="settings-outline"></ion-icon>
+                            <ion-icon name="person-outline"></ion-icon>
                         </span>
                         <span class="title">Account</span>
                     </a>
                 </li>
 
                 <li>
-                    <a href="{{ route('product.menu') }}">
+                    <a href="{{ route('all.products') }}">
                         <span class="icon">
-                            <ion-icon name="lock-closed-outline"></ion-icon>
+                            <ion-icon name="cart-outline"></ion-icon>
                         </span>
-                        <span class="title">Orders</span>
+                        <span class="title">Products</span>
                     </a>
                 </li>
+                 <li>
+                <a href="{{ route('staff.sell.form') }}">
+                    <span class="icon">
+                        <ion-icon name="cash-outline"></ion-icon>
+                    </span>
+                    <span class="title">Sell Product</span>
+                </a>
+            </li>
+               <li>
+                <a href="{{ route('logout') }}"
+                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <span class="icon">
+                        <ion-icon name="log-out-outline"></ion-icon>
+                    </span>
+                    <span class="title">Logout</span>
+                </a>
 
-                <li>
-                    <a href="#">
-                        <span class="icon">
-                            <ion-icon name="log-out-outline"></ion-icon>
-                        </span>
-                        <span class="title">Sign Out</span>
-                    </a>
-                </li>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                </form>
+            </li>
+         
             </ul>
         </div>
+        
 
         <!-- ========================= Main ==================== -->
-        <div class="main">
+        {{-- <div class="main">
             <div class="topbar">
                 <div class="toggle">
                     <ion-icon name="menu-outline"></ion-icon>
@@ -88,211 +93,120 @@
                     <img src="{{ asset('assets/images/IMG_8364.JPG') }}" alt="">
 
                 </div>
-            </div>
+            </div> --}}
 
             <!-- ======================= Cards ================== -->
-            <div class="cardBox">
-                <div class="card">
-                    <div>
-                        <div class="numbers">1,504</div>
-                        <div class="cardName">Daily Views</div>
-                    </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="eye-outline"></ion-icon>
-                    </div>
-                </div>
+<div class="cardBox">
+    <a href="{{ route('all.bookings') }}" class="card">
+        <div>
+            <div class="numbers">{{ $usersCount }}</div>
+            <div class="cardName">Total Users</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="people-outline"></ion-icon>
+        </div>
+    </a>
 
-                <div class="card">
-                    <div>
-                        <div class="numbers">80</div>
-                        <div class="cardName">Sales</div>
-                    </div>
+    <a href="{{ route('all.bookings') }}" class="card">
+        <div>
+            <div class="numbers">{{ $productsCount }}</div>
+            <div class="cardName">Total Bookings</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+    </a>
 
-                    <div class="iconBx">
-                        <ion-icon name="cart-outline"></ion-icon>
-                    </div>
-                </div>
+    <a href="{{ route('all.orders') }}" class="card">
+        <div>
+            <div class="numbers">{{ $ordersCount }}</div>
+            <div class="cardName">Total Orders</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="cart-outline"></ion-icon>
+        </div>
+    </a>
 
-                <div class="card">
-                    <div>
-                        <div class="numbers">284</div>
-                        <div class="cardName">Comments</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="chatbubbles-outline"></ion-icon>
-                    </div>
-                </div>
-
-                <div class="card">
-                    <div>
-                        <div class="numbers">$7,842</div>
-                        <div class="cardName">Earning</div>
-                    </div>
-
-                    <div class="iconBx">
-                        <ion-icon name="cash-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
+    <a href="{{ route('all.bookings') }}" class="card">
+        <div>
+            <div class="numbers">${{ $earning }}</div>
+            <div class="cardName">Total Earnings</div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="cash-outline"></ion-icon>
+        </div>
+    </a>
+</div>
 
             <!-- ================ Order Details List ================= -->
             <div class="details">
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Recent Orders</h2>
-                        <a href="#" class="btn">View All</a>
-                    </div>
+             <div class="recentOrders">
+    <div class="cardHeader">
+        <h2>Recent Orders</h2>
+        <a href="{{ route('all.orders') }}" class="btn">View All</a>
+    </div>
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <td>Name</td>
-                                <td>Price</td>
-                                <td>Payment</td>
-                                <td>Status</td>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Star Refrigerator</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status delivered">Delivered</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Dell Laptop</td>
-                                <td>$110</td>
-                                <td>Due</td>
-                                <td><span class="status pending">Pending</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Apple Watch</td>
-                                <td>$1200</td>
-                                <td>Paid</td>
-                                <td><span class="status return">Return</span></td>
-                            </tr>
-
-                            <tr>
-                                <td>Addidas Shoes</td>
-                                <td>$620</td>
-                                <td>Due</td>
-                                <td><span class="status inProgress">In Progress</span></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+    <table>
+        <thead>
+            <tr>
+                <td>Product</td>
+                <td>Price</td>
+                <td>Payment</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse($recentOrders as $order)
+            <tr>
+                <td>{{ $order->product->name ?? 'N/A' }}</td>
+                <td>${{ $order->price }}</td>
+                <td>{{ $order->payment_status ?? 'Pending' }}</td>
+                <td><span class="status {{ strtolower($order->status) }}">{{ $order->status }}</span></td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="4" class="text-center">No recent orders</td>
+            </tr>
+            @endforelse
+        </tbody>
+    </table>
+</div>
 
                 <!-- ================= New Customers ================ -->
-                <div class="recentCustomers">
-                    <div class="cardHeader">
-                        <h2>Recent Customers</h2>
-                    </div>
+               <div class="recentOrders">
+    <div class="cardHeader">
+        <h2>Recent Orders</h2>
+        <a href="{{ route('all.orders') }}" class="btn">View All</a>
+    </div>
 
-                    <table>
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">
-                            </div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
+    <table>
+        <thead>
+            <tr>
+                <td>Name</td>
+                <td>Price</td>
+                <td>Payment</td>
+                <td>Status</td>
+            </tr>
+        </thead>
 
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
+        <tbody>
+            {{-- @foreach($recentOrders as $order)
+                <tr>
+                    <td>{{ $order->last_name }}</td>
+                    <td>${{ $order->price }}</td>
+                    <td>{{ $order->payment_status }}</td>
+                    <td>
+                        <span class="status {{ strtolower($order->status) }}">
+                            {{ $order->status }}
+                        </span>
+                    </td>
+                </tr>
+            @endforeach --}}
+        </tbody>
+    </table>
+</div>
 
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                 <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                  <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                  <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td width="60px">
-                                 <div class="imgBx"><img src="{{ asset('assets/images/customer01.jpg') }}" alt="">
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-                    </table>
-                </div>
             </div>
         </div>
     </div>

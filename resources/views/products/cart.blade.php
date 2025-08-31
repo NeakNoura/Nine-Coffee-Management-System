@@ -75,7 +75,6 @@
                 </div>
             </div>
         </div>
-
         <div class="row justify-content-end">
             <div class="col-lg-3 col-md-6 mt-5 cart-wrap ftco-animate">
                 <div class="cart-total mb-3">

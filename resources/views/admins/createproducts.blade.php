@@ -39,8 +39,8 @@
                         <label for="type" class="form-label">Product Type</label>
                         <select name="type" id="type" class="form-control" required>
                             <option value="type">Type</option>
-                            <option value="drink">Drink</option>
-                            <option value="dessert">Dessert</option>
+                            <option value="drinks">Drinks</option>
+                            <option value="desserts">Desserts</option>
                             <option value="Others">Others</option>
                         </select>
                     </div>
