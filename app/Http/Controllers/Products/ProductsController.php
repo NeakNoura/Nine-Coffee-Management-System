@@ -2,193 +2,229 @@
 
 namespace App\Http\Controllers\Products;
 
-
-use App\Models\Product\Order;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Product\Product;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
-use App\Models\Product\Cart;
 use Illuminate\Support\Facades\Session;
+use App\Models\Product\Product;
+use App\Models\Product\Review;
+use App\Models\Product\Cart;
+use App\Models\Product\Order;
 use App\Models\Product\Booking;
-
-
-
+use Carbon\Carbon;
 class ProductsController extends Controller
-
 {
-    public function singleProduct($id) {
-        if(isset(auth::user()->id)){
-        $product = Product::find($id);
+    /**
+     * Display single product details with related products.
+     */
+public function home()
+{
+    $products = Product::orderBy('id', 'desc')->get();
+    $reviews = Review::orderBy('id', 'desc')->take(5)->get(); // latest 5 reviews
+
+    return view('home', compact('products', 'reviews'));
+}
+
+
+    public function singleProduct($id)
+    {
+        $product = Product::findOrFail($id);
+
         $relatedProducts = Product::where('type', $product->type)
             ->where('id', '!=', $id)
             ->orderBy('id', 'desc')
-            ->take(4)                
+            ->take(4)
             ->get();
 
-        $checkInCart = Cart::where('pro_id', $id)
-            ->where('user_id', Auth::user()->id)
-            ->count();
-        
+        $checkInCart = 0;
+        if (Auth::check()) {
+            $checkInCart = Cart::where('pro_id', $id)
+                ->where('user_id', Auth::id())
+                ->count();
+        }
+
         return view('products.productsingle', compact('product', 'relatedProducts', 'checkInCart'));
-    }else{
-        return view('products.productsingle', compact('product', 'relatedProducts'));
-
     }
-}
-    
-   
-    public function addCart(Request $request, $id) {
 
-        $addCart = Cart::create([
-            "pro_id" => $request->pro_id,
-            "name" => $request->name,
-            "image" => $request->image,
-            "price" => $request->price,
-            "user_id" => Auth::id(),
-            "created_at" => now(),  
-            "updated_at" => now(), 
+    /**
+     * Add product to cart.
+     */
+    public function addCart(Request $request, $id)
+    {
+        $request->validate([
+            'pro_id' => 'required|exists:products,id',
+            'name' => 'required|string',
+            'image' => 'required|string',
+            'price' => 'required|numeric',
         ]);
-    
+
+        Cart::create([
+            'pro_id' => $request->pro_id,
+            'name' => $request->name,
+            'image' => $request->image,
+            'price' => $request->price,
+            'user_id' => Auth::id(),
+        ]);
+
         return Redirect::route('product.single', $id)
             ->with(['success' => "Product added to cart successfully"]);
     }
 
-
-    public function cart() {
+    /**
+     * Display user's cart.
+     */
+    public function cart()
+    {
         if (!Auth::check()) {
             return Redirect::route('login')->with(['error' => "You need to login first"]);
         }
-     $cart = Cart::where('user_id', Auth::user()->id)
-      ->orderBy('id','desc')->get();
 
-      $totalPrice = $cart->sum(fn($item) => floatval($item->price));
+        $cart = Cart::where('user_id', Auth::id())->orderBy('id', 'desc')->get();
+        $totalPrice = $cart->sum(fn($item) => floatval($item->price));
 
-        return view('products.cart',compact('cart','totalPrice'));
+        return view('products.cart', compact('cart', 'totalPrice'));
     }
 
-    
+    /**
+     * Delete product from cart.
+     */
+    public function deleteProductCart($id)
+    {
+        $item = Cart::where('pro_id', $id)->where('user_id', Auth::id())->first();
 
-    public function deleteProductCart($id) {
-    
-        $deleteProducCart = Cart::where('pro_id', $id)
-       ->where('user_id',Auth::user()->id)->first();
+        if ($item) {
+            $item->delete();
+            return Redirect::route('cart')->with(['delete' => "Product deleted from cart successfully"]);
+        }
 
-        $deleteProducCart->delete();
-        
-       if($deleteProducCart){
-       return Redirect::route('cart')
-       ->with(['delete' => "Product deleted from cart successfully"]);
-       }
-
-       return Redirect::route('cart')
-       ->with(['error' => "Product not found in cart"]);
+        return Redirect::route('cart')->with(['error' => "Product not found in cart"]);
     }
 
-
-
-    public function prepareCheckout(Request $request) {
-      
-        $value = $request->price;
-        $price = Session::put('price',$value);
-        $newPrice = Session::get('price');
-        
-            if($newPrice > 0){
-       return Redirect::route('checkout');
-       }
-    }
-
-
-    
-    public function checkout() {
-    
-        {
-        return view('products.checkout');
-       }
-    }
-
-    public function storeCheckout(Request $request) {
-    
-        $order = Order::create($request->all());
-    
-       
-        return redirect::route('products.paypal');
-     
-    }
-    public function paywithpaypal(Request $request) {
-    
-      
-        return view('products.paypal');
-     
-    }
-    
-
-    public function success() {
-
-       $deleteItems = Cart::where('user_id',Auth::user()->id);
-       $deleteItems->delete();
-
-       if($deleteItems){
-        Session::forget('price');
-
-        return View('products.success');
-       }
-       
-    }
-
-
-       
-    public function BookingTables(Request $request)
+    /**
+     * Prepare checkout by saving total price in session.
+     */
+    public function prepareCheckout(Request $request)
     {
         $request->validate([
-            "first_name" => "required|max:40",
-            "last_name" => "required|max:40",
-            "date" => "required|date|after:today",
-            "time" => "required",
-            "phone" => "required|max:40",
-            "message" => "nullable",
-            
+            'price' => 'required|numeric|min:0'
         ]);
-    
-        $booking = Booking::create([
-            'user_id' => Auth::id(), 
+
+        Session::put('price', $request->price);
+
+        return Redirect::route('checkout');
+    }
+
+    /**
+     * Display checkout page.
+     */
+    public function checkout()
+    {
+        return view('products.checkout');
+    }
+
+    /**
+     * Store checkout and create order.
+     */
+    public function storeCheckout(Request $request)
+    {
+        $request->validate([
+            'first_name' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'address' => 'required|string',
+            'city' => 'required|string',
+            'zip_code' => 'nullable|string',
+            'phone' => 'required|string',
+            'email' => 'required|email',
+            'price' => 'required|numeric',
+        ]);
+
+        $order = Order::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
-            'date' => $request->date,
-            'time' => $request->time,
+            'address' => $request->address,
+            'city' => $request->city,
+            'zip_code' => $request->zip_code,
             'phone' => $request->phone,
-            'message' => $request->message,
-            'status' => "Pendding",
+            'email' => $request->email,
+            'price' => $request->price,
+            'user_id' => Auth::id(),
+            'status' => 'Pending',
         ]);
-        
-        return $booking
-            ? Redirect::route('home')->with('booking', "You booked a table successfully")
-            : Redirect::route('home')->with('error', "Failed to book a table");
-        }
 
-        public function contact()
-        {
-            $contact = Product::select()->get();
-            return view('products.contact'); 
-        }
-        public function service()
-        {
-            $service = Product::select()->get();
-            return view('pages.service'); 
-        }
-        public function menu()
-        {
-            $desserts = Product::where("type", "desserts")->orderBy('id','desc')->take(4)->get();
-            $drinks = Product::where("type", "drinks")->orderBy('id','desc')->take(4)->get();
-            return view('products.menu', compact('desserts', 'drinks'));
-        }
-    
-        public function about()
-        {
-            $about = Product::select()->get();
-            return view('products.about'); 
-        }
-
-        
+        return Redirect::route('products.paypal')->with(['order_id' => $order->id]);
     }
+
+    /**
+     * Display PayPal payment page.
+     */
+    public function paywithpaypal()
+    {
+        return view('products.paypal');
+    }
+
+    /**
+     * Handle successful checkout.
+     */
+    public function success()
+    {
+        Cart::where('user_id', Auth::id())->delete();
+        Session::forget('price');
+
+        return view('products.success');
+    }
+
+    /**
+     * Booking tables.
+     */
+ public function BookingTables(Request $request)
+{
+    // 1️⃣ Validate form input
+    $request->validate([
+        'first_name' => 'required|max:40',
+        'last_name'  => 'required|max:40',
+        'date'       => 'required|date|after:today',
+        'time'       => 'required',
+        'phone'      => 'required|max:40',
+        'message'    => 'nullable',
+    ]);
+
+    // 2️⃣ Convert date and time to MySQL format
+    try {
+        $date = Carbon::createFromFormat('m/d/Y', $request->date)->format('Y-m-d');
+        $time = Carbon::parse($request->time)->format('H:i:s');
+    } catch (\Exception $e) {
+        return redirect()->route('home')->with('error', 'Invalid date or time format.');
+    }
+
+    // 3️⃣ Create the booking
+    $booking = Booking::create([
+        'user_id'    => Auth::id(),
+        'first_name' => $request->first_name,
+        'last_name'  => $request->last_name,
+        'date'       => $date,
+        'time'       => $time,
+        'phone'      => $request->phone,
+        'message'    => $request->message,
+        'status'     => 'Pending',
+    ]);
+
+    // 4️⃣ Stay on home with success/error message
+    return redirect()->route('home')
+                     ->with($booking ? 'success' : 'error', $booking ? 'You booked a table successfully!' : 'Failed to book a table.');
+}
+
+
+    /**
+     * Static pages and menu.
+     */    public function contact() { return view('products.contact'); }
+    public function service() { return view('pages.service'); }
+    public function about() { return view('products.about'); }
+
+    public function menu()
+    {
+        $desserts = Product::where("type", "desserts")->orderBy('id', 'desc')->take(4)->get();
+        $drinks = Product::where("type", "drinks")->orderBy('id', 'desc')->take(4)->get();
+        return view('products.menu', compact('desserts', 'drinks'));
+    }
+}

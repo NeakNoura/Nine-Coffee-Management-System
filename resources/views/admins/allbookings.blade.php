@@ -51,15 +51,19 @@
                                 <td>
                                     <a href="{{ route('edit.bookings', $booking->id) }}" class="btn btn-sm btn-warning">Change Status</a>
                                 </td>
-                                    
-                                <td>{{ $booking->created_at }}</td>       
-                                <td>
-                                    <a href="{{ route('delete.bookings', $booking->id) }}" class="btn btn-sm btn-warning">Delete</a>
-                                </td>                                                            
+
+                                <td>{{ $booking->created_at }}</td>
+                               <td>
+                            <form action="{{ route('delete.bookings', $booking->id) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this booking?');" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                            </form>
+                        </td>
                             </tr>
                         @endforeach
                     </tbody>
-                </table>  
+                </table> 
             </div>
         </div>
     </div>

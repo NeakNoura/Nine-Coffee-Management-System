@@ -7,19 +7,28 @@
         <div class="navigation">
             <ul>
                 <li>
-                   <a href="{{ route('home') }}">
+                    <a href="{{ route('admins.dashboard') }}">
                         <span class="icon">
                             <ion-icon name="home"></ion-icon>
                         </span>
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
+
                 <li>
                     <a href="{{ route('all.bookings') }}">
                         <span class="icon">
                             <ion-icon name="calendar-outline"></ion-icon>
                         </span>
                         <span class="title">Bookings</span>
+                    </a>
+                </li>
+                                <li>
+                    <a href="{{ route('admins.analyst') }}">
+                        <span class="icon">
+                            <ion-icon name="bar-chart-outline"></ion-icon>
+                        </span>
+                        <span class="title">Analyst</span>
                     </a>
                 </li>
 
@@ -70,10 +79,10 @@
                     @csrf
                 </form>
             </li>
-         
+
             </ul>
         </div>
-        
+
 
         <!-- ========================= Main ==================== -->
         {{-- <div class="main">
@@ -98,7 +107,7 @@
             <!-- ======================= Cards ================== -->
 
 <div class="cardBox">
-    <a href="{{ route('all.bookings') }}" class="card">
+    <a href="{{ route('all.admins') }}" class="card">
         <div>
             <div class="numbers">{{ $usersCount }}</div>
             <div class="cardName">Total Users</div>
@@ -172,41 +181,22 @@
         </tbody>
     </table>
 </div>
-
-                <!-- ================= New Customers ================ -->
-               <div class="recentOrders">
-    <div class="cardHeader">
-        <h2>Recent Orders</h2>
-        <a href="{{ route('all.orders') }}" class="btn">View All</a>
+<!-- ================= Analytics Charts ================= -->
+<!-- ================= Analytics Charts ================= -->
+<div class="analytics col-12">
+    <div class="card">
+        <div class="card-header">
+            <h2>Analytics</h2>
+        </div>
+        <div class="card-body">
+            <canvas id="analyticsChart" style="width:100%; height:500px;"></canvas>
+        </div>
     </div>
-
-    <table>
-        <thead>
-            <tr>
-                <td>Name</td>
-                <td>Price</td>
-                <td>Payment</td>
-                <td>Status</td>
-            </tr>
-        </thead>
-
-        <tbody>
-            {{-- @foreach($recentOrders as $order)
-                <tr>
-                    <td>{{ $order->last_name }}</td>
-                    <td>${{ $order->price }}</td>
-                    <td>{{ $order->payment_status }}</td>
-                    <td>
-                        <span class="status {{ strtolower($order->status) }}">
-                            {{ $order->status }}
-                        </span>
-                    </td>
-                </tr>
-            @endforeach --}}
-        </tbody>
-    </table>
 </div>
 
+                </tbody>
+            </table>
+        </div>
             </div>
         </div>
     </div>
@@ -217,6 +207,48 @@
     <!-- ====== ionicons ======= -->
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx = document.getElementById('analyticsChart').getContext('2d');
+    const analyticsChart = new Chart(ctx, {
+        type: 'bar', // can change to 'line', 'pie', etc.
+        data: {
+            labels: ['Bookings', 'Orders', 'Users', 'Earnings'],
+            datasets: [{
+                label: 'Statistics',
+                data: [
+                    {{ $bookingsCount ?? 0 }},
+                    {{ $ordersCount ?? 0 }},
+                    {{ $usersCount ?? 0 }},
+                    {{ $earning ?? 0 }}
+                ],
+                backgroundColor: [
+                    'rgba(54, 162, 235, 0.7)',
+                    'rgba(255, 99, 132, 0.7)',
+                    'rgba(255, 206, 86, 0.7)',
+                    'rgba(75, 192, 192, 0.7)'
+                ],
+                borderColor: [
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)'
+                ],
+                borderWidth: 1
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
+
+
 </body>
 
 

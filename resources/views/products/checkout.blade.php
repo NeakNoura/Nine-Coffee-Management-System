@@ -62,7 +62,7 @@
                           <option value="Italy">Italy</option>
                           <option value="Philippines">Philippines</option>
                           <option value="South Korea">South Korea</option>
-                          <option value="Thailand">Thailand</option>
+                          <option value="Franc">Franc</option>
                           <option value="Japan">Japan</option>
                         </select>
                       </div>

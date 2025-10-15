@@ -14,23 +14,22 @@
                     </div>
                 @endif
                 <form action="{{ route('update.bookings', $booking->id) }}" method="POST">
-                    @csrf            
+                    @csrf
                     <div class="mb-3">
                         <label for="status" class="form-label">Status</label>
-                       <select name="status" class="form-select form-control" aria-label="">
-                        <option selected>Choose Status</option>
-                        <option value="Proccessing">Proccessing</option>
-                        <option value="Delivered">Delivered</option>
-                        <option value="Pending">Pending</option>
-                    </select>
-                         
+                        <select name="status" class="form-select">
+                    <option disabled>Choose Status</option>
+                    <option value="Pending" {{ $booking->status == 'Pending' ? 'selected' : '' }}>Pending</option>
+                    <option value="Proccessing" {{ $booking->status == 'Proccessing' ? 'selected' : '' }}>Proccessing</option>
+                    <option value="Delivered" {{ $booking->status == 'Delivered' ? 'selected' : '' }}>Delivered</option>
+                </select>
                     </div>
                     <button type="submit" class="btn btn-primary">Update Booking</button>
                     <a href="{{ route('all.bookings') }}" class="btn btn-secondary">Cancel</a>
                 </form>
-
             </div>
         </div>
     </div>
 </div>
 @endsection
+Compare this snippet from resources/views/admins/index.blade.php:

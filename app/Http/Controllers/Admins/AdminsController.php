@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 
 
@@ -21,6 +22,11 @@ class AdminsController extends Controller
 {
 
 
+
+ public function home()
+    {
+        return view('home'); // make sure you have resources/views/home.blade.php
+    }
 
 public function showReceipt($id)
 {
@@ -33,25 +39,25 @@ public function showReceipt($id)
     }
 
     public function checkLogin(Request $request) {
-        
+
         $request->validate([
             'email' => 'required|email',
             'password' => 'required'
         ]);
-    
-    
+
+
         $admin = Admin::where('email', $request->email)->first();
-    
-      
+
+
         if ($admin && Hash::check($request->password, $admin->password)) {
             Auth::guard('admin')->login($admin);
             return redirect()->route('admins.dashboard');
         }
-    
-        
+
+
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
     }
-    
+
  public function index(){
     $productsCount = Product::count();
     $ordersCount = Order::count();
@@ -64,9 +70,9 @@ public function showReceipt($id)
     $recentOrders = Order::latest()->take(8)->get();
 
     return view('admins.index', compact(
-        'productsCount', 
-        'ordersCount',      
-        'bookingsCount', 
+        'productsCount',
+        'ordersCount',
+        'bookingsCount',
         'adminsCount',
         'usersCount',
         'earning',
@@ -82,11 +88,11 @@ public function product() {
     return $this->belongsTo(Product::class, 'product_id', 'id');
 }
 
-            
+
 
 
     public function createAdmins(){
-      
+
         return view('admins.createadmins');
     }
 
@@ -98,7 +104,7 @@ public function product() {
             "password" => "required",
         ]);
 
-        
+
     $storeAdmins = Admin::Create([
         'name' => $request->name,
         'email' => $request->email,
@@ -114,25 +120,25 @@ public function product() {
 
     public function DisplayAllOrders(){
       $allOrders = Order::select()->orderBy('id','asc')->get();
-      
+
         return view('admins.allorders',compact('allOrders'));
     }
     public function EditOrders($id){
         $order = Order::find($id);
-        
+
           return view('admins.editorders',compact('order'));
       }
-      
 
-      
+
+
     public function UpdateOrders(Request $request,$id){
         $order = Order::find($id);
         $order->update($request->all());
         if($order){
             return Redirect::route('all.orders')->with(['update'=>"order status updated successfully"]);
         }
-        
-         
+
+
       }
 
 
@@ -142,29 +148,29 @@ public function product() {
         if($order){
             return Redirect::route('all.orders')->with(['delete'=>"order delete  successfully"]);
         }
-        
-         
+
+
       }
-      
-  
+
+
 
       public function DisplayProducts(){
         $products = Product::select()->orderBy('id','asc')->get();
-       
-          
+
+
             return view('admins.allproducts',compact('products'));
-        
-        
-         
+
+
+
       }
       public function CreateProducts(){
-       
+
             return view('admins.createproducts');
-        
-        
-         
+
+
+
       }
-      
+
       public function StoreProducts(Request $request){
 
 
@@ -177,17 +183,17 @@ public function product() {
         'image' => $myimage,
         'description' => $request->description,
         'type' => $request->type,
-      
-        
+
+
     ]);
     if($storeProducts){
         return Redirect::route('all.products')
                 ->with(['success' => "product created  successfully"]);
     }
-           
+
     }
     public function DeleteProducts($id){
-       
+
 
         $product = Product::find($id);
         if(File::exists(public_path('assets/images/' . $product->image))){
@@ -236,70 +242,90 @@ public function product() {
         return redirect()->route('all.products')->with('success', 'Product updated successfully!');
     }
 
-  
-  
-         
+
+
+
          public function DisplayBookings(){
             $bookings = Booking::select()->orderBy('id','asc')->get();
-           
-              
-                return view('admins.allbookings',compact('bookings'));         
-             
+
+
+                return view('admins.allbookings',compact('bookings'));
+
           }
           public function EditBookings($id){
             $booking = Booking::find($id);
-            
+
               return view('admins.editbooking',compact('booking'));
           }
 
-          public function DeleteBookings($id){
-            $booking = Booking::find($id);
-            $booking->delete();
-            if($booking){
-                return Redirect::route('all.bookings')->with(['delete'=>"booking delete  successfully"]);
-            }
-            
-             
-          }
+          public function DeleteBookings($id)
+{
+    $booking = Booking::find($id);
+
+    if (!$booking) {
+        return Redirect::back()->with('error', 'Booking not found.');
+    }
+
+    $booking->delete();
+
+    return Redirect::route('all.bookings')
+        ->with('delete', "Booking deleted successfully");
+}
+
           public function CreateBookings(){
-       
+
             return view('admins.createbooking');
-     
+
          }
-      
-      public function UpdateBookings(Request $request,$id){
-        $booking = Booking::find($id);
-        $booking->update($request->all());
-        if($booking){
-            return Redirect::route('all.bookings')->with(['update'=>"booking status updated successfully"]);
-        }
-         
-      }
 
+                public function UpdateBookings(Request $request, $id)
+                {
+                    $booking = Booking::findOrFail($id);
 
-      public function StoreBookings(Request $request){
+                    $request->validate([
+                        'status' => 'required|in:Pending,Proccessing,Delivered'
+                    ]);
 
-        $storeBookings = Booking::Create([
-            'user_id' => auth()->id(),
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'date' => $request->date,
-            'time' => $request->time,
-            'phone' => $request->phone,
-            'message' => $request->message,
-          
-            
-        ]);
-        if($storeBookings){
-            return Redirect::route('all.bookings')
-                    ->with(['success' => "booking created  successfully"]);
-        }
-               
-        }
+                    $booking->status = $request->status;
+                    $booking->save();
+
+                    return redirect()->route('all.bookings')
+                                    ->with('success', 'Booking status updated successfully!');
+                }
+
+      public function StoreBookings(Request $request)
+{
+    $request->validate([
+        'first_name' => 'required|max:40',
+        'last_name'  => 'required|max:40',
+        'date'       => 'required|date|after:today',
+        'time'       => 'required',
+        'phone'      => 'required|max:40',
+        'message'    => 'nullable',
+    ]);
+
+    $booking = Booking::create([
+        'user_id'    => auth()->id(),
+        'first_name' => $request->first_name,
+        'last_name'  => $request->last_name,
+        'date'       => $request->date,
+        'time'       => $request->time,
+        'phone'      => $request->phone,
+        'message'    => $request->message,
+        'status'     => 'Pending', // default status
+    ]);
+
+    if ($booking) {
+        return redirect()->route('home')->with('booking', 'You booked a table successfully!');
+    } else {
+        return redirect()->route('home')->with('error', 'Failed to book a table.');
+    }
+}
+
 
         public function Help()
         {
-            return view('admins.help'); 
+            return view('admins.help');
         }
 
           public function StaffSellForm()
@@ -327,7 +353,7 @@ public function StaffSellProduct(Request $request)
 
     $totalPrice = $product->price * $request->quantity;
 
-    // ✅ Create the order here
+
     $order = Order::create([
         'product_id' => $product->id,
         'price' => $totalPrice,
@@ -345,6 +371,9 @@ public function StaffSellProduct(Request $request)
 
     return redirect()->route('staff.sell.form')->with(['success' => 'Product sold successfully!']);
 }
+
+
+
 
 
 

@@ -8,10 +8,10 @@
             <div class="row slider-text justify-content-center align-items-center">
                 <div class="col-md-7 col-sm-12 text-center ftco-animate">
                     <h1 class="mb-3 mt-5 bread">Contact Us</h1>
-                    <p class="breadcrumbs">
-                        <span class="mr-2"><a href="{{ route('home')}}">Home</a></span>
-                        <span>Contact</span>
-                    </p>
+                  <p class="breadcrumbs">
+                    <span class="mr-2"><a href="{{ route('home') }}">Home</a></span>
+                    <span class="mr-2"><a href="{{ route('product.contact') }}">Contact</a></span>
+                </p>
                 </div>
             </div>
         </div>

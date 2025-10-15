@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/open-iconic-bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
-    
+
     <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.default.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
@@ -30,12 +30,12 @@
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap-datepicker.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.timepicker.css') }}">
 
-    
+
     <link rel="stylesheet" href="{{ asset('assets/css/flaticon.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/icomoon.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <!-- Scripts -->
-   
+
 </head>
 <body>
     <div id="app">
@@ -51,13 +51,13 @@
                   <li class="nav-item"><a href="{{ route('product.menu')}}" class="nav-link">Menu</a></li>
                   <li class="nav-item"><a href="{{ route('product.service')}}" class="nav-link">Services</a></li>
                   <li class="nav-item"><a href="{{ route('product.about')}}" class="nav-link">About</a></li>
-                 
+
                   <li class="nav-item"><a href="{{ route('product.contact')}}" class="nav-link">Contact</a></li>
                   @if(Auth::check())
                   <li class="nav-item cart"><a href="{{ route('cart')}}" class="nav-link"><span class="icon icon-shopping_cart"></span></a>
                     @endif
                  @guest
-                    @if (Route::has('login'))               
+                    @if (Route::has('login'))
                   <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">login</a></li>
                   @endif
 
@@ -67,11 +67,11 @@
                   @endif
                   @else
                   <li class="nav-item dropdown">
-                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" 
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                         data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                         {{ Auth::user()->name }}
                     </a>
-                
+
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('users.orders') }}">My Order</a>
                         <a class="dropdown-item" href="{{ route('users.bookings') }}">My Booking</a>
@@ -83,7 +83,7 @@
                         </a>
                     </div>
                 </li>
-                
+
                               <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                                   @csrf
                               </form>
@@ -174,8 +174,8 @@
         </div>
       </div>
     </footer>
-    
-  
+
+
   <div id="ftco-loader" class="show fullscreen"><svg class="circular" width="48px" height="48px"><circle class="path-bg" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke="#eeeeee"/><circle class="path" cx="24" cy="24" r="22" fill="none" stroke-width="4" stroke-miterlimit="10" stroke="#F96D00"/></svg></div>
 
 
@@ -196,7 +196,7 @@
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&callback=initMap"></script>
     <script src="{{ asset('assets/js/google-map.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
-   
+
 
 </body>
 </html>

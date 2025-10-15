@@ -16,8 +16,10 @@ use Illuminate\Support\Facades\Auth;
 
 
 Auth::routes();
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
+Route::get('/home', [App\Http\Controllers\Products\ProductsController::class, 'home'])->name('home');
+Route::middleware(['auth:admin'])->group(function () {
+    Route::get('/admins/analyst', [App\Http\Controllers\Products\ProductsController::class, 'analyst'])->name('admins.analyst');
+});
 
 Route::get('products/contact', [App\Http\Controllers\Products\ProductsController::class, 'contact'])->name('product.contact');
 Route::get('products/service', [App\Http\Controllers\Products\ProductsController::class,'service'])->name('product.service');
@@ -36,9 +38,7 @@ Route::get('products/checkout', [App\Http\Controllers\Products\ProductsControlle
 Route::post('products/checkout', [App\Http\Controllers\Products\ProductsController::class, 'storeCheckout'])->name('proccess.checkout')->middleware('check.for.price');
 
 Route::get('products/paypal', [App\Http\Controllers\Products\ProductsController::class, 'paywithpaypal'])->name('products.paypal')->middleware('check.for.price');
-Route::post('products/paypal-success', [App\Http\Controllers\Products\ProductsController::class, 'paypalSuccess'])
-    ->name('paypal.success');
- // routes/web.php
+Route::post('products/paypal-success', [App\Http\Controllers\Products\ProductsController::class, 'paypalSuccess'])->name('paypal.success');
 Route::post('products/success', [App\Http\Controllers\Products\ProductsController::class, 'paypalSuccess'])
     ->name('products.success');
 
@@ -56,6 +56,7 @@ Route::get('products/about', [App\Http\Controllers\Products\ProductsController::
 
 Route::get('users/menu', [App\Http\Controllers\Users\UsersController::class, 'displayOrders'])->name('users.orders')->middleware('auth:web');
 Route::get('users/bookings', [App\Http\Controllers\Users\UsersController::class, 'displayBookings'])->name('users.bookings')->middleware('auth:web');
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
 Route::get('users/write-reviews', [App\Http\Controllers\Users\UsersController::class, 'writeReviews'])->name('write.reviews')->middleware('auth:web');
@@ -99,7 +100,7 @@ Route::get('/delete-products/{id}', [App\Http\Controllers\Admins\AdminsControlle
 Route::match(['GET', 'POST'],'/all-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'DisplayBookings'])->name('all.bookings');
 Route::get('/edit-bookings/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'EditBookings'])->name('edit.bookings');
 Route::post('/update-bookings/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'UpdateBookings'])->name('update.bookings');
-Route::get('/delete-bookings/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'DeleteBookings'])->name('delete.bookings');
+Route::delete('/delete-bookings/{id}', [App\Http\Controllers\Admins\AdminsController::class, 'DeleteBookings'])->name('delete.bookings');
 Route::get('/create-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'CreateBookings'])->name('create.bookings');
 Route::post('/store-bookings', [App\Http\Controllers\Admins\AdminsController::class, 'StoreBookings'])->name('store.bookings');
 Route::get('/help', [App\Http\Controllers\Admins\AdminsController::class, 'Help'])->name('admins.help');

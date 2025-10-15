@@ -11,7 +11,7 @@
               <span class="subheading">Welcome</span>
             <h1 class="mb-4">The Best Coffee Testing Experience</h1>
             <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-            <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="{{ route('product.menu')}}" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+            <p><a href="/" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="{{ route('product.menu')}}" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
           </div>
         </div>
       </div>
@@ -40,25 +40,29 @@
               <span class="subheading">Welcome</span>
             <h1 class="mb-4">Creamy Hot and Ready to Serve</h1>
             <p class="mb-4 mb-md-5">A small river named Duden flows by their place and supplies it with the necessary regelialia.</p>
-            <p><a href="#" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
+            <p><a href="product.menu" class="btn btn-primary p-3 px-xl-4 py-xl-3">Order Now</a> <a href="#" class="btn btn-white btn-outline-white p-3 px-xl-4 py-xl-3">View Menu</a></p>
           </div>
 
         </div>
       </div>
     </div>
   </section>
-  <div class="container">
-    @if(Session::has('date'))
-    <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('date')
-      }}
-      @endif
-    </div>
-    <div class="container">
-      @if(Session::has('booking'))
-      <p class="alert {{ Session::get('alert-class', 'alert-info') }}">{{ Session::get('booking')
-        }}
-        @endif
-      </div>
+  <div class="container mt-3">
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+</div>
+
   <section class="ftco-intro">
 
     <div class="container-wrap">
@@ -99,7 +103,7 @@
                               <p class="alert alert-success">{{ $errors->first('first_name') }}</p>
                           @endif
                       </div>
-              
+
                       <div class="form-group ml-md-4">
                           <input type="text" name="last_name" class="form-control" placeholder="Last Name">
                           @if($errors->has('last_name'))
@@ -107,7 +111,7 @@
                           @endif
                       </div>
                   </div>
-              
+
                   <div class="d-md-flex">
                       <div class="form-group">
                           <div class="input-wrap">
@@ -118,7 +122,7 @@
                               <p class="alert alert-success">{{ $errors->first('date') }}</p>
                           @endif
                       </div>
-              
+
                       <div class="form-group ml-md-4">
                           <div class="input-wrap">
                               <div class="icon"><span class="ion-ios-clock"></span></div>
@@ -129,7 +133,7 @@
                           @endif
                       </div>
                   </div>
-              
+
                   <div class="d-md-flex">
                       <div class="form-group">
                           <input type="text" name="user_id" value="{{ Auth::user()->id }}" class="form-control">
@@ -137,7 +141,7 @@
                               <p class="alert alert-success">{{ $errors->first('user_id') }}</p>
                           @endif
                       </div>
-              
+
                       <div class="form-group ml-md-4">
                           <input type="text" name="phone" class="form-control" placeholder="Phone">
                           @if($errors->has('phone'))
@@ -145,7 +149,7 @@
                           @endif
                       </div>
                   </div>
-              
+
                   <div class="d-md-flex">
                       <div class="form-group">
                           <textarea name="message" cols="30" rows="2" class="form-control" placeholder="Message"></textarea>
@@ -153,13 +157,13 @@
                               <p class="alert alert-success">{{ $errors->first('message') }}</p>
                           @endif
                       </div>
-              
+
                       <div class="form-group ml-md-4">
                           <input type="submit" value="Book" class="btn btn-white py-3 px-4">
                       </div>
                   </div>
               </form>
-              
+
             </div>
         </div>
     </div>
@@ -191,7 +195,7 @@
             <h3 class="heading">Easy to Order</h3>
             <p>Enjoy a seamless and hassle-free ordering experience with our intuitive online system. Browse our menu, customize your coffee just the way you like it, and place your order with just a few clicks. Whether you’re at home, in the office, or on the go, getting your favorite coffee has never been this simple!.</p>
           </div>
-        </div>      
+        </div>
       </div>
       <div class="col-md-4 ftco-animate">
         <div class="media d-block text-center block-6 services">
@@ -202,7 +206,7 @@
             <h3 class="heading">Fastest Delivery</h3>
             <p>We understand that coffee cravings can’t wait! That’s why our system ensures the fastest delivery possible. Once your order is placed, our baristas start preparing your coffee immediately, and our reliable delivery service ensures that your cup of joy reaches you hot and fresh in no time.</p>
           </div>
-        </div>      
+        </div>
       </div>
       <div class="col-md-4 ftco-animate">
         <div class="media d-block text-center block-6 services">
@@ -212,7 +216,7 @@
             <h3 class="heading">Quality Coffee</h3>
             <p>We take pride in serving only the best. Our coffee beans are carefully sourced, freshly roasted, and brewed to perfection. Every cup is crafted with passion and expertise, delivering rich flavors and the perfect aroma to satisfy your coffee needs. Whether you love a classic espresso, a creamy latte, or a flavorful cappuccino, we guarantee top-quality in every sip.</p>
           </div>
-        </div>    
+        </div>
       </div>
     </div>
     </div>
