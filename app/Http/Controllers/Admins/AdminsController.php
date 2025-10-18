@@ -1,6 +1,4 @@
 <?php
-
-namespace App\Http\Controllers\Models;
 namespace App\Http\Controllers\Admins;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
@@ -15,8 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
-
-
+use Illuminate\Support\Facades\DB;
 
 class AdminsController extends Controller
 {
@@ -25,7 +22,7 @@ class AdminsController extends Controller
 
  public function home()
     {
-        return view('home'); // make sure you have resources/views/home.blade.php
+        return view('home');
     }
 
 public function showReceipt($id)
@@ -96,26 +93,36 @@ public function product() {
         return view('admins.createadmins');
     }
 
-    public function storeAdmins(Request $request){
+    public function storeAdmins(Request $request)
+{
+    $request->validate([
+        "name" => "required|max:40",
+        "email" => "required|email|max:40|unique:admins,email",
+        "password" => "required|min:6",
+    ]);
 
-        Request()->validate([
-            "name" => "required|max:40",
-            "email" => "required|max:40",
-            "password" => "required",
-        ]);
-
-
-    $storeAdmins = Admin::Create([
+    $admin = Admin::create([
         'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password),
     ]);
-    if($storeAdmins){
-        return Redirect::route('all.admins')
-                ->with(['success' => "admin created  successfully"]);
-    }
-            return view('admins.index');
-    }
+
+    return redirect()->route('all.admins')->with('success', 'Admin created successfully!');
+}
+
+public function editAdmin($id)
+{
+    $admin = Admin::findOrFail($id);
+    return view('admins.editadmin', compact('admin'));
+}
+
+public function deleteAdmin($id)
+{
+    $admin = Admin::findOrFail($id);
+    $admin->delete();
+
+    return redirect()->route('all.admins')->with('success', 'Admin deleted successfully!');
+}
 
 
     public function DisplayAllOrders(){
@@ -128,8 +135,6 @@ public function product() {
 
           return view('admins.editorders',compact('order'));
       }
-
-
 
     public function UpdateOrders(Request $request,$id){
         $order = Order::find($id);
@@ -263,20 +268,25 @@ public function product() {
     $booking = Booking::find($id);
 
     if (!$booking) {
-        return Redirect::back()->with('error', 'Booking not found.');
+        return redirect()->back()->with('error', 'Booking not found.');
     }
 
     $booking->delete();
 
-    return Redirect::route('all.bookings')
+    // ✅ If the table is empty, reset auto-increment to 1
+    if (Booking::count() === 0) {
+        DB::statement('ALTER TABLE bookings AUTO_INCREMENT = 1');
+    }
+
+    return redirect()->route('all.bookings')
         ->with('delete', "Booking deleted successfully");
 }
 
-          public function CreateBookings(){
+        public function CreateBookings() {
+    return view('admins.createbooking');
+}
 
-            return view('admins.createbooking');
 
-         }
 
                 public function UpdateBookings(Request $request, $id)
                 {
@@ -312,7 +322,7 @@ public function product() {
         'time'       => $request->time,
         'phone'      => $request->phone,
         'message'    => $request->message,
-        'status'     => 'Pending', // default status
+        'status'     => 'Pending',
     ]);
 
     if ($booking) {

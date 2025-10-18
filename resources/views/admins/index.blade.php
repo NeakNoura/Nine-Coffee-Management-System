@@ -2,7 +2,6 @@
 @section('content')
 
 <body>
-    <!-- =============== Navigation ================ -->
     <div class="container">
         <div class="navigation">
             <ul>
@@ -14,7 +13,6 @@
                         <span class="title">Dashboard</span>
                     </a>
                 </li>
-
                 <li>
                     <a href="{{ route('all.bookings') }}">
                         <span class="icon">
@@ -23,14 +21,14 @@
                         <span class="title">Bookings</span>
                     </a>
                 </li>
-                                <li>
+                {{-- <li>
                     <a href="{{ route('admins.analyst') }}">
                         <span class="icon">
                             <ion-icon name="bar-chart-outline"></ion-icon>
                         </span>
                         <span class="title">Analyst</span>
                     </a>
-                </li>
+                </li> --}}
 
                 <li>
                     <a href="{{ route('admins.help') }}">
