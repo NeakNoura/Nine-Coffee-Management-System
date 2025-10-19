@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="container mt-5 pt-5"> {{-- added pt-5 to prevent navbar overlap --}}

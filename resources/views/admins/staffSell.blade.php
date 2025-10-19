@@ -1,12 +1,11 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 @section('content')
 <div class="row">
     <div class="col-md-12">
         <section class="staff-sell-section card p-4">
             <h2 class="text-center mb-4">Staff Sell POS</h2>
 
-            <p>Click + or - to adjust quantity. Checkout when ready.</p>
-
+            <!-- Product List -->
             <div class="row">
                 @foreach($products as $product)
                     <div class="col-md-2 text-center mb-3">
@@ -21,6 +20,7 @@
                 @endforeach
             </div>
 
+            <!-- Cart Table -->
             <h4 class="mt-4">Cart</h4>
             <table class="table table-sm" id="cart-table">
                 <thead>
@@ -35,7 +35,13 @@
                 </tbody>
             </table>
 
-            <button id="checkout" class="btn btn-sm btn-primary">Checkout</button>
+            <!-- Checkout Form -->
+            <form id="checkout-form" action="{{ route('staff.checkout') }}" method="POST">
+                @csrf
+                <input type="hidden" name="cart_data" id="cart_data">
+                <button id="checkout" class="btn btn-sm btn-primary">Checkout</button>
+            </form>
+
         </section>
     </div>
 </div>
@@ -43,6 +49,7 @@
 <script>
 let cart = {}; // store cart items
 
+// Add to cart
 document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', function() {
         const card = this.closest('.product-card');
@@ -60,6 +67,7 @@ document.querySelectorAll('.add-to-cart').forEach(button => {
     });
 });
 
+// Remove from cart
 document.querySelectorAll('.remove-from-cart').forEach(button => {
     button.addEventListener('click', function() {
         const card = this.closest('.product-card');
@@ -74,9 +82,11 @@ document.querySelectorAll('.remove-from-cart').forEach(button => {
     });
 });
 
+// Render cart table
 function renderCart() {
     const tbody = document.querySelector('#cart-table tbody');
     tbody.innerHTML = '';
+
     Object.keys(cart).forEach(id => {
         const item = cart[id];
         tbody.innerHTML += `<tr>
@@ -88,22 +98,19 @@ function renderCart() {
 }
 
 // Handle checkout
-document.querySelector('#checkout').addEventListener('click', function() {
-    for(const id in cart) {
-        const item = cart[id];
-        const form = document.createElement('form');
-        form.method = 'POST';
-        form.action = "{{ route('staff.sell') }}";
-        form.innerHTML = `@csrf
-            <input type="hidden" name="product_id" value="${id}">
-            <input type="hidden" name="quantity" value="${item.quantity}">
-            <input type="hidden" name="payment_status" value="Due">
-            <input type="hidden" name="first_name" value="Staff">
-            <input type="hidden" name="last_name" value="">
-            <input type="hidden" name="state" value="">`;
-        document.body.appendChild(form);
-        form.submit();
+document.querySelector('#checkout').addEventListener('click', function(e) {
+    e.preventDefault(); // prevent default form submission
+
+    if(Object.keys(cart).length === 0){
+        alert("Cart is empty!");
+        return;
     }
+
+    const cartDataInput = document.querySelector('#cart_data');
+    cartDataInput.value = JSON.stringify(cart); // send all items as JSON
+
+    document.querySelector('#checkout-form').submit(); // submit form once
 });
 </script>
+
 @endsection

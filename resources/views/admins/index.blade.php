@@ -21,14 +21,6 @@
                         <span class="title">Bookings</span>
                     </a>
                 </li>
-                {{-- <li>
-                    <a href="{{ route('admins.analyst') }}">
-                        <span class="icon">
-                            <ion-icon name="bar-chart-outline"></ion-icon>
-                        </span>
-                        <span class="title">Analyst</span>
-                    </a>
-                </li> --}}
 
                 <li>
                     <a href="{{ route('admins.help') }}">

@@ -1,5 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admins;
+use Illuminate\Support\Facades\Session; // ✅ Add this
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Models\Product\Booking;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 class AdminsController extends Controller
 {
 
@@ -113,8 +114,9 @@ public function product() {
 public function editAdmin($id)
 {
     $admin = Admin::findOrFail($id);
-    return view('admins.editadmin', compact('admin'));
+    return view('admins.editadmins', compact('admin')); // singular matches the variable
 }
+
 
 public function deleteAdmin($id)
 {
@@ -228,7 +230,6 @@ public function deleteAdmin($id)
             'name' => 'required',
             'price' => 'required|numeric',
             'type' => 'required',
-            // 'image' => 'image|mimes:jpeg,png,jpg,gif|max:2048' // Optional
         ]);
 
         $product->name = $request->name;
@@ -285,9 +286,6 @@ public function deleteAdmin($id)
         public function CreateBookings() {
     return view('admins.createbooking');
 }
-
-
-
                 public function UpdateBookings(Request $request, $id)
                 {
                     $booking = Booking::findOrFail($id);
@@ -303,7 +301,7 @@ public function deleteAdmin($id)
                                     ->with('success', 'Booking status updated successfully!');
                 }
 
-      public function StoreBookings(Request $request)
+     public function StoreBookings(Request $request)
 {
     $request->validate([
         'first_name' => 'required|max:40',
@@ -314,8 +312,19 @@ public function deleteAdmin($id)
         'message'    => 'nullable',
     ]);
 
+    $userId = null;
+    $redirectRoute = 'home';
+
+    if (auth('web')->check()) {
+        $userId = auth('web')->id();
+        $redirectRoute = 'home';
+    } elseif (auth('admin')->check()) {
+        $userId = auth('admin')->id();
+        $redirectRoute = 'all.bookings';
+    }
+
     $booking = Booking::create([
-        'user_id'    => auth()->id(),
+        'user_id'    => $userId,
         'first_name' => $request->first_name,
         'last_name'  => $request->last_name,
         'date'       => $request->date,
@@ -326,13 +335,12 @@ public function deleteAdmin($id)
     ]);
 
     if ($booking) {
-        return redirect()->route('home')->with('booking', 'You booked a table successfully!');
+        return redirect()->route($redirectRoute)
+                         ->with('success', 'Booking created successfully!');
     } else {
-        return redirect()->route('home')->with('error', 'Failed to book a table.');
+        return redirect()->back()->with('error', 'Failed to book a table.');
     }
 }
-
-
         public function Help()
         {
             return view('admins.help');
@@ -381,6 +389,56 @@ public function StaffSellProduct(Request $request)
 
     return redirect()->route('staff.sell.form')->with(['success' => 'Product sold successfully!']);
 }
+
+public function staffCheckout(Request $request)
+{
+    $cart = json_decode($request->cart_data, true) ?? [];
+    $total = 0;
+    foreach ($cart as $item) {
+        $total += $item['price'] * $item['quantity'];
+    }
+
+    // Store in session for PayPal
+    session(['admin_cart' => $cart]);
+    session(['admin_cart_total' => $total]);
+
+    return view('admins.staff_checkout', compact('cart', 'total'));
+}
+
+
+public function paywithPaypal()
+{
+    $cart = session('admin_cart', []);
+    $total = 0;
+    foreach ($cart as $item) {
+        $total += $item['price'] * $item['quantity'];
+    }
+
+    return view('admins.paypal-checkout', compact('total'));
+}
+
+public function paypalSuccess()
+{
+    session()->forget('admin_cart');
+    session()->forget('admin_cart_total');
+    return view('admins.paypal-success'); // create this blade
+}
+
+// Controller
+public function showQrPayment()
+{
+    $total = Session::get('admin_cart_total', 0); // get total from session
+    $merchantId = 'merchant123'; // your merchant ID
+
+    $paymentString = "ABA_PAY:{$merchantId}:{$total}";
+
+    return view('admin.qr_payment', compact('total', 'paymentString'));
+}
+
+
+
+
+
 
 
 

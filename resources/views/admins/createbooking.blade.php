@@ -3,24 +3,26 @@
 @section('content')
 <style>
 .form-control {
-  border: 1px solid #ced4da !important;
-  border-radius: .25rem !important;
-  background-color: #fff !important;
+    border: 1px solid #ced4da !important;
+    border-radius: .25rem !important;
+    background-color: #fff !important;
+    color: #000 !important; /* ensures text is visible */
+}
+
+textarea.form-control {
+    resize: none; /* optional, prevents resizing */
 }
 </style>
+
 <div class="container mt-5 pt-5">
-     @csrf
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card shadow border border-primary rounded-3">
                 <div class="card-header bg-primary text-white text-center">
-                   <a href="{{ route('create.bookings') }}" class="btn btn-primary float-end">
-    Create Booking
-</a>
-
+                    <h5 class="mb-0">Booking Form</h5>
                 </div>
-                <div class="card-body p-4">
 
+                <div class="card-body p-4">
                     {{-- Success message --}}
                     @if (Session::has('success'))
                         <div class="alert alert-success alert-dismissible fade show" role="alert">
@@ -30,10 +32,10 @@
                     @endif
 
                     <form action="{{ route('store.bookings') }}" method="POST">
-
+                        @csrf
 
                         @php
-                            $inputClass = 'form-control border border-dark text-dark';
+                            $inputClass = 'form-control';
                         @endphp
 
                         {{-- First Name --}}
@@ -41,7 +43,7 @@
                             <label for="first_name" class="form-label">First Name</label>
                             <input type="text"
                                    class="{{ $inputClass }} @error('first_name') is-invalid @enderror"
-                                   id="first_name" name="first_name" required>
+                                   id="first_name" name="first_name" value="{{ old('first_name') }}" required>
                             @error('first_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -52,7 +54,7 @@
                             <label for="last_name" class="form-label">Last Name</label>
                             <input type="text"
                                    class="{{ $inputClass }} @error('last_name') is-invalid @enderror"
-                                   id="last_name" name="last_name" required>
+                                   id="last_name" name="last_name" value="{{ old('last_name') }}" required>
                             @error('last_name')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -63,7 +65,7 @@
                             <label for="date" class="form-label">Date</label>
                             <input type="date"
                                    class="{{ $inputClass }} @error('date') is-invalid @enderror"
-                                   id="date" name="date" required>
+                                   id="date" name="date" value="{{ old('date') }}" required>
                             @error('date')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -74,7 +76,7 @@
                             <label for="time" class="form-label">Time</label>
                             <input type="time"
                                    class="{{ $inputClass }} @error('time') is-invalid @enderror"
-                                   id="time" name="time" required>
+                                   id="time" name="time" value="{{ old('time') }}" required>
                             @error('time')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -85,7 +87,7 @@
                             <label for="phone" class="form-label">Phone</label>
                             <input type="text"
                                    class="{{ $inputClass }} @error('phone') is-invalid @enderror"
-                                   id="phone" name="phone" required>
+                                   id="phone" name="phone" value="{{ old('phone') }}" required>
                             @error('phone')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -95,7 +97,7 @@
                         <div class="mb-3">
                             <label for="message" class="form-label">Message</label>
                             <textarea class="{{ $inputClass }} @error('message') is-invalid @enderror"
-                                      id="message" name="message" rows="3"></textarea>
+                                      id="message" name="message" rows="3">{{ old('message') }}</textarea>
                             @error('message')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
@@ -105,11 +107,9 @@
                             <button type="submit" class="btn btn-primary btn-lg">Submit Booking</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
     </div>
 </div>
-
 @endsection

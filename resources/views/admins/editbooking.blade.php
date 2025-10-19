@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 
 @section('content')
 <div class="row">
@@ -32,4 +32,4 @@
     </div>
 </div>
 @endsection
-Compare this snippet from resources/views/admins/index.blade.php:
+

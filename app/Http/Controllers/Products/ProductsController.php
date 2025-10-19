@@ -27,49 +27,60 @@ public function home()
 }
 
 
-    public function singleProduct($id)
-    {
-        $product = Product::findOrFail($id);
-
-        $relatedProducts = Product::where('type', $product->type)
-            ->where('id', '!=', $id)
-            ->orderBy('id', 'desc')
-            ->take(4)
-            ->get();
-
-        $checkInCart = 0;
-        if (Auth::check()) {
-            $checkInCart = Cart::where('pro_id', $id)
-                ->where('user_id', Auth::id())
-                ->count();
-        }
-
-        return view('products.productsingle', compact('product', 'relatedProducts', 'checkInCart'));
-    }
-
-    /**
-     * Add product to cart.
-     */
     public function addCart(Request $request, $id)
-    {
-        $request->validate([
-            'pro_id' => 'required|exists:products,id',
-            'name' => 'required|string',
-            'image' => 'required|string',
-            'price' => 'required|numeric',
-        ]);
+{
+    $request->validate([
+        'pro_id' => 'required|exists:products,id',
+        'name' => 'required|string',
+        'image' => 'required|string',
+        'price' => 'required|numeric',
+    ]);
 
-        Cart::create([
-            'pro_id' => $request->pro_id,
-            'name' => $request->name,
-            'image' => $request->image,
-            'price' => $request->price,
-            'user_id' => Auth::id(),
-        ]);
-
-        return Redirect::route('product.single', $id)
-            ->with(['success' => "Product added to cart successfully"]);
+    // Determine logged-in user id for both guards
+    $userId = null;
+    if (Auth::guard('web')->check()) {
+        $userId = Auth::guard('web')->id();
+    } elseif (Auth::guard('admin')->check()) {
+        $userId = Auth::guard('admin')->id();
     }
+
+    // If still null, you may allow nullable, but better check
+    if (!$userId) {
+        return redirect()->back()->with('error', 'You must be logged in to add to cart.');
+    }
+
+    Cart::create([
+        'pro_id' => $request->pro_id,
+        'name' => $request->name,
+        'image' => $request->image,
+        'price' => $request->price,
+        'user_id' => $userId,
+    ]);
+
+    return redirect()->route('product.single', $id)
+                     ->with(['success' => "Product added to cart successfully"]);
+}
+
+public function singleProduct($id)
+{
+    $product = Product::findOrFail($id);
+
+    $relatedProducts = Product::where('type', $product->type)
+                               ->where('id', '!=', $id)
+                               ->orderBy('id', 'desc')
+                               ->take(4)
+                               ->get();
+
+    // Check if product is in the current user's cart
+    $checkInCart = 0;
+    if (Auth::check()) { // for logged-in user
+        $checkInCart = Cart::where('user_id', Auth::id())
+                           ->where('pro_id', $product->id)
+                           ->count();
+    }
+
+    return view('products.product-single', compact('product', 'relatedProducts', 'checkInCart'));
+}
 
     /**
      * Display user's cart.
@@ -104,16 +115,18 @@ public function home()
     /**
      * Prepare checkout by saving total price in session.
      */
-    public function prepareCheckout(Request $request)
-    {
-        $request->validate([
-            'price' => 'required|numeric|min:0'
-        ]);
+   public function prepareCheckout(Request $request)
+{
+    $request->validate([
+        'price' => 'required|numeric|min:0'
+    ]);
 
-        Session::put('price', $request->price);
+    Session::put('price', $request->price);
 
-        return Redirect::route('checkout');
-    }
+    return redirect()->route('products.paypal');
+}
+
+
 
     /**
      * Display checkout page.
@@ -155,24 +168,28 @@ public function home()
         return Redirect::route('products.paypal')->with(['order_id' => $order->id]);
     }
 
-    /**
-     * Display PayPal payment page.
-     */
-    public function paywithpaypal()
-    {
-        return view('products.paypal');
+   public function paywithpaypal()
+{
+    $price = session('price', 0);
+    if ($price <= 0) {
+        return redirect()->route('cart')->with('error', 'Cart is empty or invalid total');
     }
 
-    /**
-     * Handle successful checkout.
-     */
-    public function success()
-    {
+    return view('products.paypal', compact('price'));
+}
+
+public function success(Request $request)
+{
+    // Clear cart and session
+    if(Auth::check()) {
         Cart::where('user_id', Auth::id())->delete();
-        Session::forget('price');
-
-        return view('products.success');
     }
+    Session::forget('price');
+
+    return view('products.success');
+}
+
+
 
     /**
      * Booking tables.
