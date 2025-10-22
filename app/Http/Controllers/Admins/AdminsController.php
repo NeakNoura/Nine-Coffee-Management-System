@@ -62,11 +62,8 @@ public function showReceipt($id)
     $bookingsCount = Booking::count();
     $adminsCount = Admin::count();
     $usersCount = User::count();
-    $earning = Order::sum('price'); // fix sum query
-
-    // Add this line to get latest orders
+    $earning = Order::sum('price');
     $recentOrders = Order::latest()->take(8)->get();
-
     return view('admins.index', compact(
         'productsCount',
         'ordersCount',
@@ -117,6 +114,27 @@ public function editAdmin($id)
     return view('admins.editadmins', compact('admin')); // singular matches the variable
 }
 
+public function updateAdmin(Request $request, $id)
+{
+    $request->validate([
+        "name" => "required|max:40",
+        "email" => "required|email|max:40|unique:admins,email,".$id,
+        "password" => "nullable|min:6",
+    ]);
+
+    $admin = Admin::findOrFail($id);
+    $admin->name = $request->name;
+    $admin->email = $request->email;
+
+    // Only update password if a new one is provided
+    if (!empty($request->password)) {
+        $admin->password = Hash::make($request->password);
+    }
+
+    $admin->save();
+
+    return redirect()->route('all.admins')->with('success', 'Admin updated successfully!');
+}
 
 public function deleteAdmin($id)
 {
@@ -159,8 +177,6 @@ public function deleteAdmin($id)
 
       }
 
-
-
       public function DisplayProducts(){
         $products = Product::select()->orderBy('id','asc')->get();
 
@@ -173,8 +189,6 @@ public function deleteAdmin($id)
       public function CreateProducts(){
 
             return view('admins.createproducts');
-
-
 
       }
 
@@ -419,30 +433,47 @@ public function paywithPaypal()
 
 public function paypalSuccess()
 {
+    $cart = session('admin_cart', []);
+    $total = session('admin_cart_total', 0);
+
+    if (empty($cart)) {
+        return redirect()->route('staff.sell.form')->with('error', 'No cart data found!');
+    }
+
+    foreach ($cart as $productId => $item) {
+        $product = Product::find($productId);
+        if (!$product) continue;
+
+        $order = Order::create([
+    'product_id' => $product->id,
+    'price' => $item['price'] * $item['quantity'],
+    'payment_status' => 'Paid',
+    'status' => 'Completed',
+    'first_name' => 'Staff',
+    'last_name' => '',
+    'state' => 'POS Sale',
+    'user_id' => auth('admin')->id() ?? null,
+    'address' => 'N/A',  // mandatory
+    'city' => 'N/A',
+    'zip_code' => '00000',
+    'phone' => '0000000000',
+    'email' => 'staff@pos.local'
+]);
+
+
+        // Deduct stock
+        if ($product->quantity >= $item['quantity']) {
+            $product->quantity -= $item['quantity'];
+            $product->save();
+        }
+    }
+
+    // Clear cart session
     session()->forget('admin_cart');
     session()->forget('admin_cart_total');
-    return view('admins.paypal-success'); // create this blade
+
+    return view('admins.paypal-success')->with('success', 'Payment and order recorded successfully!');
 }
-
-// Controller
-public function showQrPayment()
-{
-    $total = Session::get('admin_cart_total', 0); // get total from session
-    $merchantId = 'merchant123'; // your merchant ID
-
-    $paymentString = "ABA_PAY:{$merchantId}:{$total}";
-
-    return view('admin.qr_payment', compact('total', 'paymentString'));
-}
-
-
-
-
-
-
-
-
-
 
 
 

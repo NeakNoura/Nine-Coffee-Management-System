@@ -11,23 +11,27 @@ class Order extends Model
 
     protected $table = "orders";
 
-   protected $fillable = [
-    "first_name",
-    "last_name",
-    "state",
-    "address",
-    "city",
-    "zip_code",
-    "phone",
-    "email",
-    "price",
-    "user_id",
-    "status",
-    "product_id",       // new
-    "payment_status",   // optional, if you want
-];
-
+    protected $fillable = [
+        "first_name",
+        "last_name",
+        "state",
+        "address",
+        "city",
+        "zip_code",
+        "phone",
+        "email",
+        "price",
+        "user_id",
+        "status",
+        "product_id",       // new
+        "payment_status",   // optional
+    ];
 
     public $timestamps = true;
-    
+
+    // 🔹 Add the relationship here
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }

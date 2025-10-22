@@ -76,6 +76,7 @@ Route::middleware(['auth:admin'])->group(function () {
     Route::post('/create-admins', [AdminsController::class, 'storeAdmins'])->name('store.admins');
     Route::get('/edit-admin/{id}', [AdminsController::class, 'editAdmin'])->name('edit.admin');
     Route::delete('/delete-admin/{id}', [AdminsController::class, 'deleteAdmin'])->name('delete.admin');
+    Route::post('/update-admin/{id}', [AdminsController::class, 'updateAdmin'])->name('update.admins');
 
     // Orders management
     Route::get('admin/all-orders', [AdminsController::class, 'DisplayAllOrders'])->name('all.orders');

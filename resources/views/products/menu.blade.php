@@ -49,7 +49,7 @@
   </section>
   <section class="ftco-section">
       <div class="container">
-      <div class="row"> 
+      <div class="row">
         <div class="col-md-6">
             <h3 class="mb-5 heading-pricing ftco-animate">Desserts</h3>
             @foreach ($desserts as $dessert)

@@ -35,10 +35,10 @@
                             <p><span>Phone:</span> <a href="tel://1234567920">+855 87708259</a></p>
                         </div>
                         <div class="col-md-12 mb-3">
-                            <p><span>Email:</span> <a href="mailto:info@yoursite.com">neaknoura@gmail.com</a></p>
+                            <p><span>Email:</span> <a href="mailto:info@yoursite.com">NineCoffee@gmail.com</a></p>
                         </div>
                         <div class="col-md-12 mb-3">
-                            <p><span>Website:</span> <a href="#">www.facebook.com</a></p>
+                            <p><span>Website:</span> <a href="#">www.NineCoffee.com</a></p>
                         </div>
                     </div>
                 </form>

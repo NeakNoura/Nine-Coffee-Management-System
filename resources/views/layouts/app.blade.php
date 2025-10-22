@@ -158,7 +158,7 @@
 	              <ul>
 	                <li><span class="icon icon-map-marker"></span><span class="text">265  St.  Tekl'k ti 3, ToulKork, PhnomPenh, Cambodia</span></li>
 	                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+855 87708259</span></a></li>
-	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">neaknoura@gmail.com</span></a></li>
+	                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">NiceCoffee@gmail.com</span></a></li>
 	              </ul>
 	            </div>
             </div>

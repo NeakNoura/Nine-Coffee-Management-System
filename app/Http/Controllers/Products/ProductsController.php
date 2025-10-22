@@ -22,7 +22,7 @@ public function home()
 {
     $products = Product::orderBy('id', 'desc')->get();
     $reviews = Review::orderBy('id', 'desc')->take(5)->get(); // latest 5 reviews
-
+    $orders = Order::with('product')->orderBy('id', 'desc')->get();
     return view('home', compact('products', 'reviews'));
 }
 
@@ -152,18 +152,19 @@ public function singleProduct($id)
             'price' => 'required|numeric',
         ]);
 
-        $order = Order::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'address' => $request->address,
-            'city' => $request->city,
-            'zip_code' => $request->zip_code,
-            'phone' => $request->phone,
-            'email' => $request->email,
-            'price' => $request->price,
-            'user_id' => Auth::id(),
-            'status' => 'Pending',
-        ]);
+     $order = Order::create([
+    'first_name' => $request->first_name,
+    'last_name' => $request->last_name,
+    'address' => $request->address,
+    'city' => $request->city,
+    'zip_code' => $request->zip_code,
+    'phone' => $request->phone,
+    'email' => $request->email,
+    'price' => $request->price,
+    'user_id' => Auth::id(),
+    'product_id' => $request->product_id, // <-- make sure you pass this
+    'status' => 'Pending',
+]);
 
         return Redirect::route('products.paypal')->with(['order_id' => $order->id]);
     }

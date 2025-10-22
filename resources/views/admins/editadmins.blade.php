@@ -9,23 +9,32 @@
                     <h4>Edit Admin</h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('store.admins') }}">
+                    {{-- Form submits to the update route --}}
+                    <form method="POST" action="{{ route('update.admins', $admin->id) }}">
                         @csrf
-                        <input type="hidden" name="id" value="{{ $admin->id }}">
 
                         <div class="mb-3">
                             <label class="form-label">Name</label>
-                            <input type="text" name="name" value="{{ $admin->name }}" class="form-control" required>
+                            <input type="text" name="name" value="{{ old('name', $admin->name) }}" class="form-control" required>
+                            @error('name')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Email</label>
-                            <input type="email" name="email" value="{{ $admin->email }}" class="form-control" required>
+                            <input type="email" name="email" value="{{ old('email', $admin->email) }}" class="form-control" required>
+                            @error('email')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label">Password</label>
                             <input type="password" name="password" placeholder="Leave blank to keep old password" class="form-control">
+                            @error('password')
+                                <small class="text-danger">{{ $message }}</small>
+                            @enderror
                         </div>
 
                         <div class="text-center">

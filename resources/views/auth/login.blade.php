@@ -37,7 +37,7 @@
                     @enderror
                   </div>
                 </div>
-               
+
                 <div class="col-md-12">
                   <div class="form-group">
                       <label for="Password">Password</label>
@@ -56,13 +56,13 @@
                               <button name="submit" type="submit" class="btn btn-primary py-3 px-4">Login</button>
                           </div>
                   </div>
-              </div>           
+              </div>
             </form>
-        </div> 
+        </div>
         </div>
       </div>
     </div>
-  </section> 
+  </section>
 @endsection --}}
 @extends('layouts.app')
 
@@ -126,32 +126,39 @@
                     </div>
 
                     <!-- Admin Login -->
-                    <div class="tab-pane fade" id="admin-login" role="tabpanel" aria-labelledby="admin-tab">
-                        <form action="{{ route('check.login') }}" method="POST" class="billing-form ftco-bg-dark p-3 p-md-5">
-                            @csrf
-                            <h3 class="mb-4 billing-heading">Admin Login</h3>
-                            <div class="form-group">
-                                <label for="admin-email">Email</label>
-                                <input id="admin-email" type="email" class="form-control @error('email') is-invalid @enderror"
-                                    name="email" value="{{ old('email') }}" required>
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
-                            <div class="form-group">
-                                <label for="admin-password">Password</label>
-                                <input id="admin-password" type="password" class="form-control @error('password') is-invalid @enderror"
-                                    name="password" required>
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
-                                @enderror
-                            </div>
-                            <button type="submit" class="btn btn-danger py-3 px-4">Login as Admin</button>
-                        </form>
-                    </div>
+<div class="tab-pane fade" id="admin-login" role="tabpanel" aria-labelledby="admin-tab">
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
 
-                </div>
+    <form action="{{ route('check.login') }}" method="POST" class="billing-form ftco-bg-dark p-3 p-md-5">
+        @csrf
+        <h3 class="mb-4 billing-heading">Admin Login</h3>
 
+        <div class="form-group">
+            <label for="admin-email">Email</label>
+            <input id="admin-email" type="email" class="form-control @error('email') is-invalid @enderror"
+                   name="email" value="{{ old('email') }}" required>
+            @error('email')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+
+        <div class="form-group">
+            <label for="admin-password">Password</label>
+            <input id="admin-password" type="password" class="form-control @error('password') is-invalid @enderror"
+                   name="password" required>
+            @error('password')
+                <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-danger py-3 px-4">Login as Admin</button>
+    </form>
+</div>                </div>
             </div>
         </div>
     </div>

@@ -127,7 +127,7 @@
         </div>
     </a>
 
-    <a href="{{ route('all.bookings') }}" class="card">
+    <a href="{{ route('all.orders') }}" class="card">
         <div>
             <div class="numbers">${{ $earning }}</div>
             <div class="cardName">Total Earnings</div>
@@ -137,7 +137,6 @@
         </div>
     </a>
 </div>
-
             <!-- ================ Order Details List ================= -->
             <div class="details">
              <div class="recentOrders">
@@ -158,7 +157,7 @@
         <tbody>
             @forelse($recentOrders as $order)
             <tr>
-                <td>{{ $order->product->name ?? 'N/A' }}</td>
+                <td>{{ $order->product->id ?? 'N/A' }}</td>
                 <td>${{ $order->price }}</td>
                 <td>{{ $order->payment_status ?? 'Pending' }}</td>
                 <td><span class="status {{ strtolower($order->status) }}">{{ $order->status }}</span></td>
