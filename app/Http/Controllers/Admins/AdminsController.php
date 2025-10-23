@@ -1,6 +1,6 @@
 <?php
 namespace App\Http\Controllers\Admins;
-use Illuminate\Support\Facades\Session; // ✅ Add this
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\File;
 use App\Http\Controllers\Controller;
 use App\Models\Product\Booking;
@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
-use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Illuminate\Support\Facades\Cookie;
 class AdminsController extends Controller
 {
 
@@ -55,6 +55,16 @@ public function showReceipt($id)
 
         return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
     }
+public function logout(Request $request)
+{
+    Auth::guard('admin')->logout();               // log out admin
+    $request->session()->invalidate();            // destroy session
+    $request->session()->regenerateToken();       // regenerate CSRF token
+    Cookie::queue(Cookie::forget('remember_admin')); // clear remember-me cookie
+    return redirect()->route('view.login');       // redirect to admin login page
+}
+
+
 
  public function index(){
     $productsCount = Product::count();
@@ -142,6 +152,11 @@ public function deleteAdmin($id)
     $admin->delete();
 
     return redirect()->route('all.admins')->with('success', 'Admin deleted successfully!');
+}
+public function DisplayAllUsers()
+{
+    $users = User::orderBy('id', 'asc')->get();
+    return view('admins.allusers', compact('users'));
 }
 
 

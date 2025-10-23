@@ -23,6 +23,7 @@ Route::get('products/service', [ProductsController::class, 'service'])->name('pr
 Route::get('products/menu', [ProductsController::class, 'menu'])->name('product.menu');
 Route::get('products/about', [ProductsController::class, 'about'])->name('product.about');
 Route::get('products/product-single/{id}', [ProductsController::class, 'singleProduct'])->name('product.single');
+Route::get('/welcome', [HomeController::class, 'welcome'])->name('welcome');
 
 // 🛒 Cart & checkout
 Route::post('products/product-single/{id}', [ProductsController::class, 'addCart'])->name('add.cart');
@@ -60,15 +61,19 @@ Route::get('users/bookings', [UsersController::class, 'displayBookings'])->name(
 Route::get('users/write-reviews', [UsersController::class, 'writeReviews'])->name('write.reviews')->middleware('auth:web');
 Route::post('users/write-reviews', [UsersController::class, 'proccesswriteReviews'])->name('proccess.write.reviews')->middleware('auth:web');
 
-// 🧩 Admin login (public)
-Route::get('admin/login', [AdminsController::class, 'viewLogin'])->name('view.login')->middleware('check.for.auth');
+/// Admin login (public)
+Route::get('admin/login', [AdminsController::class, 'viewLogin'])
+     ->name('view.login')->middleware('check.for.auth');
 Route::post('admin/login', [AdminsController::class, 'checkLogin'])->name('check.login');
 
-// 🔒 Protected Admin routes (only after login)
+// Protected admin routes
 Route::middleware(['auth:admin'])->group(function () {
-    // Dashboard + logout
     Route::get('/admin/dashboard', [AdminsController::class, 'index'])->name('admins.dashboard');
     Route::post('/admin/logout', [AdminsController::class, 'logout'])->name('admin.logout');
+    // Users management
+Route::get('admin/all-users', [AdminsController::class, 'DisplayAllUsers'])->name('all.users');
+
+
 
     // Admin management
     Route::get('admin/all-admins', [AdminsController::class, 'DisplayAllAdmins'])->name('all.admins');

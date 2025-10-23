@@ -29,7 +29,11 @@
             <h2 class="mb-4">Our Story</h2>
           </div>
           <div>
-                    <p>On her way she met a copy. The copy warned the Little Blind Text, that where it came from it would have been rewritten a thousand times and everything that was left from its origin would be the word "and" and the Little Blind Text should turn around and return to its own, safe country. But nothing the copy said could convince her and so it didn’t take long until a few insidious Copy Writers ambushed her, made her drunk with Longe and Parole and dragged her into their agency, where they abused her for their.</p>
+                    <p>NineCoffee is where great coffee meets great people. Inspired by the pursuit of perfection, we believe the best coffee doesn’t just taste good — it creates moments. Each bean is carefully selected from trusted farmers, roasted with passion, and brewed to deliver a smooth, bold flavor in every cup.
+
+We are more than just a café. At NineCoffee, we fuel busy days, spark late-night ideas, and bring communities together. Every sip is made to feel like home — cozy, warm, and full of inspiration. Whether you come to relax, work, or dream, we’re here to make every moment better.
+
+NineCoffee — Better Coffee. Better Moments.</p>
                 </div>
             </div>
       </div>

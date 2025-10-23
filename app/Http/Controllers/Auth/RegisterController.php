@@ -28,7 +28,11 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
+protected function registered($request, $user)
+{
+    return redirect($this->redirectTo)->with('success', 'Welcome to NineCoffee!');
+}
 
     /**
      * Create a new controller instance.

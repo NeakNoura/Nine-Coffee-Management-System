@@ -10,12 +10,12 @@
             {{-- Flash Messages --}}
             @if (Session::has('update'))
                 <div class="alert alert-success">
-                    {{ Session::get('update') }}                
+                    {{ Session::get('update') }}
                 </div>
             @endif
             @if (Session::has('delete'))
                 <div class="alert alert-danger">
-                    {{ Session::get('delete') }}                
+                    {{ Session::get('delete') }}
                 </div>
             @endif
 
@@ -31,7 +31,7 @@
                             <th>State</th>
                             <th>Phone</th>
                             <th>Street Address</th>
-                            <th>Total Price</th>                                       
+                            <th>Total Price</th>
                             <th>Status</th>
                             <th>Change Status</th>
                             <th>Delete</th>
@@ -49,7 +49,7 @@
                             <td>{{ $order->address }}</td>
                             <td>${{ $order->price }}</td>
                             <td>
-                                <span class="badge 
+                                <span class="badge
                                     {{ $order->status == 'Pending' ? 'badge-warning' : '' }}
                                     {{ $order->status == 'Delivered' ? 'badge-success' : '' }}
                                     {{ $order->status == 'Cancelled' ? 'badge-danger' : '' }}
@@ -59,8 +59,8 @@
                             </td>
                             <td>
                                 <a href="{{ route('edit.orders', $order->id) }}" class="btn btn-sm btn-info">Change Status</a>
-                            </td>   
-                            <td>                                
+                            </td>
+                            <td>
                                 <form action="{{ route('delete.orders', $order->id)}}" method="POST">
                                     @csrf
                                     @method('DELETE')
@@ -70,9 +70,27 @@
                         </tr>
                         @endforeach
                     </tbody>
+                    {{-- Total Price Row --}}
+                  <tfoot class="bg-light font-bold">
+    <tr>
+        <td colspan="7" class="text-end"> <!-- Align to right of the first 7 columns -->
+            <strong>Total Price:</strong>
+        </td>
+        <td>
+            ${{ $allOrders->sum('price') }}
+        </td>
+        <td colspan="3">
+            <button class="btn btn-sm btn-success">Total Money</button>
+        </td>
+    </tr>
+</tfoot>
+
+
                 </table>
             </div> {{-- table-responsive --}}
+            <a href="{{ route('admins.dashboard') }}" class="btn btn-primary mt-3">Back to Dashboard</a>
         </div> {{-- card-body --}}
     </div> {{-- card --}}
+
 </div> {{-- container --}}
 @endsection

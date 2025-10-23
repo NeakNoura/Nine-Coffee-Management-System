@@ -1,20 +1,21 @@
 @extends('layouts.admin')
 
 @section('content')
+
 <div class="row">
     <div class="col">
         <div class="card">
             <div class="card-body">
-             
+
                     @if (Session::has('success'))
                             <p class="alert {{ Session::get('alert-class', 'alert-success') }}">
-                                {{ Session::get('success') }}                
+                                {{ Session::get('success') }}
                             </p>
                         @endif
-                        
+
                     @if (Session::has('delete'))
                     <p class="alert {{ Session::get('alert-class', 'alert-info') }}">
-                        {{ Session::get('delete') }}                
+                        {{ Session::get('delete') }}
                     </p>
                 @endif
                     <h5 class="card-title mb-3 d-inline">All Products</h5>
@@ -37,7 +38,7 @@
                                 <td>{{ $product->name }}</td>
                                 <td><img src="{{asset('assets/images/'.$product->image.'')}}" width="50" ></td>
                                 <td>${{ $product->price }}</td>
-                                <td>{{ $product->type }}</td>                               
+                                <td>{{ $product->type }}</td>
                                 <td><a href="{{ route('delete.products', $product->id)}}" class="btn btn-danger text-center">Delete</a></td>
                                 <td>
                                     <a href="{{ route('edit.products', $product->id) }}" class="btn btn-warning text-center">Edit</a>
@@ -46,11 +47,13 @@
                             </tr>
                             @endforeach
                         </tbody>
-                    </table>                  
-                
+                    </table>
+<a href="{{ route('admins.dashboard') }}" class="btn btn-primary mt-3">Back to Dashboard</a>
             </div>
         </div>
     </div>
+
+
 </div>
 @endsection
 

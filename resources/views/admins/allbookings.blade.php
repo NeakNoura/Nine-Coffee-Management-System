@@ -94,7 +94,7 @@
                             </tbody>
                         </table>
                     </div>
-
+<a href="{{ route('admins.dashboard') }}" class="btn btn-primary mt-3">Back to Dashboard</a>
                 </div>
             </div>
         </div>

@@ -10,7 +10,10 @@
 
           <div class="col-md-7 col-sm-12 text-center ftco-animate">
               <h1 class="mb-3 mt-5 bread">Register</h1>
-              <p class="breadcrumbs"><span class="mr-2"><a href="index.html">Home</a></span> <span>Register</span></p>
+              <p class="breadcrumbs">
+  <span class="mr-2"><a href="{{ route('home') }}">Home</a></span>
+  <span>Register</span>
+</p>
           </div>
 
         </div>
@@ -22,7 +25,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-12 ftco-animate">
-          <form method="POST" action="{{ route('register') }}" class="billing-form ftco-bg-dark p-3 p-md-5">
+<form method="POST" action="{{ route('register') }}" class="billing-form ftco-bg-dark p-3 p-md-5">
             @csrf
             <h3 class="mb-4 billing-heading">Register</h3>
             <div class="row align-items-end">
@@ -38,7 +41,12 @@
                         @enderror
                     </div>
                 </div>
-        
+@if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+@endif
+
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="email">Email</label>
@@ -51,7 +59,7 @@
                         @enderror
                     </div>
                 </div>
-        
+
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="password">Password</label>
@@ -64,7 +72,7 @@
                         @enderror
                     </div>
                 </div>
-        
+
                 <div class="col-md-12">
                     <div class="form-group">
                         <label for="password_confirmation">Confirm Password</label>
@@ -72,7 +80,7 @@
                             name="password_confirmation" required autocomplete="new-password">
                     </div>
                 </div>
-        
+
                 <div class="col-md-12">
                     <div class="form-group mt-4">
                         <button type="submit" class="btn btn-primary py-3 px-4">Register</button>
@@ -80,7 +88,7 @@
                 </div>
             </div>
         </form>
-        
+
         </div> <!-- .col-md-8 -->
         </div>
       </div>

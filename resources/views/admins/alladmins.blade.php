@@ -1,6 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
+
 <div class="container mt-5 pt-5"> {{-- added pt-5 to prevent navbar overlap --}}
     <div class="row justify-content-center">
         <div class="col-md-10">
@@ -64,7 +65,7 @@
                             </tbody>
                         </table>
                     </div>
-
+<a href="{{ route('admins.dashboard') }}" class="btn btn-primary mt-3">Back to Dashboard</a>
                 </div>
             </div>
 

@@ -100,12 +100,23 @@
     <a href="{{ route('all.admins') }}" class="card">
         <div>
             <div class="numbers">{{ $usersCount }}</div>
-            <div class="cardName">Total Users</div>
+            <div class="cardName">Total Admin</div>
         </div>
         <div class="iconBx">
             <ion-icon name="people-outline"></ion-icon>
         </div>
     </a>
+
+    <a href="{{ route('all.users') }}" class="card">
+    <div>
+        <div class="numbers">{{ $usersCount }}</div>
+        <div class="cardName">Total Users</div>
+    </div>
+    <div class="iconBx">
+        <ion-icon name="person-outline"></ion-icon>
+    </div>
+</a>
+
 
     <a href="{{ route('all.bookings') }}" class="card">
         <div>
