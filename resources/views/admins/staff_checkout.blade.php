@@ -2,68 +2,77 @@
 
 @section('content')
 <div class="container mt-5">
-    <h2 class="text-center mb-4">Staff Checkout</h2>
-
-    @if(empty($cart))
-        <p class="text-center">Your cart is empty.</p>
-    @else
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="table-light">
-                    <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Subtotal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($cart as $item)
-                        <tr>
-                            <td>{{ $item['name'] }}</td>
-                            <td>{{ $item['quantity'] }}</td>
-                            <td>${{ number_format($item['price'], 2) }}</td>
-                            <td>${{ number_format($item['price'] * $item['quantity'], 2) }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
+    <div class="card shadow-sm border-0 rounded-4 staff-checkout" style="background-color: #3e2f2f; color: #f5f5f5;">
+        <div class="card-header text-center" style="background-color: #db770c; color: #fff;">
+            <h4 class="mb-0">Staff Checkout</h4>
         </div>
+        <div class="card-body">
 
-        <div class="text-end mt-3">
-            <h4>Total: <strong>${{ number_format($total, 2) }}</strong></h4>
-        </div>
+            @if(empty($cart))
+                <p class="text-center">Your cart is empty.</p>
+            @else
+                {{-- Cart Table --}}
+                <div class="table-responsive">
+                    <table class="table align-middle mb-0" style="color:#f5f5f5; border:1px solid #6b4c3b;">
+                        <thead style="background-color: #5a3d30;">
+                            <tr class="text-center">
+                                <th>Product</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($cart as $item)
+                                <tr class="text-center" style="border-bottom:1px solid #6b4c3b;">
+                                    <td>{{ $item['name'] }}</td>
+                                    <td>{{ $item['quantity'] }}</td>
+                                    <td>${{ number_format($item['price'], 2) }}</td>
+                                    <td>${{ number_format($item['price'] * $item['quantity'], 2) }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                        <tfoot style="background-color:#5a3d30; color:#fff;">
+                            <tr>
+                                <td colspan="3" class="text-end"><strong>Total:</strong></td>
+                                <td>${{ number_format($total, 2) }}</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
 
-        <hr>
+                {{-- ABA Payment Section --}}
+                <div class="text-center mt-4">
+                    <h5>Scan to Pay with ABA</h5>
+                    <p>Use your ABA app to scan this QR and complete the payment.</p>
+                    <img src="{{ asset('assets/images/image.png') }}" alt="ABA QR" width="200" class="border p-2 rounded">
+                    <div class="mt-2">
+                        <a href="https://pay.ababank.com/oRF8/6qxitpv7" target="_blank" class="btn btn-primary mt-3">
+                            Open in ABA App
+                        </a>
+                    </div>
+                </div>
 
-        {{-- ABA Payment Section --}}
-        <div class="text-center mt-4">
-            <h5>Scan to Pay with ABA</h5>
-            <p>Use your ABA app to scan this QR and complete the payment.</p>
+                {{-- PayPal Section --}}
+                <div class="text-center mt-4">
+                    <h5>Or Pay with PayPal</h5>
+                    <form action="{{ route('admin.paypal') }}" method="GET">
+                        @csrf
+                        <button type="submit" class="btn btn-success btn-lg mt-2">
+                            Pay Now with PayPal
+                        </button>
+                    </form>
+                </div>
+            @endif
 
-            <!-- ✅ Make sure your image file is inside: public/assets/images/image.png -->
-            <img src="{{ asset('assets/images/image.png') }}" alt="ABA QR" width="200" class="border p-2 rounded">
-
-            <div class="mt-2">
-                <a href="https://pay.ababank.com/oRF8/6qxitpv7" target="_blank" class="btn btn-primary mt-3">
-                    Open in ABA App
+            {{-- Back Button --}}
+            <div class="text-center mt-4">
+                <a href="{{ route('admins.dashboard') }}" class="btn btn-light mt-3" style="color:#3e2f2f;">
+                    <i class="bi bi-arrow-left-circle"></i> Back to Dashboard
                 </a>
             </div>
+
         </div>
-
-        <hr>
-
-        {{-- PayPal Section --}}
-        <div class="text-center mt-4">
-            <h5>Or Pay with PayPal</h5>
-            <form action="{{ route('admin.paypal') }}" method="GET">
-                @csrf
-                <button type="submit" class="btn btn-success btn-lg mt-2">
-                    Pay Now with PayPal
-                </button>
-            </form>
-        </div>
-
-    @endif
+    </div>
 </div>
 @endsection

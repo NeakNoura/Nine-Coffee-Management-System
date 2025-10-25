@@ -5,7 +5,7 @@
         <title>Admin Panel</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
-        <link href="{{ asset('assets/css/noura.css')}}" rel="stylesheet">
+        <link href="{{ asset('assets/css/admin.css')}}" rel="stylesheet">
         <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
         <link rel="stylesheet" href="{{ asset('assets/css/fonts/icomoon/icomoon.woff') }}">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
@@ -22,7 +22,7 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse" id="navbarText">          
+                <div class="collapse navbar-collapse" id="navbarText">
                     <ul class="navbar-nav side-nav">
                         <li class="nav-item">
                             <a class="nav-link" style="margin-left:20px;" href="{{ route('admins.dashboard') }}">Home</a>

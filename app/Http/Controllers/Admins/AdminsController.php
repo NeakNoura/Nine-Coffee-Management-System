@@ -161,7 +161,7 @@ public function DisplayAllUsers()
 
 
     public function DisplayAllOrders(){
-      $allOrders = Order::select()->orderBy('id','asc')->get();
+      $allOrders = Order::select()->orderBy('created_at','desc')->get();
 
         return view('admins.allorders',compact('allOrders'));
     }

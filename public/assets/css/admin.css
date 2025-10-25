@@ -513,5 +513,382 @@ body {
     right: 0;
     left: initial;
   }
+/* ================= Help Center ================= */
+.help-main {
+    background: #fdf6ec; /* soft warm background */
+    padding: 40px 30px;
+    min-height: 100vh;
+    transition: margin-left 0.5s;
+}
+
+.navigation.active ~ .help-main {
+    margin-left: 80px; /* adjust for collapsed sidebar */
+}
+
+.help-section {
+    background: #fff;
+    border-radius: 25px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.help-section h2 {
+    font-size: 2rem;
+    color: var(--blue);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.help-section .intro-text {
+    text-align: center;
+    color: var(--black1);
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+/* Card grid layout */
+.help-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Individual card styling */
+.help-card {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 20px;
+    box-shadow: 0 7px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    background: #f9f1e7;
+}
+
+/* Icon circle */
+.help-card .help-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* Color-coded icons */
+.help-card.dashboard .help-icon { background: #3498db; }
+.help-card.customers .help-icon { background: #2ecc71; }
+.help-card.orders .help-icon { background: #e67e22; }
+.help-card.messages .help-icon { background: #f1c40f; }
+.help-card.settings .help-icon { background: #9b59b6; }
+.help-card.password .help-icon { background: #e74c3c; }
+.help-card.signout .help-icon { background: #34495e; }
+
+.help-card h3 {
+    font-size: 1.25rem;
+    color: var(--blue);
+    margin-bottom: 12px;
+}
+
+.help-card ul {
+    list-style: none;
+    padding-left: 0;
+    color: var(--black2);
+}
+
+.help-card ul li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 18px;
+}
+
+.help-card ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: var(--blue);
+}
+
+/* Support text */
+.support-text {
+    margin-top: 30px;
+    text-align: center;
+    font-weight: 500;
+    font-size: 1rem;
+}
+
+.support-text a {
+    color: var(--blue);
+    font-weight: 600;
+    text-decoration: none;
+}
+
+.support-text a:hover {
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .help-cards {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+}
+
+@media (max-width: 480px) {
+    .help-section {
+        padding: 25px 15px;
+    }
+    .help-section h2 {
+        font-size: 1.5rem;
+    }
+    .help-card h3 {
+        font-size: 1.1rem;
+    }
+}
+/* ================= Help Center ================= */
+.help-main {
+    background: linear-gradient(120deg, #fefcea 0%, #f1daaa 100%);
+    padding: 40px 30px;
+    min-height: 100vh;
+    transition: margin-left 0.5s;
+}
+
+/* Help section card */
+.help-section {
+    background: #fff3e0;
+    border-radius: 25px;
+    padding: 40px 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+}
+
+.help-section h2 {
+    font-size: 2rem;
+    color: #6b4226;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.help-section .intro-text {
+    text-align: center;
+    color: #4d4037;
+    margin-bottom: 30px;
+    font-weight: 500;
+}
+
+/* Card grid layout */
+.help-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Individual card styling */
+.help-card {
+    background: #fff;
+    padding: 25px 20px;
+    border-radius: 20px;
+    box-shadow: 0 7px 25px rgba(0,0,0,0.08);
+    transition: transform 0.3s, box-shadow 0.3s, background 0.3s;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    background: #ffe8c2;
+}
+
+/* Icon circle */
+.help-card .help-icon {
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+/* Color-coded icons */
+.help-card.dashboard .help-icon { background: #3498db; }
+.help-card.customers .help-icon { background: #2ecc71; }
+.help-card.orders .help-icon { background: #e67e22; }
+.help-card.messages .help-icon { background: #f1c40f; color: #333; }
+.help-card.settings .help-icon { background: #9b59b6; }
+.help-card.password .help-icon { background: #e74c3c; }
+.help-card.signout .help-icon { background: #34495e; }
+
+/* Help Center Container */
+.help-main {
+    padding: 40px 30px;
+    min-height: 100vh;
+    background-color: #3e2f2f; /* match Orders List background */
+}
+
+/* Help Section Card */
+.help-section {
+    background-color: #db770c; /* header-like warm tone */
+    color: #f5f5f5;
+    border-radius: 20px;
+    padding: 30px 25px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+/* Section Title */
+.help-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* Intro Text */
+.intro-text {
+    text-align: center;
+    font-size: 1rem;
+    margin-bottom: 25px;
+    color: #f5f5f5;
+}
+
+/* Help Cards Grid */
+.help-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+/* Individual Card */
+.help-card {
+    background-color: #5a3d30;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+    transition: transform 0.3s, background 0.3s;
+}
+
+.help-card:hover {
+    transform: translateY(-5px);
+    background-color: #784c2f;
+}
+
+/* Icons */
+.help-card .help-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+/* Card Headings */
+.help-card h3 {
+    color: #fff;
+    font-weight: 600;
+    margin-bottom: 12px;
+}
+
+/* Card List Items */
+.help-card ul {
+    list-style: none;
+    padding-left: 0;
+    color: #f5f5f5;
+}
+.help-card ul li {
+    margin-bottom: 8px;
+    position: relative;
+    padding-left: 18px;
+}
+.help-card ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0;
+    color: #fff;
+}
+
+/* Support Text */
+.support-text {
+    text-align: center;
+    margin-top: 25px;
+    font-weight: 500;
+    color: #f5f5f5;
+}
+.support-text a {
+    color: #fff;
+    text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width:768px){
+    .help-cards{
+        grid-template-columns: repeat(auto-fit,minmax(200px,1fr));
+    }
+}
+
+.cardBox .card:nth-child(1) { background: #e74c3c; } /* red - urgent / total orders */
+.cardBox .card:nth-child(2) { background: #2ecc71; } /* green - users */
+.cardBox .card:nth-child(3) { background: #f39c12; } /* yellow - bookings */
+.cardBox .card:nth-child(4) { background: #3498db; } /* blue - earnings */
+.cardBox .card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.3);
+}
+.cardBox .card .numbers, .cardBox .card .cardName, .cardBox .card .iconBx {
+    color: #fff; /* contrast on colored cards */
+}
+.details .recentOrders table tr:hover {
+    background: rgba(219, 119, 12, 0.2);
+}
+.status.delivered { background: #2ecc71; }
+.status.pending { background: #f1c40f; }
+.status.return { background: #e74c3c; }
+.status.inProgress { background: #3498db; }
+.navigation ul li:hover,
+.navigation ul li.hovered {
+    background-color: #db770c; /* warm highlight */
+}
+.navigation ul li a:hover {
+    color: #fff;
+}
+.help-card {
+    background-color: #5a3d30;
+    border-radius: 20px;
+    color: #fff;
+    padding: 25px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+    transition: transform 0.3s, background 0.3s;
+}
+.help-card:hover {
+    transform: translateY(-5px);
+    background-color: #784c2f;
+}
+.help-card h3, .help-card ul li::before, .help-card ul li {
+    color: #fff;
+}
+.cardBox {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+}
+.details {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 30px;
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .cardBox {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+    .details {
+        grid-template-columns: 1fr;
+    }
+
+}
 
 }

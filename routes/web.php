@@ -26,17 +26,32 @@ Route::get('products/product-single/{id}', [ProductsController::class, 'singlePr
 Route::get('/welcome', [HomeController::class, 'welcome'])->name('welcome');
 
 // 🛒 Cart & checkout
+// Add product to cart
 Route::post('products/product-single/{id}', [ProductsController::class, 'addCart'])->name('add.cart');
+
+// View cart
 Route::get('products/cart', [ProductsController::class, 'cart'])->name('cart')->middleware('auth:web');
+
+// Delete product from cart
 Route::get('products/cart-delete/{id}', [ProductsController::class, 'deleteProductCart'])->name('cart.product.delete');
+
+// Prepare checkout (optional)
 Route::post('products/prepare-checkout', [ProductsController::class, 'prepareCheckout'])->name('prepare.checkout');
-Route::get('products/checkout', [ProductsController::class, 'checkout'])->name('checkout')->middleware('check.for.price');
-Route::post('products/checkout', [ProductsController::class, 'storeCheckout'])->name('proccess.checkout')->middleware('check.for.price');
+
+// Show checkout form
+Route::get('products/checkout', [ProductsController::class, 'checkout'])->name('checkout')->middleware('auth:web');
+Route::post('products/store-checkout', [ProductsController::class, 'storeCheckout'])->name('store.checkout');
+
+// Process checkout form
+Route::post('products/checkout', [ProductsController::class, 'proccessCheckout'])->name('proccess.checkout')->middleware('auth:web');
+
+// Success page
+Route::get('products/success', [ProductsController::class, 'success'])->name('products.success');
 
 // 💳 Payment routes
-Route::get('products/paypal', [ProductsController::class, 'paywithpaypal'])
-    ->name('products.paypal')
-    ->middleware('check.for.price');
+Route::get('products/paypal', [ProductsController::class, 'paywithpaypal'])->name('products.paypal')->middleware('check.for.price');
+Route::post('products/paypal', [ProductsController::class, 'paywithpaypal'])->name('products.paypal')->middleware('check.for.price');
+
   Route::middleware(['auth:admin'])->group(function () {
     Route::get('/admin/paypal', [AdminsController::class, 'paywithPaypal'])->name('admin.paypal');
     Route::get('/admin/paypal-success', [AdminsController::class, 'paypalSuccess'])->name('admin.paypal.success');

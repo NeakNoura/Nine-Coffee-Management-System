@@ -34,7 +34,7 @@
             },
             onApprove: (data, actions) => {
                 return actions.order.capture().then(function(orderData) {
-                    window.location.href = "{{ route('products.success') }}"; // ✅ Laravel route
+                    window.location.href = "{{ route('products.success') }}";
                 });
             }
         }).render('#paypal-button-container');

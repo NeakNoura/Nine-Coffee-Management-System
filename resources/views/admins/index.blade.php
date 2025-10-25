@@ -97,57 +97,69 @@
             <!-- ======================= Cards ================== -->
 
 <div class="cardBox">
-    <a href="{{ route('all.admins') }}" class="card">
+    <a href="{{ route('all.admins') }}" class="card" style="background-color:#6c5ce7; color:#fff;">
         <div>
-            <div class="numbers">{{ $usersCount }}</div>
-            <div class="cardName">Total Admin</div>
+            <div class="numbers" style="font-size:2rem; font-weight:bold;">{{ $usersCount }}</div>
+            <div class="cardName" style="font-size:1rem; font-weight:600; color:#fff; text-shadow:1px 1px 2px rgba(0,0,0,0.5);">
+                Total Admin
+            </div>
         </div>
         <div class="iconBx">
-            <ion-icon name="people-outline"></ion-icon>
+            <ion-icon name="people-outline" style="color:#fff; font-size:2rem;"></ion-icon>
         </div>
     </a>
 
-    <a href="{{ route('all.users') }}" class="card">
-    <div>
-        <div class="numbers">{{ $usersCount }}</div>
-        <div class="cardName">Total Users</div>
-    </div>
-    <div class="iconBx">
-        <ion-icon name="person-outline"></ion-icon>
-    </div>
-</a>
-
-
-    <a href="{{ route('all.bookings') }}" class="card">
+    <a href="{{ route('all.users') }}" class="card" style="background-color:#00b894; color:#fff;">
         <div>
-            <div class="numbers">{{ $productsCount }}</div>
-            <div class="cardName">Total Bookings</div>
+            <div class="numbers" style="font-size:2rem; font-weight:bold;">{{ $usersCount }}</div>
+            <div class="cardName" style="font-size:1rem; font-weight:600; color:#fff; text-shadow:1px 1px 2px rgba(0,0,0,0.5);">
+                Total Users
+            </div>
         </div>
         <div class="iconBx">
-            <ion-icon name="calendar-outline"></ion-icon>
+            <ion-icon name="person-outline" style="color:#fff; font-size:2rem;"></ion-icon>
         </div>
     </a>
 
-    <a href="{{ route('all.orders') }}" class="card">
+    <a href="{{ route('all.bookings') }}" class="card" style="background-color:#fdcb6e; color:#000;">
         <div>
-            <div class="numbers">{{ $ordersCount }}</div>
-            <div class="cardName">Total Orders</div>
+            <div class="numbers" style="font-size:2rem; font-weight:bold;">{{ $productsCount }}</div>
+            <div class="cardName" style="font-size:1rem; font-weight:600; color:#000; text-shadow:1px 1px 2px rgba(255,255,255,0.5);">
+                Total Bookings
+            </div>
         </div>
         <div class="iconBx">
-            <ion-icon name="cart-outline"></ion-icon>
+            <ion-icon name="calendar-outline" style="color:#000; font-size:2rem;"></ion-icon>
         </div>
     </a>
 
-    <a href="{{ route('all.orders') }}" class="card">
+    <a href="{{ route('all.orders') }}" class="card" style="background-color:{{ $ordersCount > 50 ? '#d63031' : '#00cec9' }}; color:#fff;">
         <div>
-            <div class="numbers">${{ $earning }}</div>
-            <div class="cardName">Total Earnings</div>
+            <div class="numbers" style="font-size:2rem; font-weight:bold;">{{ $ordersCount }}</div>
+            <div class="cardName" style="font-size:1rem; font-weight:600; color:#fff; text-shadow:1px 1px 2px rgba(0,0,0,0.5);">
+                Total Orders
+            </div>
         </div>
         <div class="iconBx">
-            <ion-icon name="cash-outline"></ion-icon>
+            <ion-icon name="cart-outline" style="color:#fff; font-size:2rem;"></ion-icon>
+        </div>
+    </a>
+
+    <a href="{{ route('all.orders') }}" class="card" style="background-color:{{ $earning > 1000 ? '#00b894' : '#e17055' }}; color:#fff;">
+        <div>
+            <div class="numbers" style="font-size:2rem; font-weight:bold;">${{ $earning }}</div>
+            <div class="cardName" style="font-size:1rem; font-weight:600; color:#fff; text-shadow:1px 1px 2px rgba(0,0,0,0.5);">
+                Total Earnings
+            </div>
+        </div>
+        <div class="iconBx">
+            <ion-icon name="cash-outline" style="color:#fff; font-size:2rem;"></ion-icon>
         </div>
     </a>
 </div>
+
+
+
             <!-- ================ Order Details List ================= -->
             <div class="details">
              <div class="recentOrders">
@@ -190,11 +202,10 @@
         </div>
         <div class="card-body">
             <canvas id="analyticsChart" style="width:100%; height:500px;"></canvas>
-        </div>
-    </div>
-</div>
-
-                </tbody>
+                    </div>
+                </div>
+            </div>
+             </tbody>
             </table>
         </div>
             </div>
