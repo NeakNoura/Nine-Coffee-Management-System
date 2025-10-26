@@ -177,22 +177,32 @@
                 <td>Status</td>
             </tr>
         </thead>
-        <tbody>
-            @forelse($recentOrders as $order)
-            <tr>
-                <td>{{ $order->product->id ?? 'N/A' }}</td>
-                <td>${{ $order->price }}</td>
-                <td>{{ $order->payment_status ?? 'Pending' }}</td>
-                <td><span class="status {{ strtolower($order->status) }}">{{ $order->status }}</span></td>
-            </tr>
-            @empty
-            <tr>
-                <td colspan="4" class="text-center">No recent orders</td>
-            </tr>
-            @endforelse
-        </tbody>
+       <tbody>
+                                @forelse($recentOrders as $order)
+                                <tr style="border-bottom:1px solid #6b4c3b;">
+                                    <td>{{ $order->product->id ?? 'N/A' }}</td>
+                                    <td>${{ $order->price }}</td>
+                                    <td>{{ $order->payment_status ?? 'Pending' }}</td>
+                                    <td>
+                                        <span class="badge
+                                            @if(strtolower($order->status)=='pending') bg-warning
+                                            @elseif(strtolower($order->status)=='delivered') bg-success
+                                            @elseif(strtolower($order->status)=='cancelled') bg-danger
+                                            @else bg-secondary
+                                            @endif px-3 py-1 rounded-pill">
+                                            {{ $order->status }}
+                                        </span>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="4" class="text-center">No recent orders</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
     </table>
 </div>
+
 <!-- ================= Analytics Charts ================= -->
 <!-- ================= Analytics Charts ================= -->
 <div class="analytics col-12">
@@ -232,6 +242,7 @@
                     {{ $ordersCount ?? 0 }},
                     {{ $usersCount ?? 0 }},
                     {{ $earning ?? 0 }}
+
                 ],
                 backgroundColor: [
                     'rgba(54, 162, 235, 0.7)',

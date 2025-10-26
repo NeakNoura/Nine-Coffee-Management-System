@@ -1,28 +1,64 @@
 @extends('layouts.admin')
 
-@section('content')
+@section('title', 'Login')
 
-<div class="row">
-    <div class="col-md-4 offset-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title text-center mt-3">Login</h5>
-                <form method="POST" action="{{ route('check.login') }}">
-                    @csrf
-                
-                    <div class="form-outline mb-4">
-                        <label for="form2Example1">Email:</label>
-                        <input type="email" name="email" id="form2Example1" class="form-control" required>
-                    </div>
-                    <div class="form-outline mb-4">
-                        <label for="form2Example2">Password:</label>
-                        <input type="password" name="password" id="form2Example2" class="form-control" required>
-                    </div>
-                    <button type="submit" name="submit" class="btn btn-primary btn-block">Login</button>
-                </form>
+@section('content')
+<div class="login-container">
+    <div class="login-card">
+        <div class="login-header text-center">
+            <img src="{{ asset('assets/images/image_5.jpg') }}" alt="9NineCoffee Logo" class="login-logo">
+            <h3 class="fw-bold text-dark">9NineCoffee</h3>
+            <p class="text-muted mb-4">Sign in to your account</p>
+        </div>
+
+        @if (session('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
             </div>
+        @endif
+
+        <form action="{{ route('check.login') }}" method="POST" autocomplete="off">
+            @csrf
+            <div class="mb-3">
+                <label for="email" class="form-label">Email Address</label>
+                <input type="email" id="email" name="email"
+                       class="form-control @error('email') is-invalid @enderror"
+                       placeholder="Enter your email" value="{{ old('email') }}" required autofocus>
+                @error('email')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" id="password" name="password"
+                       class="form-control @error('password') is-invalid @enderror"
+                       placeholder="Enter your password" required>
+                @error('password')
+                    <div class="invalid-feedback">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                    <label for="remember" class="form-check-label">Remember Me</label>
+                </div>
+                <a href="{{ route('password.request') }}" class="text-decoration-none text-primary small">
+                    Forgot Password?
+                </a>
+            </div>
+
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Login
+            </button>
+        </form>
+
+        <div class="text-center mt-4">
+            <small class="text-muted">Don’t have an account?</small>
+            <a href="{{ route('register') }}" class="text-decoration-none fw-semibold text-primary">Register</a>
         </div>
     </div>
 </div>
-
 @endsection

@@ -60,7 +60,6 @@ public function logout(Request $request)
     Auth::guard('admin')->logout();               // log out admin
     $request->session()->invalidate();            // destroy session
     $request->session()->regenerateToken();       // regenerate CSRF token
-    Cookie::queue(Cookie::forget('remember_admin')); // clear remember-me cookie
     return redirect()->route('view.login');       // redirect to admin login page
 }
 

@@ -10,69 +10,16 @@
         <link rel="stylesheet" href="{{ asset('assets/css/fonts/icomoon/icomoon.woff') }}">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </head>
-<body>
-    <div id="wrapper">
-        @auth('admin')
-        <!-- Show navbar only when the admin is logged in -->
-        {{-- <nav class="navbar header-top fixed-top navbar-expand-lg navbar-dark bg-dark">
-            <div class="container">
-                <a class="navbar-brand" href="#">LOGO</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse"
-                        data-target="#navbarText" aria-controls="navbarText"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarText">
-                    <ul class="navbar-nav side-nav">
-                        <li class="nav-item">
-                            <a class="nav-link" style="margin-left:20px;" href="{{ route('admins.dashboard') }}">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="margin-left:20px;" href="{{ route('all.admins') }}">Admins</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="margin-left:20px;" href="{{ route('all.orders') }}">Orders</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="margin-left:20px;" href="{{ route('all.products') }}">Products</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" style="margin-left:20px;" href="{{ route('all.bookings') }}">Bookings</a>
-                        </li>
-                    </ul>
-
-                    <!-- Right side menu -->
-                 <ul class="navbar-nav ml-md-auto d-md-flex">
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown"
-            role="button" data-toggle="dropdown"
-            aria-haspopup="true" aria-expanded="false">
-            {{ Auth::guard('admin')->user()->name }}
-        </a>
-        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-            <a class="dropdown-item" href="#"
-               onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                Logout
-            </a>
-        </div>
-
-        <!-- Hidden logout form -->
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            @csrf
-        </form>
-    </li>
-</ul>
-
-                </div>
-            </div>
-        </nav> --}}
-        @endauth
-
-        <div class="container-fluid">
-            <main class="py-4">
-                @yield('content')
-            </main>
+<body style="background-image: url('{{ asset('assets/images/bg_1.jpg') }}');
+             background-size: cover;
+             background-position: center;
+             background-attachment: fixed;
+             min-height: 100vh;">
+    <div id="wrapper" style="background: rgba(0,0,0,0.6); min-height: 100vh;">
+        <div class="container-fluid py-4 text-light">
+            @yield('content')
         </div>
     </div>
 </body>
+
 </html>
