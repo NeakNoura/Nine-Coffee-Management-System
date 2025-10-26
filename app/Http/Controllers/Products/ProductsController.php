@@ -27,6 +27,27 @@ public function home()
 }
 
 
+public function loginUser(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
+
+    // Try admin
+    if (Auth::guard('admin')->attempt($request->only('email','password'))) {
+        return redirect()->route('admins.dashboard');
+    }
+
+    // Try customer
+    if (Auth::guard('web')->attempt($request->only('email','password'))) {
+        return redirect()->route('home');
+    }
+
+    return back()->withErrors(['email'=>'Invalid credentials']);
+}
+
+
     public function addCart(Request $request, $id)
 {
     $request->validate([

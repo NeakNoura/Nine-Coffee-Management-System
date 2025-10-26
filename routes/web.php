@@ -76,36 +76,38 @@ Route::get('users/bookings', [UsersController::class, 'displayBookings'])->name(
 Route::get('users/write-reviews', [UsersController::class, 'writeReviews'])->name('write.reviews')->middleware('auth:web');
 Route::post('users/write-reviews', [UsersController::class, 'proccesswriteReviews'])->name('proccess.write.reviews')->middleware('auth:web');
 
-/// Admin login (public)
-Route::get('admin/login', [AdminsController::class, 'viewLogin'])
-     ->name('view.login')->middleware('check.for.auth');
-Route::post('admin/login', [AdminsController::class, 'checkLogin'])->name('check.login');
+// ---------------------------
+// Admin Routes
+// ---------------------------
 
-// Protected admin routes
-Route::middleware(['auth:admin'])->group(function () {
-    Route::get('/admin/dashboard', [AdminsController::class, 'index'])->name('admins.dashboard');
-    Route::post('/admin/logout', [AdminsController::class, 'logout'])->name('admin.logout');
-    // Users management
-Route::get('admin/all-users', [AdminsController::class, 'DisplayAllUsers'])->name('all.users');
+Route::middleware('guest:admin')->group(function () {
+    Route::post('/login-user', [ProductsController::class, 'loginUser'])->name('login.user');
 
+    Route::get('admin/login', [AdminsController::class, 'viewLogin'])->name('view.login');
+    Route::post('admin/login', [AdminsController::class, 'checkLogin'])->name('check.login');
+});
 
 
-    // Admin management
-    Route::get('admin/all-admins', [AdminsController::class, 'DisplayAllAdmins'])->name('all.admins');
+// 🔒 Protected admin routes
+Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
+    Route::get('/dashboard', [AdminsController::class, 'index'])->name('admins.dashboard');
+    Route::post('/logout', [AdminsController::class, 'logout'])->name('admin.logout');
+    Route::get('/all-users', [AdminsController::class, 'DisplayAllUsers'])->name('all.users');
+    Route::get('/all-admins', [AdminsController::class, 'DisplayAllAdmins'])->name('all.admins');
     Route::get('/create-admins', [AdminsController::class, 'createAdmins'])->name('create.admins');
     Route::post('/create-admins', [AdminsController::class, 'storeAdmins'])->name('store.admins');
     Route::get('/edit-admin/{id}', [AdminsController::class, 'editAdmin'])->name('edit.admin');
-    Route::delete('/delete-admin/{id}', [AdminsController::class, 'deleteAdmin'])->name('delete.admin');
     Route::post('/update-admin/{id}', [AdminsController::class, 'updateAdmin'])->name('update.admins');
+    Route::delete('/delete-admin/{id}', [AdminsController::class, 'deleteAdmin'])->name('delete.admin');
 
     // Orders management
-    Route::get('admin/all-orders', [AdminsController::class, 'DisplayAllOrders'])->name('all.orders');
-    Route::get('admin/edit-orders/{id}', [AdminsController::class, 'EditOrders'])->name('edit.orders');
-    Route::post('admin/edit-orders/{id}', [AdminsController::class, 'UpdateOrders'])->name('update.orders');
-    Route::delete('admin/delete-orders/{id}', [AdminsController::class, 'DeleteOrders'])->name('delete.orders');
+    Route::get('/all-orders', [AdminsController::class, 'DisplayAllOrders'])->name('all.orders');
+    Route::get('/edit-orders/{id}', [AdminsController::class, 'EditOrders'])->name('edit.orders');
+    Route::post('/edit-orders/{id}', [AdminsController::class, 'UpdateOrders'])->name('update.orders');
+    Route::delete('/delete-orders/{id}', [AdminsController::class, 'DeleteOrders'])->name('delete.orders');
 
     // Products management
-    Route::get('all/products', [AdminsController::class, 'DisplayProducts'])->name('all.products');
+    Route::get('/all-products', [AdminsController::class, 'DisplayProducts'])->name('all.products');
     Route::get('/create-products', [AdminsController::class, 'CreateProducts'])->name('create.products');
     Route::get('/edit-products/{id}', [AdminsController::class, 'EditProducts'])->name('edit.products');
     Route::post('/update-products/{id}', [AdminsController::class, 'UpdateProducts'])->name('update.products');
@@ -118,11 +120,18 @@ Route::get('admin/all-users', [AdminsController::class, 'DisplayAllUsers'])->nam
     Route::post('/update-bookings/{id}', [AdminsController::class, 'UpdateBookings'])->name('update.bookings');
     Route::delete('/delete-bookings/{id}', [AdminsController::class, 'DeleteBookings'])->name('delete.bookings');
     Route::get('/create-bookings', [AdminsController::class, 'CreateBookings'])->name('create.bookings');
+    Route::post('/store-bookings', [AdminsController::class, 'StoreBookings'])->name('store.bookings');
 
-    // Other admin tools
+    // Payments
+    Route::get('/paypal', [AdminsController::class, 'paywithPaypal'])->name('admin.paypal');
+    Route::get('/paypal-success', [AdminsController::class, 'paypalSuccess'])->name('admin.paypal.success');
+    Route::get('/qr-payment', [AdminsController::class, 'showQrPayment'])->name('admin.qr.payment');
+
+    // Other tools
     Route::get('/help', [AdminsController::class, 'Help'])->name('admins.help');
     Route::get('/staff-sell', [AdminsController::class, 'StaffSellForm'])->name('staff.sell.form');
     Route::post('/staff-sell', [AdminsController::class, 'StaffSellProduct'])->name('staff.sell');
-    Route::post('admin/staff-checkout', [App\Http\Controllers\Admins\AdminsController::class, 'staffCheckout'])->name('staff.checkout')->middleware('auth:admin');
+    Route::post('/staff-checkout', [AdminsController::class, 'staffCheckout'])->name('staff.checkout');
 });
+
     Route::post('/store-bookings', [AdminsController::class, 'StoreBookings'])->name('store.bookings');

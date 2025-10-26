@@ -36,32 +36,35 @@ public function showReceipt($id)
         return view('admins.login');
     }
 
-    public function checkLogin(Request $request) {
+   public function checkLogin(Request $request) {
+    $request->validate([
+        'email' => 'required|email',
+        'password' => 'required'
+    ]);
 
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-
-
-        $admin = Admin::where('email', $request->email)->first();
-
-
-        if ($admin && Hash::check($request->password, $admin->password)) {
-            Auth::guard('admin')->login($admin);
-            return redirect()->route('admins.dashboard');
-        }
-
-
-        return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+    if (Auth::guard('admin')->attempt($request->only('email', 'password'))) {
+        return redirect()->route('admins.dashboard');
     }
+
+    return back()->withErrors(['email' => 'Invalid credentials'])->withInput();
+}
+
 public function logout(Request $request)
 {
-    Auth::guard('admin')->logout();               // log out admin
-    $request->session()->invalidate();            // destroy session
-    $request->session()->regenerateToken();       // regenerate CSRF token
-    return redirect()->route('view.login');       // redirect to admin login page
+    // Logout admin
+    Auth::guard('admin')->logout();
+
+    // Invalidate session
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // Forget remember me cookie if it exists
+    Cookie::queue(Cookie::forget(Auth::guard('admin')->getRecallerName()));
+
+    // Redirect to admin login
+    return redirect()->route('view.login');
 }
+
 
 
 

@@ -73,8 +73,8 @@
                     </a>
 
                     <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="{{ route('users.orders') }}">My Order</a>
-                        <a class="dropdown-item" href="{{ route('users.bookings') }}">My Booking</a>
+                        <a class="dropdown-item" href="{{ route('check.login') }}">Admin login</a>
+                        {{-- <a class="dropdown-item" href="{{ route('users.bookings') }}">My Booking</a> --}}
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();

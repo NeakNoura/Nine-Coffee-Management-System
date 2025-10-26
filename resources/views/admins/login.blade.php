@@ -11,6 +11,7 @@
             <p class="text-muted mb-4">Sign in to your account</p>
         </div>
 
+        {{-- Display session error --}}
         @if (session('error'))
             <div class="alert alert-danger alert-dismissible fade show" role="alert">
                 {{ session('error') }}
@@ -18,6 +19,7 @@
             </div>
         @endif
 
+        {{-- Admin login form --}}
         <form action="{{ route('check.login') }}" method="POST" autocomplete="off">
             @csrf
             <div class="mb-3">
@@ -55,9 +57,18 @@
             </button>
         </form>
 
+        {{-- Register link --}}
         <div class="text-center mt-4">
             <small class="text-muted">Don’t have an account?</small>
             <a href="{{ route('register') }}" class="text-decoration-none fw-semibold text-primary">Register</a>
+        </div>
+
+        {{-- Login as customer link --}}
+        <div class="text-center mt-2">
+            <small class="text-muted">Or login as a customer:</small>
+            <a href="{{ route('login') }}" class="btn btn-outline-success w-100 mt-1">
+                <i class="bi bi-person-circle me-1"></i> Customer Login
+            </a>
         </div>
     </div>
 </div>
